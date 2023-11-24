@@ -1,5 +1,5 @@
-import class_board
-import class_player
+from class_board import *
+from class_player import *
 class Game:
     def __init__(self):
         self.board = [[' ' for _ in range(15)] for _ in range(15)]
