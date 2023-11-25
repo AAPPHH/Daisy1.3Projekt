@@ -38,3 +38,4 @@ class Board:
             return True
 
         return False
+import random from random
