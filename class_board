@@ -1,10 +1,12 @@
 import numpy as np
 
 class Board:
-    def __init__(self, size):
-        self.size = size
-        self.board = [[' ' for _ in range(size)] for _ in range(size)]
-
+    def __init__(self, m, n, k, board):
+        self.m = m
+        self.n = n
+        self.k = k
+        self.board = np.zeros((m, n))        
+        
     def print_board(self):
         for row in self.board:
             print(' '.join(row))
