@@ -1,4 +1,4 @@
-import numpy as np
+print("Marc")
 
 class Board:
     def __init__(self, size):
