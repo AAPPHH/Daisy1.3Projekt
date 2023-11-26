@@ -1,24 +1,43 @@
 from class_board import *
 from class_player import *
 class Game:
-    def __init__(self):
-        self.board = [[' ' for _ in range(15)] for _ in range(15)]
+    def __init__(self, m, n, k, board, player1, player2):
+        self.m = m
+        self.n = n
+        self.k = k
+        self.board = board
+        self.player1 = player1
+        self.player2 = player2
         self.current_player = 'X'
 
-    def print_board(self):
+    def start(self):
         for row in self.board:
             print(' '.join(row))
 
-    def make_move(self, row, col):
-        if self.board[row][col] == ' ':
-            self.board[row][col] = self.current_player
-            self.current_player = 'O' if self.current_player == 'X' else 'X'
-        else:
-            print('Invalid move. Please try again.')
+    def game_loop(self):
+        game_over = False
+        while not game_over:
+            self.print_board()
+            try:
+                row = int(input(f"Spieler {self.current_player}, geben Sie die Zeilennummer ein (0-4): "))
+                col = int(input(f"Spieler {self.current_player}, geben Sie die Spaltennummer ein (0-4): ")) #hast to be array based
+            except ValueError:
+                print("Bitte geben Sie gültige ganze Zahlen ein.")
+                continue
 
-    def check_winner(self):
-        # TODO: Implement the logic to check for a winner in Gomoku
-        pass
+            if self.make_move(row, col):
+                if self.check_winner():
+                    game_over = True
+                    self.print_board()
+                    print(f"Spieler {self.current_player} hat gewonnen!")
+                elif self.is_full():
+                    game_over = True
+                    self.print_board()
+                    print("Das Spiel endet unentschieden!")
+                else:
+                    self.switch_player()
+            else:
+                continue
 
 # Usage example:
 game = Game()
