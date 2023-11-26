@@ -1,5 +1,5 @@
-from class_board import Board
-from class_player import Player
+from class_board import *
+from class_player import *
 class Game:
     def __init__(self, m, n, k, board, player1, player2):
         self.m = m # Zeilen
@@ -46,6 +46,6 @@ game.make_move(7, 7)
 game.print_board()
 
 
-Human = class_player.Player(1)
-print(Human.player_number)
-class_player
+# Human = class_player.Player(1)
+# print(Human.player_number)
+# class_player
