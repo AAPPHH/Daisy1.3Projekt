@@ -5,7 +5,7 @@ class Board:
         self.m = m
         self.n = n
         self.k = k
-        self.board = np.zeros((m, n))
+        self.board = np.zeros((m, n))        
 
     def print_board(self):
         for row in self.board:
