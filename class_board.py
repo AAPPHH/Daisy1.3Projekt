@@ -1,10 +1,10 @@
 import numpy as np
 
 class Board:
-    def __init__(self, m=5, n=5, k=4):
-        self.m = m #rows 
-        self.n = n #columns
-        self.k = k #number of pieces in a row to win
+    def __init__(self, m, n, k, board):
+        self.m = m
+        self.n = n
+        self.k = k
         self.board = np.zeros((m, n))
 
     def print_board(self):
@@ -40,5 +40,4 @@ class Board:
             return True
 
         return False
-Spielbrett = Board()
-print_board()
+
