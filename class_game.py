@@ -11,8 +11,7 @@ class Game:
         self.current_player = 'X'
 
     def start(self):
-        for row in self.board:
-            print(' '.join(row))
+       Spielbrett = Board()
 
     def game_loop(self):
         game_over = False
