@@ -2,9 +2,9 @@ import numpy as np
 
 class Board:
     def __init__(self, m, n, k, board):
-        self.m = m
-        self.n = n
-        self.k = k
+        self.m = m #rows
+        self.n = n #columns
+        self.k = k #number of pieces in a row to win
         self.board = np.zeros((m, n))
 
     def print_board(self):
