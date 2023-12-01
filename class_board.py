@@ -13,7 +13,7 @@ class Board:
 
     def place_piece(self, row, col, piece):
         if self.is_valid_move(row, col):
-            self.board[row][col] = piece
+            self.board[row][col] = self.current_player
             return True
         return False
 
@@ -24,6 +24,7 @@ class Board:
         return False
 
     def is_winner(self, piece):
+        piece = self.current_player 
         # Zeilen überprüfen
         if np.any(np.all(self.board == piece, axis=1)):
             return True
