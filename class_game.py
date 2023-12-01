@@ -26,19 +26,22 @@ class Game:
               player2 = "Computer"
               game.game_loop()
 
+    def switch_player(self):
+        self.current_player = 2 if self.current_player == 1 else 1
+
     def game_loop(self):
         game_over = False
         while not game_over:
             self.print_board()
             try:
-                row = int(input(f"Spieler {self.current_player}, geben Sie die Zeilennummer ein (0-4): "))
-                col = int(input(f"Spieler {self.current_player}, geben Sie die Spaltennummer ein (0-4): ")) #hast to be array based
+                row = int(input(f"Spieler {self.current_player}, geben Sie die Zeilennummer ein (0-{self.m-1}): "))
+                col = int(input(f"Spieler {self.current_player}, geben Sie die Spaltennummer ein (0-{self.n-1}): "))
             except ValueError:
                 print("Bitte geben Sie gültige ganze Zahlen ein.")
                 continue
 
-            if self.make_move(row, col):
-                if self.check_winner():
+            if self.place_piece(row, col):
+                if self.is_winner():
                     game_over = True
                     self.print_board()
                     print(f"Spieler {self.current_player} hat gewonnen!")
@@ -49,14 +52,5 @@ class Game:
                 else:
                     self.switch_player()
             else:
-                continue
+                print("Ungültiger Zug, bitte versuchen Sie es erneut.")
 
-# Usage example:
-game = Game()
-game.print_board()
-game.make_move(7, 7)
-game.print_board()
-
-
-Human = Player.Player("John", 1)
-print(Human.player_number)

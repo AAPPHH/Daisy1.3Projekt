@@ -42,7 +42,9 @@ class Board:
                 return True
 
         return False
-
+    
+    def is_full(self):
+        return np.all(self.board != 0)
 # Spielbrett = Board()
 # Spielbrett.print_board()
 # Spielbrett.place_piece(0, 0, 1)
