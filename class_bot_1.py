@@ -1,6 +1,8 @@
-
-class GomokuBot:
-    def __init__(self):
+from class_player import *
+from class_board import *
+class GomokuBot(Player):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         # Initialize any necessary variables or data structures
         pass
 

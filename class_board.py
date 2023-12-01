@@ -1,5 +1,5 @@
 import numpy as np
-
+from class_board import *
 class Board:
     def __init__(self, m=5, n=5, k=4):
         self.m = m
@@ -43,7 +43,7 @@ class Board:
 
         return False
 
-Spielbrett = Board()
-Spielbrett.print_board()
-Spielbrett.place_piece(0, 0, 1)
-Spielbrett.print_board()
+# Spielbrett = Board()
+# Spielbrett.print_board()
+# Spielbrett.place_piece(0, 0, 1)
+# Spielbrett.print_board()

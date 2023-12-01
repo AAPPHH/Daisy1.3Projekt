@@ -1,17 +1,30 @@
+import time
 from class_board import *
 from class_player import *
+from class_bot_1 import *
 class Game:
     def __init__(self, m, n, k, board, player1, player2):
         self.m = m # Zeilen
         self.n = n # Spalten
         self.k = k # Gewinnbedingung
-        self.board = board
         self.player1 = player1
         self.player2 = player2
         self.current_player = 'X'
 
     def start(self):
-       Spielbrett = Board()
+        print("Let's play five in row!/n Bitte geben sie ihre Namen ein:")
+        game = Game()
+        time.sleep(1)
+        player1 = input("Spieler 1: ")
+        time.sleep(1)
+        choice = input(f"Hallo {player1}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2):")
+        time.sleep(1)
+        if choice == 1:
+              player2 = input("Spieler 2: ")
+              game.game_loop()
+        else:
+              player2 = "Computer"
+              game.game_loop()
 
     def game_loop(self):
         game_over = False
