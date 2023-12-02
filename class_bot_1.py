@@ -14,4 +14,4 @@ class GomokuBot(Player):
         # Implement the evaluation function to assess the current position on the board
         pass
 
-
+#check if the move is valid and the place isnt full
