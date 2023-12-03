@@ -24,7 +24,7 @@ class Game:
               self.player2.name = input("Spieler 2: ")
               game.game_loop()
         else:
-              player2 = "Computer"
+              player2 = GomokuBot()
               game.game_loop()
 
     def switch_player(self):
