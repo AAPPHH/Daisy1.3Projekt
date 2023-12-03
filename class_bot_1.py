@@ -1,5 +1,5 @@
 import random
-import board
+from class_board import *
 
 class GomokuBot(Player):
     def __init__(self, name, row, col):
