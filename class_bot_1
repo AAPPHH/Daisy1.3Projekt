@@ -1,4 +1,3 @@
-
 class GomokuBot:
     def __init__(self, name, row, col):
         self.name = name
