@@ -2,7 +2,7 @@ import random
 from class_board import *
 
 class GomokuBot(Player):
-    def __superinit__(self, name, row, col):
+    def super__init__(self, name, row, col):
         self.name = name
         self.row = row
         self.col = col
