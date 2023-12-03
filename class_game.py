@@ -18,15 +18,19 @@ class Game:
         time.sleep(1)
         self.player1.name = input("Spieler 1: ")
         time.sleep(1)
-        choice2 = input(f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2):")
+        choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2):")
         time.sleep(1)
-        if choice2 == "1":
+        if choice == "1":
               self.player2.name = input("Spieler 2: ")
               game.game_loop()
-        else:
-              player2 = "Computer"
+        elif choice == "2":
+              COMPUTER = GomokuBot()
               game.game_loop()
-
+        elif choice == "3":
+             pass
+        else:
+            pass
+        
     def switch_player(self):
         self.current_player = self.player2 if self.current_player == self.player1 else self.player1
 

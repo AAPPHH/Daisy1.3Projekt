@@ -52,7 +52,12 @@ class GomokuBot:
     def evaluate_position(self, board):
         # Implement the evaluation function to assess the current position on the board
         pass
+    
 
+    def evaluate_board(self, board):
+        # Implement the evaluation function to assess the current state of the board
+        pass
+    
     # def make_move(self, board):
     #     import random  # Import the random module
     #     random_row = random.randint(0, 4)  # Generate a random number between 0 and 4
@@ -228,12 +233,3 @@ class GomokuBot:
 
 
 
-    def evaluate_board(self, board):
-        # Implement the evaluation function to assess the current state of the board
-        pass
-
-    def evaluate_position(self, board):
-        # Implement the evaluation function to assess the current position on the board
-        pass
-
-#check if the move is valid and the place isnt full
