@@ -3,7 +3,8 @@ from class_board import *
 from class_player import *
 
 class GomokuBot(Player):
-    def super__init__(self, name, row, col):
+    def __init__(self, name, row, col, **Kwargs):
+        super().__init__()
         self.name = name
         self.row = row
         self.col = col
