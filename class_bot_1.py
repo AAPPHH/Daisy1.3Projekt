@@ -37,4 +37,28 @@ class GomokuBot:
 
         
 
-#check if the move is valid and the place isnt full
+class GomokuBot(Player):
+    def __init__(self, name, row, col):
+        self.name = name
+        self.row = row
+        self.col = col
+
+    def make_move(self, board):
+        import random
+        random_row = random.randint(0, 4)
+        random_col = random.randint(0, 4)
+        if board[random_row][random_col] == 1:
+            return False
+        elif board[random_row][random_col] == 2:
+            return False
+        elif board[random_row][random_col] == 0:
+            board[random_row][random_col] = 2
+            return True
+        else:
+            return False
+        while st_invalid_move == False or nd_invalid_move == False:
+            random_row = random.randint(0, 4)
+            random_col = random.randint(0, 4)
+            if board[random_row][random_col] == 0:
+                board[random_row][random_col] = 2
+                return True
