@@ -1,4 +1,12 @@
 
+# from class_player import *
+# from class_board import *
+# class GomokuBot(Player):
+#     def __init__(self, **kwargs):
+#         super().__init__(**kwargs)
+#         # Initialize any necessary variables or data structures
+#         pass
+
 class GomokuBot:
     def __init__(self, name, row, col):
         self.name = name
@@ -188,4 +196,4 @@ class GomokuBot:
         # Implement the evaluation function to assess the current position on the board
         pass
 
-
+#check if the move is valid and the place isnt full
