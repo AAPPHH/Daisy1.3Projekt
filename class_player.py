@@ -6,7 +6,7 @@ class Player:
         self.player_number = player_number
 
 
-    def place_piece(self, row, col, game, board):
+    def place_piece(self, row, col, board):
         if board.is_valid_move(row, col):
             board.board[row][col] =  self.player_number #objekt der game class übergeben
             return True
