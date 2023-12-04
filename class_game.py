@@ -18,15 +18,19 @@ class Game:
         time.sleep(1)
         self.player1.name = input("Spieler 1: ")
         time.sleep(1)
-        choice2 = input(f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2):")
+        choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2):")
         time.sleep(1)
-        if choice2 == "1":
+        if choice == "1":
               self.player2.name = input("Spieler 2: ")
-              game.game_loop()
+              self.game_loop()
+        elif choice == "2":
+              self.player2 = GomokuBot()
+              self.game_loop()
+        elif choice == "3":
+             pass
         else:
-              player2 = "Computer"
-              game.game_loop()
-
+            pass
+        
     def switch_player(self):
         self.current_player = self.player2 if self.current_player == self.player1 else self.player1
 
@@ -35,8 +39,8 @@ class Game:
         while not game_over:
             self.board.print_board()
             try:
-                row = int(input(f"Spieler {self.current_player}, geben Sie die Zeilennummer ein (0-{self.m-1}): "))
-                col = int(input(f"Spieler {self.current_player}, geben Sie die Spaltennummer ein (0-{self.n-1}): "))
+                row = int(input(f"Spieler {self.current_player.name}, geben Sie die Zeilennummer ein (0-{self.m-1}): "))
+                col = int(input(f"Spieler {self.current_player.name}, geben Sie die Spaltennummer ein (0-{self.n-1}): "))
             except ValueError:
                 print("Bitte geben Sie gültige ganze Zahlen ein.")
                 continue
@@ -58,9 +62,4 @@ class Game:
 Spielbrett = Board()
 game = Game(Spielbrett)
 game.start()
-
-# game.current_player = 1
-# Spielbrett.print_board()
-# Spielbrett.place_piece(0, 0, game)
-# Spielbrett.print_board()
 
