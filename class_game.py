@@ -14,7 +14,7 @@ class Game:
         self.current_player = self.player1
 
     def start(self):
-        print("Let's play five in row!/n Bitte geben sie ihre Namen ein:")
+        print("Let's play five in row!/n Bitte geben sie ihre Namen ein")
         time.sleep(1)
         self.player1.name = input("Spieler 1: ")
         time.sleep(1)
