@@ -18,29 +18,54 @@ class Board:
         return False
     
     def is_winner(self, piece):
-        # Create a vector of length k with all elements being the piece
-        vec = np.ones(self.k, dtype=int) * piece
-        # Check rows
+        # Create a string representation of the piece sequence needed to win
+        win_sequence = str(piece) * self.k
+
+        # Check rows for a winning sequence
         for row in self.board:
-            if np.any(np.convolve(row, vec, 'valid') == self.k):
+            if win_sequence in ''.join(str(int(e)) for e in row):
                 return True
 
-        # Check columns
+        # Check columns for a winning sequence
         for col in self.board.T:
-            if np.any(np.convolve(col, vec, 'valid') == self.k):
+            if win_sequence in ''.join(str(int(e)) for e in col):
                 return True
 
-        # Check main diagonal
-        for diag in [np.diagonal(self.board, offset) for offset in range(-self.board.shape[0]+self.k, self.board.shape[1]-self.k+1)]:
-            if np.any(np.convolve(diag, vec, 'valid') == self.k):
+        # Check main diagonal for a winning sequence
+        for diag in [np.diagonal(self.board, offset) for offset in range(-self.board.shape[0] + self.k, self.board.shape[1] - self.k + 1)]:
+            if win_sequence in ''.join(str(int(e)) for e in diag):
                 return True
 
-        # Check anti-diagonal
-        for diag in [np.diagonal(np.fliplr(self.board), offset) for offset in range(-self.board.shape[0]+self.k, self.board.shape[1]-self.k+1)]:
-            if np.any(np.convolve(diag, vec, 'valid') == self.k):
+        # Check anti-diagonal for a winning sequence
+        for diag in [np.diagonal(np.fliplr(self.board), offset) for offset in range(-self.board.shape[0] + self.k, self.board.shape[1] - self.k + 1)]:
+            if win_sequence in ''.join(str(int(e)) for e in diag):
                 return True
 
         return False
+    # def is_winner(self, piece):
+    #     # Create a vector of length k with all elements being the piece
+    #     vec = np.ones(self.k, dtype=int) * piece
+    #     # Check rows
+    #     for row in self.board:
+    #         if np.any(np.convolve(row, vec, 'valid') == self.k):
+    #             return True
+
+    #     # Check columns
+    #     for col in self.board.T:
+    #         if np.any(np.convolve(col, vec, 'valid') == self.k):
+    #             return True
+
+    #     # Check main diagonal
+    #     for diag in [np.diagonal(self.board, offset) for offset in range(-self.board.shape[0]+self.k, self.board.shape[1]-self.k+1)]:
+    #         if np.any(np.convolve(diag, vec, 'valid') == self.k):
+    #             return True
+
+    #     # Check anti-diagonal
+    #     for diag in [np.diagonal(np.fliplr(self.board), offset) for offset in range(-self.board.shape[0]+self.k, self.board.shape[1]-self.k+1)]:
+    #         if np.any(np.convolve(diag, vec, 'valid') == self.k):
+    #             return True
+
+    #     return False
     # def is_winner(self, piece): 
     #     # Zeilen überprüfen
     #     if np.any(np.all(self.board == piece, axis=1)):
