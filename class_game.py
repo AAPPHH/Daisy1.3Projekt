@@ -6,7 +6,7 @@ from class_bot_1 import *
 class Game:
     def __init__(self, board):
         self.m = board.m # Zeilen
-        self.n =board.n # Spalten
+        self.n = board.n # Spalten
         self.k = board.k # Gewinnbedingung
         self.board = board
         self.player1 = Player("", 1)
@@ -24,7 +24,7 @@ class Game:
               self.player2.name = input("Spieler 2: ")
               self.game_loop()
         elif choice == "2":
-              self.player2 = GomokuBot()
+              self.player2 = GomokuBot("GomokuBot", 2)
               self.game_loop()
         elif choice == "3":
              pass
@@ -38,11 +38,14 @@ class Game:
         game_over = False
         while not game_over:
             self.board.print_board()
-            try:
-                row = int(input(f"Spieler {self.current_player.name}, geben Sie die Zeilennummer ein (0-{self.m-1}): "))
-                col = int(input(f"Spieler {self.current_player.name}, geben Sie die Spaltennummer ein (0-{self.n-1}): "))
-            except ValueError:
-                print("Bitte geben Sie gültige ganze Zahlen ein.")
+            if isinstance(self.current_player, GomokuBot):
+                self.current_player.make_move()
+            else:
+                try:
+                    row = int(input(f"Spieler {self.current_player.name}, geben Sie die Zeilennummer ein (0-{self.m-1}): "))
+                    col = int(input(f"Spieler {self.current_player.name}, geben Sie die Spaltennummer ein (0-{self.n-1}): "))
+                except ValueError:
+                    print("Bitte geben Sie gültige ganze Zahlen ein.")
                 continue
 
             if Player.place_piece(self.current_player, row, col, self, self.board):
@@ -63,3 +66,20 @@ Spielbrett = Board()
 game = Game(Spielbrett)
 game.start()
 
+# def game_loop(self):
+#     game_over = False
+#     while not game_over:
+#         self.board.print_board()
+#         if isinstance(self.current_player, GomokuBot):
+#             self.current_player.make_move()
+#         else:
+#             try:
+#                 row = int(input(f"Spieler {self.current_player.name}, geben Sie die Zeilennummer ein (0-{self.m-1}): "))
+#                 col = int(input(f"Spieler {self.current_player.name}, geben Sie die Spaltennummer ein (0-{self.n-1}): "))
+#             except ValueError:
+#                 print("Bitte geben Sie gültige ganze Zahlen ein.")
+#                 continue
+#             if Player.place_piece(self.current_player, row, col, self, self.board):
+#                 if self.board.is_winner(self.current_player.player_number):
+#                     game_over = True
+#                     self.board.print_board()
