@@ -29,6 +29,8 @@ class Game:
         elif choice == "3":
              pass
         else:
+            pass
+        
 <<<<<<< HEAD
               self.player2 = GomokuBot(name="Randome", player_number=2)
               game.game_loop()
