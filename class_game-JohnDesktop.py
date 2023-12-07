@@ -7,6 +7,7 @@ class Game:
     def __init__(self, board):
         self.m = board.m # Zeilen
         self.n = board.n # Spalten
+        self.n = board.n # Spalten
         self.k = board.k # Gewinnbedingung
         self.board = board
         self.player1 = Player("", 1)
@@ -29,16 +30,9 @@ class Game:
         elif choice == "3":
              pass
         else:
-            pass
-        
-<<<<<<< HEAD
-              self.player2 = GomokuBot(name="Randome", player_number=2)
+              player2 = "Computer"
               game.game_loop()
 
-=======
-            pass
-        
->>>>>>> fe24b2b9de5070fd8619261f2943e284cbce99e1
     def switch_player(self):
         self.current_player = self.player2 if self.current_player == self.player1 else self.player1
 
