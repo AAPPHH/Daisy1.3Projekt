@@ -17,27 +17,28 @@ class Board:
         if 0 <= row < m and 0 <= col < n and self.board[row][col] == 0:
             return True
         return False
+    
+    def is_winner(self, piece):
+        win_sequence = str(piece) * self.k
 
-    def is_winner(self, piece): 
-        # Zeilen überprüfen
-        if np.any(np.all(self.board == piece, axis=1)):
-            return True
-
-        # Spalten überprüfen
-        if np.any(np.all(self.board == piece, axis=0)):
-            return True
-
-        # Hauptdiagonale überprüfen, wenn das Brett quadratisch ist
-        if self.board.shape[0] == self.board.shape[1]:
-            if np.all(np.diag(self.board) == piece):
+        for row in self.board:
+            if win_sequence in ''.join(str(int(e)) for e in row):
                 return True
 
-            # Nebendiagonale überprüfen
-            if np.all(np.diag(np.fliplr(self.board)) == piece):
+        for col in self.board.T:
+            if win_sequence in ''.join(str(int(e)) for e in col):
+                return True
+
+        for diag in [np.diagonal(self.board, offset) for offset in range(-self.board.shape[0] + self.k, self.board.shape[1] - self.k + 1)]:
+            if win_sequence in ''.join(str(int(e)) for e in diag):
+                return True
+
+        for diag in [np.diagonal(np.fliplr(self.board), offset) for offset in range(-self.board.shape[0] + self.k, self.board.shape[1] - self.k + 1)]:
+            if win_sequence in ''.join(str(int(e)) for e in diag):
                 return True
 
         return False
-    
+
     def is_full(self):
         return np.all(self.board != 0)
     
