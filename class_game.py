@@ -39,15 +39,12 @@ class Game:
         game_over = False
         while not game_over:
             self.board.print_board()
-            if isinstance(self.current_player, GomokuBot):
-                self.current_player.make_move()
-            else:
-                try:
+            try:
                     row = int(input(f"Spieler {self.current_player.name}, geben Sie die Zeilennummer ein (0-{self.m-1}): "))
                     col = int(input(f"Spieler {self.current_player.name}, geben Sie die Spaltennummer ein (0-{self.n-1}): "))
-                except ValueError:
+            except ValueError:
                     print("Bitte geben Sie gültige ganze Zahlen ein.")
-                continue
+                    continue
 
             if Player.place_piece(self.current_player, row, col, self, self.board):
                 if self.board.is_winner(self.current_player.player_number):
