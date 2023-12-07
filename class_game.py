@@ -31,14 +31,7 @@ class Game:
         else:
             pass
         
-<<<<<<< HEAD
-              self.player2 = GomokuBot(name="Randome", player_number=2)
-              game.game_loop()
-
-=======
-            pass
         
->>>>>>> fe24b2b9de5070fd8619261f2943e284cbce99e1
     def switch_player(self):
         self.current_player = self.player2 if self.current_player == self.player1 else self.player1
 
