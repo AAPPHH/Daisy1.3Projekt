@@ -2,6 +2,7 @@ import time
 from class_board import *
 from class_player import *
 from class_bot_1 import *
+from class_bot_2 import *
 
 
 class Game:
@@ -30,7 +31,7 @@ class Game:
             self.player2 = GomokuBot("GomokuBot", 2)
             self.game_loop()
         elif choice == "3":
-            pass
+            self.player2 = GomokuBot_2("GomokuBot_2", 2)
         else:
             pass
 
