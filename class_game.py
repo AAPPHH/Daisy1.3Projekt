@@ -34,7 +34,7 @@ class Game:
             self.player2 = GomokuBot_2("GomokuBot_2", 2)
         else:
             pass
-
+         
     def switch_player(self):
         self.current_player = (
             self.player2 if self.current_player == self.player1 else self.player1
@@ -44,20 +44,13 @@ class Game:
         game_over = False
         while not game_over:
             self.board.print_board()
+
             try:
-                row = int(
-                    input(
-                        f"Spieler {self.current_player.name}, geben Sie die Zeilennummer ein (0-{self.m-1}): "
-                    )
-                )
-                col = int(
-                    input(
-                        f"Spieler {self.current_player.name}, geben Sie die Spaltennummer ein (0-{self.n-1}): "
-                    )
-                )
+                    row = int(input(f"Spieler {self.current_player.name}, geben Sie die Zeilennummer ein (0-{self.m-1}): "))
+                    col = int(input(f"Spieler {self.current_player.name}, geben Sie die Spaltennummer ein (0-{self.n-1}): "))
             except ValueError:
-                print("Bitte geben Sie gültige ganze Zahlen ein.")
-                continue
+                    print("Bitte geben Sie gültige ganze Zahlen ein.")
+                    continue
 
             if Player.place_piece(self.current_player, row, col, self, self.board):
                 if self.board.is_winner(self.current_player.player_number):
