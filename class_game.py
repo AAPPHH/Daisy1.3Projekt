@@ -2,12 +2,14 @@ import time
 from class_board import *
 from class_player import *
 from class_bot_1 import *
+from class_bot_2 import *
+
 
 class Game:
     def __init__(self, board):
-        self.m = board.m # Zeilen
-        self.n = board.n # Spalten
-        self.k = board.k # Gewinnbedingung
+        self.m = board.m  # Zeilen
+        self.n = board.n  # Spalten
+        self.k = board.k  # Gewinnbedingung
         self.board = board
         self.player1 = Player("", 1)
         self.player2 = Player("", 2)
@@ -18,21 +20,25 @@ class Game:
         time.sleep(1)
         self.player1.name = input("Spieler 1: ")
         time.sleep(1)
-        choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2):")
+        choice = input(
+            f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2):"
+        )
         time.sleep(1)
         if choice == "1":
-              self.player2.name = input("Spieler 2: ")
-              self.game_loop()
+            self.player2.name = input("Spieler 2: ")
+            self.game_loop()
         elif choice == "2":
-              self.player2 = GomokuBot("GomokuBot", 2)
-              self.game_loop()
+            self.player2 = GomokuBot("GomokuBot", 2)
+            self.game_loop()
         elif choice == "3":
-             pass
+            self.player2 = GomokuBot_2("GomokuBot_2", 2)
         else:
             pass
          
     def switch_player(self):
-        self.current_player = self.player2 if self.current_player == self.player1 else self.player1
+        self.current_player = (
+            self.player2 if self.current_player == self.player1 else self.player1
+        )
 
     def game_loop(self):
         game_over = False
@@ -59,7 +65,8 @@ class Game:
                     self.switch_player()
             else:
                 print("Ungültiger Zug, bitte versuchen Sie es erneut.")
-   
+
+
 Spielbrett = Board()
 game = Game(Spielbrett)
 game.start()
