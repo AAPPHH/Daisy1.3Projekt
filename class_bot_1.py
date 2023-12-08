@@ -1,3 +1,5 @@
+import random
+from class_board import *
 from class_player import *
 from class_board import * 
 import random
