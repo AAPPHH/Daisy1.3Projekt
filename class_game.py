@@ -2,7 +2,7 @@ import time
 from class_board import *
 from class_player import *
 from class_bot_1 import *
-from class_bot_2 import *
+#from class_bot_2 import *
 
 
 class Game:
