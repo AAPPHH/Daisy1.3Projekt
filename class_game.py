@@ -38,11 +38,13 @@ class Game:
         game_over = False
         while not game_over:
             self.board.print_board()
-
-            try:
+            if isinstance(self.current_player, GomokuBot):
+                row, col = self.current_player.place_piece(self.board)
+            else:
+                try:
                     row = int(input(f"Spieler {self.current_player.name}, geben Sie die Zeilennummer ein (0-{self.m-1}): "))
                     col = int(input(f"Spieler {self.current_player.name}, geben Sie die Spaltennummer ein (0-{self.n-1}): "))
-            except ValueError:
+                except ValueError:
                     print("Bitte geben Sie gültige ganze Zahlen ein.")
                     continue
 
