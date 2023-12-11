@@ -1,5 +1,6 @@
 import numpy as np
 from class_player import *
+
 class Board:
     def __init__(self, m=5, n=5, k=4):
         self.m = m
