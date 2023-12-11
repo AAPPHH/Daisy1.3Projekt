@@ -7,7 +7,7 @@ class GomokuBot(Player):
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
 
-    def make_move(self):
-        random_row = random.randint(0, 4)
-        random_col = random.randint(0, 4)
-        self.place_piece(random_row, random_col)
+    def place_piece(self, row, col, board):
+        row = random.randint(0, 4)
+        col = random.randint(0, 4)
+        board.place_piece(row, col)
