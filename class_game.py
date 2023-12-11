@@ -30,7 +30,7 @@ class Game:
              pass
         else:
             pass
-         
+        #choice player oder bot dann choice bot1 oder bot2... 
     def switch_player(self):
         self.current_player = self.player2 if self.current_player == self.player1 else self.player1
 
@@ -39,7 +39,7 @@ class Game:
         while not game_over:
             self.board.print_board()
             if isinstance(self.current_player, GomokuBot):
-                row, col = self.current_player.place_piece(self.board)
+                row, col = self.current_player.place_piece(row, col, game, self.board)
             else:
                 try:
                     row = int(input(f"Spieler {self.current_player.name}, geben Sie die Zeilennummer ein (0-{self.m-1}): "))
