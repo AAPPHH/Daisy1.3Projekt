@@ -39,7 +39,7 @@ class Game:
         while not game_over:
             self.board.print_board()
             if isinstance(self.current_player, GomokuBot):
-                row, col = self.current_player.place_piece(row, col, game, self.board)
+                GomokuBot.place_piece(self.current_player, row, col, self, self.board)
             else:
                 try:
                     row = int(input(f"Spieler {self.current_player.name}, geben Sie die Zeilennummer ein (0-{self.m-1}): "))
