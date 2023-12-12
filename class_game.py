@@ -4,7 +4,6 @@ from class_player import *
 from class_bot_1 import *
 from class_bot_2 import *
 
-
 class Game:
     def __init__(self, board):
         self.m = board.m  # Zeilen
