@@ -1,4 +1,6 @@
 class MinimaxBot(Player):
+
+    
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
 
