@@ -1,15 +1,23 @@
+from class_player import *
+from class_board import *
 class MinimaxBot(Player):
-
-    
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
-
+    
+    def make_move(self):
+        best_score = float('-inf')
+        best_move = None
+        for move in self.get_possible_moves(self.board):
+            score = self.minimax(move, 3, False)
+            if score > best_score:
+                best_score = score
+                best_move = move
+        self.place_piece(best_move[0], best_move[1])
+    
     def evaluate_board(self, board):
-        # Implement your board evaluation logic here
         pass
 
     def get_possible_moves(self, board):
-        # Implement your logic to get all possible moves from the current board state
         pass
 
     def minimax(self, board, depth, is_maximizing):
@@ -29,12 +37,3 @@ class MinimaxBot(Player):
                 min_eval = min(min_eval, eval)
             return min_eval
 
-    def make_move(self):
-        best_score = float('-inf')
-        best_move = None
-        for move in self.get_possible_moves(self.board):
-            score = self.minimax(move, 3, False)
-            if score > best_score:
-                best_score = score
-                best_move = move
-        self.place_piece(best_move[0], best_move[1])
