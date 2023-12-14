@@ -3,7 +3,7 @@ from class_board import *
 from class_player import *
 from class_bot_1 import *
 from class_bot_2 import *
-
+from class_bot_3 import *
 
 class Game:
     def __init__(self, board):
@@ -33,7 +33,8 @@ class Game:
         elif choice == "3":
             pass#self.player2 = GomokuBot_2("GomokuBot_2", 2)
         else:
-            pass
+            self.player2 = MinimaxBot("MinimaxBot", 2)
+            self.game_loop()
         #choice player oder bot dann choice bot1 oder bot2... 
     def switch_player(self):
         self.current_player = (
