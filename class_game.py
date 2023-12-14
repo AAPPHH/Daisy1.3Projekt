@@ -44,55 +44,34 @@ class Game:
     def game_loop(self):
         game_over = False
         while not game_over:
+            valid_move = True
             self.board.print_board()
             if isinstance(self.current_player, GomokuBot):
                 GomokuBot.place_piece(self.current_player, row, col, self, self.board)
-                if self.board.is_winner(self.current_player.player_number):
-                    game_over = True
-                    self.board.print_board()
-                    print(f"Spieler {self.current_player.name} hat gewonnen!")
-                elif self.board.is_full():
-                    game_over = True
-                    self.board.print_board()
-                    print("Das Spiel endet unentschieden!")
-                else:
-                    self.switch_player()
 
             elif isinstance(self.current_player, MinimaxBot):
                 MinimaxBot.place_piece(self.current_player, row, col, self, self.board)
-                if self.board.is_winner(self.current_player.player_number):
-                    game_over = True
-                    self.board.print_board()
-                    print(f"Spieler {self.current_player.name} hat gewonnen!")
-                elif self.board.is_full():
-                    game_over = True
-                    self.board.print_board()
-                    print("Das Spiel endet unentschieden!")
-                else:
-                    self.switch_player()
-                    
-            else:
+
+            elif isinstance(self.current_player, Player):
                 try:
                     row = int(input(f"Spieler {self.current_player.name}, geben Sie die Zeilennummer ein (0-{self.m-1}): "))
                     col = int(input(f"Spieler {self.current_player.name}, geben Sie die Spaltennummer ein (0-{self.n-1}): "))
                 except ValueError:
                     print("Bitte geben Sie gültige ganze Zahlen ein.")
                     continue
+                valid_move = Player.place_piece(self.current_player, row, col, self, self.board)
 
-            if Player.place_piece(self.current_player, row, col, self, self.board):
-                if self.board.is_winner(self.current_player.player_number):
+            if self.board.is_winner(self.current_player.player_number):
                     game_over = True
                     self.board.print_board()
                     print(f"Spieler {self.current_player.name} hat gewonnen!")
-                elif self.board.is_full():
+            elif self.board.is_full():
                     game_over = True
                     self.board.print_board()
                     print("Das Spiel endet unentschieden!")
-                else:
-                    self.switch_player()
             else:
-                print("Ungültiger Zug, bitte versuchen Sie es erneut.")
-
+                    if valid_move == True: 
+                        self.switch_player()
 
 Spielbrett = Board()
 game = Game(Spielbrett)
