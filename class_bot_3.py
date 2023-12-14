@@ -15,10 +15,26 @@ class MinimaxBot(Player):
         self.place_piece(best_move[0], best_move[1])
     
     def evaluate_board(self, board):
-        pass
+        score = 0
+        
+        for row in range(board.m):
+            for col in range(board.n):
+                if board.board[row][col] == self.player_number:
+                    score += 1  
+                elif board.board[row][col] != 0:
+                    score -= 1 
+        return score
 
     def get_possible_moves(self, board):
-        pass
+        possible_moves = []
+        # Durchlaufe das Spielbrett, um alle möglichen Züge zu finden
+        for row in range(board.height):
+            for col in range(board.width):
+                if board.is_piece_of_player(row, col, self.player_number):
+                    # Finde alle möglichen Züge für das Spielstück an dieser Position
+                    piece_moves = board.get_moves_for_piece(row, col)
+                    possible_moves.extend(piece_moves)
+        return possible_moves
 
     def minimax(self, board, depth, is_maximizing):
         if depth == 0 or game_over:
