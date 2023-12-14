@@ -57,6 +57,18 @@ class Game:
                     print("Das Spiel endet unentschieden!")
                 else:
                     self.switch_player()
+            elif isinstance(self.current_player, MinimaxBot):
+                MinimaxBot.place_piece(self.current_player, row, col, self, self.board)
+                if self.board.is_winner(self.current_player.player_number):
+                    game_over = True
+                    self.board.print_board()
+                    print(f"Spieler {self.current_player.name} hat gewonnen!")
+                elif self.board.is_full():
+                    game_over = True
+                    self.board.print_board()
+                    print("Das Spiel endet unentschieden!")
+                else:
+                    self.switch_player()
             else:
                 try:
                     row = int(input(f"Spieler {self.current_player.name}, geben Sie die Zeilennummer ein (0-{self.m-1}): "))

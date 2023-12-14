@@ -16,7 +16,7 @@ class MinimaxBot(Player):
     
     def evaluate_board(self, board):
         score = 0
-        
+
         for row in range(board.m):
             for col in range(board.n):
                 if board.board[row][col] == self.player_number:
@@ -37,7 +37,7 @@ class MinimaxBot(Player):
         return possible_moves
 
     def minimax(self, board, depth, is_maximizing):
-        if depth == 0 or game_over:
+        if depth == 0 or board.is_game_over():
             return self.evaluate_board(board)
 
         if is_maximizing:
