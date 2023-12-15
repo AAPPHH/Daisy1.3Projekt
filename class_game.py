@@ -62,8 +62,11 @@ class Game:
                 except ValueError:
                     print("Bitte geben Sie gültige ganze Zahlen ein.")
                     continue
-                valid_move = Player.place_piece(self.current_player, row, col, self, self.board)
-
+                valid_move = Player.place_piece(self.current_player, row, col, self, self.board)  
+                if not valid_move:
+                    print("Ungültiger Zug, bitte versuchen Sie es erneut.")
+                    continue
+                
             if self.board.is_winner(self.current_player.player_number):
                     game_over = True
                     self.board.print_board()
