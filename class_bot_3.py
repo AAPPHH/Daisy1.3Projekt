@@ -31,7 +31,7 @@ class MinimaxBot(Player):
 
     def get_possible_moves(self, board):
         # Finde alle leeren Positionen für mögliche Züge
-        return [(row, col) for row, col in np.ndindex(board.shape) if board[row, col] == 0]
+        return [(row, col) for row, col in np.ndindex(board.board.shape) if board.board[row, col] == 0]
 
     def minimax(self, board, move, depth, is_maximizing):
         board[move[0]][move[1]] = self.player_number if is_maximizing else 3 - self.player_number
