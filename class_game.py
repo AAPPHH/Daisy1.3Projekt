@@ -1,4 +1,3 @@
-import time
 from class_board import *
 from class_player import *
 from class_bot_1 import *
@@ -17,13 +16,10 @@ class Game:
 
     def start(self):
         print("Let's play five in row!/n Bitte geben sie ihre Namen ein")
-        time.sleep(1)
         self.player1.name = input("Spieler 1: ")
-        time.sleep(1)
         choice = input(
             f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2):"
         )
-        time.sleep(1)
         if choice == "1":
             self.player2.name = input("Spieler 2: ")
             self.game_loop()

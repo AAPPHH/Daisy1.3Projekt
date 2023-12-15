@@ -8,20 +8,19 @@ class MinimaxBot(Player):
         super().__init__(name, player_number)
 
     def make_move(self, row, col, game, board):
-        # Hinweis: row und col werden ignoriert, da der Bot seinen eigenen Zug berechnet
+        # Assuming 'board' is an instance of the Board class, we access the NumPy array with 'board.board'
         best_score = float('-inf')
         best_move = None
-        for move in self.get_possible_moves(board):
-            # Kopie des Bretts für die Simulation der Züge
-            board_copy = np.copy(board.board)
+        for move in self.get_possible_moves(board.board):  # Access the NumPy array
+            board_copy = np.copy(board.board)  # Create a copy of the NumPy array
             score = self.minimax(board_copy, move, 3, True)
             if score > best_score:
                 best_score = score
                 best_move = move
 
-        # Gültigkeit des besten Zuges prüfen und den Zug ausführen
-        if best_move and game.board.is_valid_move(best_move[0], best_move[1]):
-            game.board.place_piece(best_move[0], best_move[1], self.player_number)
+        # After finding the best move, we use 'board' as an instance of Board to call 'is_valid_move'
+        if best_move and board.is_valid_move(best_move[0], best_move[1]):
+            board.place_piece(best_move[0], best_move[1], self.player_number)
         else:
             print("Kein gültiger Zug gefunden für MinimaxBot")
 
@@ -34,11 +33,12 @@ class MinimaxBot(Player):
         return [(row, col) for row, col in np.ndindex(board.board.shape) if board.board[row, col] == 0]
 
     def minimax(self, board, move, depth, is_maximizing):
+        # Here 'board' is a NumPy array
         board[move[0]][move[1]] = self.player_number if is_maximizing else 3 - self.player_number
 
-        if depth == 0 or self.is_game_over(board):
-            score = self.evaluate_board(board)
-            board[move[0]][move[1]] = 0  # Zug rückgängig machen
+        if depth == 0 or self.is_game_over(board):  # 'is_game_over' also needs to work with NumPy array
+            score = self.evaluate_board(board)  # 'evaluate_board' should accept a NumPy array
+            board[move[0]][move[1]] = 0  # Undo the move on the NumPy array
             return score
 
         if is_maximizing:
