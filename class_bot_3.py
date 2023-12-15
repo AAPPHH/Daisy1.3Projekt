@@ -15,7 +15,6 @@ class MinimaxBot(Player):
                 best_move = move
         self.place_piece(best_move[0], best_move[1], board)
 
-
     def evaluate_board(self, board):
         score = 0
         for row in range(board.m):
@@ -35,12 +34,10 @@ class MinimaxBot(Player):
         return possible_moves
 
     def minimax(self, board, move, depth, is_maximizing):
-        # Apply the move temporarily
         board.board[move[0]][move[1]] = self.player_number if is_maximizing else 3 - self.player_number
 
         if depth == 0 or board.is_game_over():
             score = self.evaluate_board(board)
-            # Undo the move
             board.board[move[0]][move[1]] = 0
             return score
 
@@ -49,7 +46,6 @@ class MinimaxBot(Player):
             for next_move in self.get_possible_moves(board):
                 eval = self.minimax(board, next_move, depth - 1, False)
                 max_eval = max(max_eval, eval)
-            # Undo the move
             board.board[move[0]][move[1]] = 0
             return max_eval
         
@@ -58,7 +54,6 @@ class MinimaxBot(Player):
             for next_move in self.get_possible_moves(board):
                 eval = self.minimax(board, next_move, depth - 1, True)
                 min_eval = min(min_eval, eval)
-            # Undo the move
             board.board[move[0]][move[1]] = 0
             return min_eval
 

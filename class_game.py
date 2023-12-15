@@ -28,7 +28,7 @@ class Game:
             self.player2.name = input("Spieler 2: ")
             self.game_loop()
         elif choice == "2":
-            choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen RandomBot, TreeBot einen MinimaxBot spielen? (1/2/3):")
+            choice   = input(f"Hallo {self.player1.name}, möchtest du gegen einen RandomBot, TreeBot einen MinimaxBot spielen? (1/2/3):")
             if choice == "1":
                 self.player2 = GomokuBot("GomokuBot", 2)
                 self.game_loop()
@@ -69,7 +69,7 @@ class Game:
                     continue
                 valid_move = Player.place_piece(self.current_player, row, col, self, self.board)  
                 if not valid_move:
-                    print("Ungültiger Zug, bitte versuchen Sie es erneut.")
+                    print("Bitte geben Sie eine gültige Zahl ein.")
                     continue
 
             if self.board.is_winner(self.current_player.player_number):
