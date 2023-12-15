@@ -13,11 +13,8 @@ class MinimaxBot(Player):
             if score > best_score:
                 best_score = score
                 best_move = move
+        self.place_piece(best_move[0], best_move[1], board)
 
-        if best_move:
-            self.place_piece(best_move[0], best_move[1], board)
-        else:
-            print("No possible moves for MinimaxBot")
 
     def evaluate_board(self, board):
         score = 0

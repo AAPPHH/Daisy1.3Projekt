@@ -50,7 +50,7 @@ class Game:
                 GomokuBot.place_piece(self.current_player, row, col, self, self.board)
 
             elif isinstance(self.current_player, MinimaxBot):
-                MinimaxBot.place_piece(self.current_player, row, col, self, self.board)
+                MinimaxBot.make_move(self.current_player, row, col, self, self.board)
             
             # elif isinstance(self.current_player, GomokuBot_2):
             #     GomokuBot_2.place_piece(self.current_player, row, col, self, self.board)    
