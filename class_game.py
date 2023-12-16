@@ -39,7 +39,7 @@ class Game:
                 else:
                     self.game_loop()
             elif choice == "2":
-                self.player2 = GomokuBot_2("GomokuBot_2", 2)
+                self.player2 = GomokuBot_2("TreeBot", 2)
                 order_choice = input(f"Möchtest du anfangen, {self.player1.name}? (j/n): ")
                 if order_choice.lower() == 'n':
                     self.current_player = self.player2 
