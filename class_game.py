@@ -17,9 +17,7 @@ class Game:
     def start(self):
         print("Let's play five in row!/n Bitte geben sie ihre Namen ein")
         self.player1.name = input("Spieler 1: ")
-        choice = input(
-            f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2):"
-        )
+        choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2):")
         if choice == "1":
             self.player2.name = input("Spieler 2: ")
             order_choice = input(f"Möchtest du anfangen, {self.player1.name}? (j/n): ")
