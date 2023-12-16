@@ -30,10 +30,11 @@ class Game:
             self.player2 = GomokuBot("GomokuBot", 2)
             self.game_loop()
         elif choice == "3":
-            self.player2 = GomokuBot_2("GomokuBot_2", 2)
+            pass#self.player2 = GomokuBot_2("GomokuBot_2", 2)
         else:
-            pass
-         
+            self.player2 = MinimaxBot("MinimaxBot", 2)
+            self.game_loop()
+        #choice player oder bot dann choice bot1 oder bot2... 
     def switch_player(self):
         self.current_player = (
             self.player2 if self.current_player == self.player1 else self.player1
@@ -42,48 +43,39 @@ class Game:
     def game_loop(self):
         game_over = False
         while not game_over:
+            valid_move = True
             self.board.print_board()
+            if isinstance(self.current_player, GomokuBot):
+                GomokuBot.place_piece(self.current_player, row, col, self, self.board)
 
-            try:
+            elif isinstance(self.current_player, MinimaxBot):
+                MinimaxBot.place_piece(self.current_player, row, col, self, self.board)
+            
+            # elif isinstance(self.current_player, GomokuBot_2):
+            #     GomokuBot_2.place_piece(self.current_player, row, col, self, self.board)    
+
+            elif isinstance(self.current_player, Player):
+                try:
                     row = int(input(f"Spieler {self.current_player.name}, geben Sie die Zeilennummer ein (0-{self.m-1}): "))
                     col = int(input(f"Spieler {self.current_player.name}, geben Sie die Spaltennummer ein (0-{self.n-1}): "))
-            except ValueError:
+                except ValueError:
                     print("Bitte geben Sie gültige ganze Zahlen ein.")
                     continue
+                valid_move = Player.place_piece(self.current_player, row, col, self, self.board)
 
-            if Player.place_piece(self.current_player, row, col, self, self.board):
-                if self.board.is_winner(self.current_player.player_number):
+            if self.board.is_winner(self.current_player.player_number):
                     game_over = True
                     self.board.print_board()
                     print(f"Spieler {self.current_player.name} hat gewonnen!")
-                elif self.board.is_full():
+            elif self.board.is_full():
                     game_over = True
                     self.board.print_board()
                     print("Das Spiel endet unentschieden!")
-                else:
-                    self.switch_player()
             else:
-                print("Ungültiger Zug, bitte versuchen Sie es erneut.")
-
+                    if valid_move == True: 
+                        self.switch_player()
 
 Spielbrett = Board()
 game = Game(Spielbrett)
 game.start()
 
-# def game_loop(self):
-#     game_over = False
-#     while not game_over:
-#         self.board.print_board()
-#         if isinstance(self.current_player, GomokuBot):
-#             self.current_player.make_move()
-#         else:
-#             try:
-#                 row = int(input(f"Spieler {self.current_player.name}, geben Sie die Zeilennummer ein (0-{self.m-1}): "))
-#                 col = int(input(f"Spieler {self.current_player.name}, geben Sie die Spaltennummer ein (0-{self.n-1}): "))
-#             except ValueError:
-#                 print("Bitte geben Sie gültige ganze Zahlen ein.")
-#                 continue
-#             if Player.place_piece(self.current_player, row, col, self, self.board):
-#                 if self.board.is_winner(self.current_player.player_number):
-#                     game_over = True
-#                     self.board.print_board()
