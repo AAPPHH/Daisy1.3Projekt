@@ -27,7 +27,10 @@ class Game:
             choice   = input(f"Hallo {self.player1.name}, möchtest du gegen einen RandomBot, TreeBot einen MinimaxBot spielen? (1/2/3):")
             if choice == "1":
                 self.player2 = GomokuBot("GomokuBot", 2)
-                self.game_loop()
+                order_choice = input(f"Möchtest du anfangen, {self.player1.name}? (j/n): ")
+                if order_choice.lower() == 'n':
+                    self.current_player = self.player2 
+                    self.game_loop()
             elif choice == "2":
                 self.player2 = GomokuBot_2("GomokuBot_2", 2)
                 self.game_loop()
@@ -48,7 +51,7 @@ class Game:
             valid_move = True
             self.board.print_board()
             if isinstance(self.current_player, GomokuBot):
-                GomokuBot.place_piece(self.current_player, row, col, self, self.board)
+                GomokuBot.place_piece(self.current_player, self, self.board)
 
             elif isinstance(self.current_player, MinimaxBot):
                 MinimaxBot.make_move(self.current_player, row, col, self, self.board)
