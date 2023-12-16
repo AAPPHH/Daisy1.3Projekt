@@ -1,7 +1,11 @@
-import random
 from class_board import *
+
 from class_player import *
+
 from class_board import * 
+
+import random
+
 class GomokuBot(Player):
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
