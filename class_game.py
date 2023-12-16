@@ -22,7 +22,12 @@ class Game:
         )
         if choice == "1":
             self.player2.name = input("Spieler 2: ")
-            self.game_loop()
+            order_choice = input(f"Möchtest du anfangen, {self.player1.name}? (j/n): ")
+            if order_choice.lower() == 'n':
+                self.current_player = self.player2 
+                self.game_loop()
+            else:
+                self.game_loop()
         elif choice == "2":
             choice   = input(f"Hallo {self.player1.name}, möchtest du gegen einen RandomBot, TreeBot einen MinimaxBot spielen? (1/2/3):")
             if choice == "1":
@@ -31,12 +36,24 @@ class Game:
                 if order_choice.lower() == 'n':
                     self.current_player = self.player2 
                     self.game_loop()
+                else:
+                    self.game_loop()
             elif choice == "2":
                 self.player2 = GomokuBot_2("GomokuBot_2", 2)
-                self.game_loop()
+                order_choice = input(f"Möchtest du anfangen, {self.player1.name}? (j/n): ")
+                if order_choice.lower() == 'n':
+                    self.current_player = self.player2 
+                    self.game_loop()
+                else:
+                    self.game_loop()
             elif choice == "3":
                 self.player2 = MinimaxBot("MinimaxBot", 2)
-                self.game_loop()
+                order_choice = input(f"Möchtest du anfangen, {self.player1.name}? (j/n): ")
+                if order_choice.lower() == 'n':
+                    self.current_player = self.player2 
+                    self.game_loop()
+                else:
+                    self.game_loop()
             else:
                 print("Bitte geben Sie eine gültige Zahl ein.")
 
