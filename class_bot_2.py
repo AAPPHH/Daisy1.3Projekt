@@ -1,9 +1,9 @@
 import numpy as np
-
 import random
-
-class Bot_2:
-    def __init__(self, m, n, board): 
+from class_player import *
+class TreeBot(Player):
+    def __init__(self, m, n, board, name, player_number): 
+        super().__init__(name, player_number)
         self.m = m
         self.n = n
         self.board = np.zeros((m, n), dtype=int)
