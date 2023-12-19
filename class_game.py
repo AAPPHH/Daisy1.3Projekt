@@ -15,7 +15,7 @@ class Game:
         self.current_player = self.player1
 
     def start(self):
-        print("Let's play five in row!/n Bitte geben sie ihre Namen ein")
+        print("Let's play five in row!\n Bitte geben sie Ihren Namen ein: ")
         self.player1.name = input("Spieler 1: ")
         choice = input(
             f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2):"
@@ -24,7 +24,7 @@ class Game:
             self.player2.name = input("Spieler 2: ")
             self.game_loop()
         elif choice == "2":
-            choice   = input(f"Hallo {self.player1.name}, möchtest du gegen einen RandomBot, TreeBot einen MinimaxBot spielen? (1/2/3):")
+            choice   = input(f"Hallo {self.player1.name}, möchtest du gegen RandomBot, TreeBot gegen MinimaxBot spielen? (1/2/3):")
             if choice == "1":
                 self.player2 = GomokuBot("GomokuBot", 2)
                 order_choice = input(f"Möchtest du anfangen, {self.player1.name}? (j/n): ")
