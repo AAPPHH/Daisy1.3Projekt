@@ -24,7 +24,7 @@ class Game:
             self.player2.name = input("Spieler 2: ")
             self.game_loop()
         elif choice == "2":
-            choice   = input(f"Hallo {self.player1.name}, möchtest du gegen RandomBot, TreeBot gegen MinimaxBot spielen? (1/2/3):")
+            choice   = input(f"Hallo {self.player1.name}, möchtest du gegen RandomBot, TreeBot oder gegen MinimaxBot spielen? (1/2/3):")
             if choice == "1":
                 self.player2 = GomokuBot("GomokuBot", 2)
                 order_choice = input(f"Möchtest du anfangen, {self.player1.name}? (j/n): ")
