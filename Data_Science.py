@@ -15,9 +15,3 @@ class Data_Science:
         except FileNotFoundError:
             return []
         
-    def play_multiple_games(self, bot1, bot2, num_games):
-        for game_number in range(num_games):
-            print(f"Spiel {game_number + 1} von {num_games}")
-            self.reset_board()
-            self.play_bot_vs_bot(bot1, bot2)
-            # Hier können Sie weitere Statistiken oder Logik nach jedem Spiel hinzufügen.
