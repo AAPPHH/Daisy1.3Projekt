@@ -43,9 +43,28 @@ class Game:
                     print("Bitte geben Sie eine gültige Zahl ein.")
         elif start_choice == "2":
             choice_bot_1 = input(f"Möchtest du das einen RandomBot, TreeBot oder einen MinimaxBot Player One ist? (1/2/3):")
+            if choice_bot_1 == "1":
+                self.player1 = GomokuBot("GomokuBot", 1)
+            elif choice_bot_1 == "2":
+                self.player1 = TreeBot("TreeBot", 1)
+            elif choice_bot_1 == "3":
+                self.player1 = MinimaxBot("MinimaxBot", 1)
+            else:
+                print("Bitte geben Sie eine gültige Zahl ein.")
+
             choice_bot_2 = input(f"Möchtest du das einen RandomBot, TreeBot oder einen MinimaxBot Player Two ist? (1/2/3):")
-            choice_rounds = input(f"Wie viele Runden möchtest du spielen? (1/2/3/4/5):")
-            self.game_loop()
+            if choice_bot_2 == "1":
+                self.player2 = GomokuBot("GomokuBot", 2)
+            elif choice_bot_2 == "2":
+                self.player2 = TreeBot("TreeBot", 2)
+            elif choice_bot_2 == "3":
+                self.player2 = MinimaxBot("MinimaxBot", 2)
+            num_games = input(f"Wie viele Runden möchtest du spielen? (1/2/3/4/5):")
+            for game_number in range(int(num_games)):
+                print(f"Spiel {game_number + 1} von {num_games}")
+                self.game_loop()
+                Spielbrett = Board()
+
         else:
             print("Bitte geben Sie eine gültige Zahl ein.")
 
