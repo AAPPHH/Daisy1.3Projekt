@@ -86,7 +86,7 @@ class Game:
         game_over = False
         while not game_over:
             valid_move = True
-            
+            self.game_arrays.append(np.copy(self.board.board))
             self.board.print_board()
             if isinstance(self.current_player, GomokuBot):
                 GomokuBot.place_piece(self.current_player, self, self.board)
@@ -113,11 +113,14 @@ class Game:
                 game_over = True
                 self.board.print_board()
                 print(f"Spieler {self.current_player.name} hat gewonnen!")
-                self.save_game_history(self.game_arrays)
+                game_data = Data_Science()
+                game_data.save_game_state(self)
             elif self.board.is_full():
                 game_over = True
                 self.board.print_board()
                 print("Das Spiel endet unentschieden!")
+                game_data = Data_Science()
+                game_data.save_game_state(self)
             else:
                 if valid_move == True: 
                     self.switch_player()

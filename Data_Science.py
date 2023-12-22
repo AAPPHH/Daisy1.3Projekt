@@ -6,14 +6,26 @@ class Data_Science:
         self.filename = filename
 
     def save_game_history(self, game_history):
-        # Speichert den DataFrame als Pickle-Datei
+        # Saves the DataFrame as a pickle file
         game_history.to_pickle(self.filename)
 
     def load_game_history(self):
         try:
-            # Lädt den DataFrame aus der Pickle-Datei
+            # Loads the DataFrame from the pickle file
             return pd.read_pickle(self.filename)
         except FileNotFoundError:
-            # Gibt einen leeren DataFrame zurück, wenn die Datei nicht existiert
+            # Returns an empty DataFrame if the file does not exist
             return pd.DataFrame()
+
+    def save_game_state(self, game):
+        # Convert game states to DataFrame
+        game_history = self.load_game_history()
+        for state in game.game_arrays:
+            game_history = game_history.append({
+                'player1': game.player1.name,
+                'player2': game.player2.name,
+                'board_state': state
+            }, ignore_index=True)
         
+        # Save updated game history
+        self.save_game_history(game_history)
