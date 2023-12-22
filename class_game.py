@@ -14,6 +14,7 @@ class Game:
         self.player1 = Player("", 1)
         self.player2 = Player("", 2)
         self.current_player = self.player1
+        self.game_arrays = []
 
     def start(self):
         start_choice = input("Let's play five in row!/n wollen sie oder soll der Computer spielen? (1/2):")
@@ -85,6 +86,7 @@ class Game:
         game_over = False
         while not game_over:
             valid_move = True
+            self.game_arrays.append(self.board)
             self.board.print_board()
             if isinstance(self.current_player, GomokuBot):
                 GomokuBot.place_piece(self.current_player, self, self.board)
