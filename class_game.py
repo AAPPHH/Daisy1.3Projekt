@@ -5,12 +5,14 @@ from class_bot_2 import *
 from class_bot_3 import *
 from Data_Science import *
 
+import numpy as np
+
 class Game:
     def __init__(self, board):
         self.m = board.m  # Zeilen
         self.n = board.n  # Spalten
         self.k = board.k  # Gewinnbedingung
-        self.board = board
+        self.board = board #array objekt der klasse board
         self.player1 = Player("", 1)
         self.player2 = Player("", 2)
         self.current_player = self.player1
@@ -28,7 +30,7 @@ class Game:
                     self.current_player = self.player2 
                     self.game_loop()
                 else:
-                    self.game_loop()
+                    self.game_loop() #ändern
             elif choice == "2":
                 choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen RandomBot, TreeBot einen MinimaxBot spielen? (1/2/3):")
                 if choice == "1":
@@ -52,7 +54,7 @@ class Game:
                 self.player1 = MinimaxBot("MinimaxBot", 1)
             else:
                 print("Bitte geben Sie eine gültige Zahl ein.")
-
+            self.current_player = self.player1
             choice_bot_2 = input(f"Möchtest du das einen RandomBot, TreeBot oder einen MinimaxBot Player Two ist? (1/2/3):")
             if choice_bot_2 == "1":
                 self.player2 = GomokuBot("GomokuBot", 2)
@@ -61,11 +63,10 @@ class Game:
             elif choice_bot_2 == "3":
                 self.player2 = MinimaxBot("MinimaxBot", 2)
             num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000):")
-            for game_number in range(int(num_games)):
+            for game_number in range(int(num_games)): #try except
                 print(f"Spiel {game_number + 1} von {num_games}")
                 self.game_loop()
-                Spielbrett = Board()
-
+                self.board.reset_board()
         else:
             print("Bitte geben Sie eine gültige Zahl ein.")
 
@@ -86,7 +87,7 @@ class Game:
         game_over = False
         while not game_over:
             valid_move = True
-            self.game_arrays.append(np.copy(self.board.board))
+            self.game_arrays.append(self.board.board)
             self.board.print_board()
             if isinstance(self.current_player, GomokuBot):
                 GomokuBot.place_piece(self.current_player, self, self.board)
@@ -128,4 +129,3 @@ class Game:
 Spielbrett = Board()
 game = Game(Spielbrett)
 game.start()
-
