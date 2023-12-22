@@ -1,3 +1,4 @@
+import pandas as pd
 import pickle
 
 class Data_Science:
@@ -5,13 +6,14 @@ class Data_Science:
         self.filename = filename
 
     def save_game_history(self, game_history):
-        with open(self.filename, "wb") as f:
-            pickle.dump(game_history, f)
+        # Speichert den DataFrame als Pickle-Datei
+        game_history.to_pickle(self.filename)
 
     def load_game_history(self):
         try:
-            with open(self.filename, "rb") as f:
-                return pickle.load(f)
+            # Lädt den DataFrame aus der Pickle-Datei
+            return pd.read_pickle(self.filename)
         except FileNotFoundError:
-            return []
+            # Gibt einen leeren DataFrame zurück, wenn die Datei nicht existiert
+            return pd.DataFrame()
         

@@ -60,7 +60,7 @@ class Game:
                 self.player2 = TreeBot("TreeBot", 2)
             elif choice_bot_2 == "3":
                 self.player2 = MinimaxBot("MinimaxBot", 2)
-            num_games = input(f"Wie viele Runden möchtest du spielen? (1/2/3/4/5):")
+            num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000):")
             for game_number in range(int(num_games)):
                 print(f"Spiel {game_number + 1} von {num_games}")
                 self.game_loop()
@@ -86,7 +86,7 @@ class Game:
         game_over = False
         while not game_over:
             valid_move = True
-            self.game_arrays.append(self.board)
+            
             self.board.print_board()
             if isinstance(self.current_player, GomokuBot):
                 GomokuBot.place_piece(self.current_player, self, self.board)
@@ -113,6 +113,7 @@ class Game:
                 game_over = True
                 self.board.print_board()
                 print(f"Spieler {self.current_player.name} hat gewonnen!")
+                self.save_game_history(self.game_arrays)
             elif self.board.is_full():
                 game_over = True
                 self.board.print_board()
