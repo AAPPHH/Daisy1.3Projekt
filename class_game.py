@@ -2,8 +2,6 @@ from class_board import *
 from class_player import *
 from class_bot_1 import *
 from class_bot_2 import *
-from class_bot_3 import *
-from Data_Science import *
 
 class Game:
     def __init__(self, board):
@@ -16,66 +14,26 @@ class Game:
         self.current_player = self.player1
 
     def start(self):
-        start_choice = input("Let's play five in row!\n Wollen Sie oder soll der Computer spielen? (1/2): ")
-        if start_choice == "1":
-            self.player1.name = input("Bitte geben Sie Ihre Namen ein: ")
-            choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2): ")
-            if choice == "1":
-                self.player2.name = input("Spieler 2: ")
-                order_choice = input(f"Möchtest du anfangen, {self.player1.name}? (j/n): ")
-                if order_choice.lower() == 'n':
-                    self.current_player = self.player2 
-                    self.game_loop()
-                else:
-                    self.game_loop()
-            elif choice == "2":
-                choice = input(f"Hallo {self.player1.name}, möchtest du gegen RandomBot, TreeBot oder gegen MinimaxBot spielen? (1/2/3): ")
-                if choice == "1":
-                    self.player2 = GomokuBot("GomokuBot", 2)
-                    self.whos_first()
-                elif choice == "2":
-                    self.player2 = TreeBot("TreeBot", 2)
-                    self.whos_first()
-                elif choice == "3":
-                    self.player2 = MinimaxBot("MinimaxBot", 2)
-                    self.whos_first()
-                else:
-                    print("Bitte geben Sie eine gültige Zahl ein.")
-        elif start_choice == "2":
-            choice_bot_1 = input(f"Möchtest du das einen RandomBot, TreeBot oder einen MinimaxBot Player One ist? (1/2/3):")
-            if choice_bot_1 == "1":
-                self.player1 = GomokuBot("GomokuBot", 1)
-            elif choice_bot_1 == "2":
-                self.player1 = TreeBot("TreeBot", 1)
-            elif choice_bot_1 == "3":
-                self.player1 = MinimaxBot("MinimaxBot", 1)
-            else:
-                print("Bitte geben Sie eine gültige Zahl ein.")
-
-            choice_bot_2 = input(f"Möchtest du das einen RandomBot, TreeBot oder einen MinimaxBot Player Two ist? (1/2/3):")
-            if choice_bot_2 == "1":
-                self.player2 = GomokuBot("GomokuBot", 2)
-            elif choice_bot_2 == "2":
-                self.player2 = TreeBot("TreeBot", 2)
-            elif choice_bot_2 == "3":
-                self.player2 = MinimaxBot("MinimaxBot", 2)
-            num_games = input(f"Wie viele Runden möchtest du spielen? (1/2/3/4/5):")
-            for game_number in range(int(num_games)):
-                print(f"Spiel {game_number + 1} von {num_games}")
-                self.game_loop()
-                Spielbrett = Board()
-
-        else:
-            print("Bitte geben Sie eine gültige Zahl ein.")
-
-    def whos_first(self):
-        order_choice = input(f"Möchtest du anfangen, {self.player1.name}? (j/n): ")
-        if order_choice.lower() == 'n':
-            self.current_player = self.player2 
+        print("Let's play five in row!/n Bitte geben sie ihre Namen ein")
+        time.sleep(1)
+        self.player1.name = input("Spieler 1: ")
+        time.sleep(1)
+        choice = input(
+            f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2):"
+        )
+        time.sleep(1)
+        if choice == "1":
+            self.player2.name = input("Spieler 2: ")
             self.game_loop()
-        else:
+        elif choice == "2":
+            self.player2 = GomokuBot("GomokuBot", 2)
             self.game_loop()
-
+        elif choice == "3":
+            pass#self.player2 = GomokuBot_2("GomokuBot_2", 2)
+        else:
+            self.player2 = MinimaxBot("MinimaxBot", 2)
+            self.game_loop()
+        #choice player oder bot dann choice bot1 oder bot2... 
     def switch_player(self):
         self.current_player = (
             self.player2 if self.current_player == self.player1 else self.player1
