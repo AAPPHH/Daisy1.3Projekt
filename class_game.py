@@ -28,7 +28,7 @@ class Game:
                 self.player2.name = input("Spieler 2: ")
                 self.whos_first()
             elif choice == "2":
-                choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen RandomBot, TreeBot einen MinimaxBot spielen? (1/2/3):")
+                choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot spielen? (1/2/3/4):")
                 if choice == "1":
                     self.player2 = GomokuBot("GomokuBot", 2)
                     self.whos_first()
@@ -38,10 +38,13 @@ class Game:
                 elif choice == "3":
                     self.player2 = MinimaxBot("MinimaxBot", 2)
                     self.whos_first()
+                elif choice == "4":
+                    self.player2 = MonteCarloBot("MonteCarloBot", 2)
+                    self.whos_first()
                 else:
                     print("Bitte geben Sie eine gültige Zahl ein.")
         elif start_choice == "2":
-            choice_bot_1 = input(f"Möchtest du das einen RandomBot, TreeBot oder einen MinimaxBot Player One ist? (1/2/3):")
+            choice_bot_1 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player One ist? (1/2/3/4):")
             if choice_bot_1 == "1":
                 self.player1 = GomokuBot("GomokuBot", 1)
             elif choice_bot_1 == "2":
@@ -53,7 +56,7 @@ class Game:
             else:
                 print("Bitte geben Sie eine gültige Zahl ein.")
             self.current_player = self.player1
-            choice_bot_2 = input(f"Möchtest du das einen RandomBot, TreeBot oder einen MinimaxBot Player Two ist? (1/2/3):")
+            choice_bot_2 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player Two ist? (1/2/3/4):")
             if choice_bot_2 == "1":
                 self.player2 = GomokuBot("GomokuBot", 2)
             elif choice_bot_2 == "2":
@@ -64,7 +67,7 @@ class Game:
                 self.player2 = MonteCarloBot("MonteCarloBot", 2)
             num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000):")
             try:
-                for game_number in range(int(num_games)): #try except
+                for game_number in range(int(num_games)): 
                         print(f"Spiel {game_number + 1} von {num_games}")
                         self.game_loop()
                         self.board.reset_board()
