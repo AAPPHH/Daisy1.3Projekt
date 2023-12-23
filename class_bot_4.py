@@ -4,15 +4,16 @@ from copy import deepcopy
 from class_player import Player
 
 class MonteCarloBot(Player):
-    NTRIALS = 3000
+    NTRIALS = 5000
     SCORE_CURRENT = 1.0
     SCORE_OTHER = 2.0
-    DEP = 4
+    DEP = 15
 
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
 
     def mc_trial(self, position):
+        current_player = self.player_number
         winner = position.is_winner(self.player_number)
         board_full = position.is_full()
         game_over = winner or board_full
@@ -36,8 +37,8 @@ class MonteCarloBot(Player):
                 break
 
             move = empty_squares[random.randrange(len(empty_squares))]
-            position.board[move[0]][move[1]] = self.player_number
-            self.player_number = 2 if self.player_number == 1 else 1
+            position.board[move[0]][move[1]] = current_player
+            current_player = 2 if current_player == 1 else 1
             depth -= 1
 
     def mc_update_scores(self, scores, position):
