@@ -3,6 +3,7 @@ from class_player import *
 from class_bot_1 import *
 from class_bot_2 import *
 from class_bot_3 import *
+from class_bot_4 import *
 from Data_Science import *
 
 import numpy as np
@@ -47,6 +48,8 @@ class Game:
                 self.player1 = TreeBot("TreeBot", 1)
             elif choice_bot_1 == "3":
                 self.player1 = MinimaxBot("MinimaxBot", 1)
+            elif choice_bot_1 == "4":
+                self.player1 = MonteCarloBot("MonteCarloBot", 1)
             else:
                 print("Bitte geben Sie eine gültige Zahl ein.")
             self.current_player = self.player1
@@ -57,6 +60,8 @@ class Game:
                 self.player2 = TreeBot("TreeBot", 2)
             elif choice_bot_2 == "3":
                 self.player2 = MinimaxBot("MinimaxBot", 2)
+            elif choice_bot_2 == "4":
+                self.player2 = MonteCarloBot("MonteCarloBot", 2)
             num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000):")
             try:
                 for game_number in range(int(num_games)): #try except
@@ -92,12 +97,15 @@ class Game:
             if isinstance(self.current_player, GomokuBot):
                 GomokuBot.place_piece(self.current_player, self, self.board)
 
+            elif isinstance(self.current_player, TreeBot):
+                 TreeBot.place_piece(self.current_player, row, col, self, self.board)  
+
             elif isinstance(self.current_player, MinimaxBot):
                 MinimaxBot.make_move(self.current_player, row, col, self, self.board)
-            
-            elif isinstance(self.current_player, TreeBot):
-                 TreeBot.place_piece(self.current_player, row, col, self, self.board)    
 
+            elif isinstance(self.current_player, MonteCarloBot):
+                MonteCarloBot.place_piece(self.current_player, self, self.board)
+            
             elif isinstance(self.current_player, Player):
                 try:
                     row = int(input(f"Spieler {self.current_player.name}, geben Sie die Zeilennummer ein (0-{self.m-1}): "))
