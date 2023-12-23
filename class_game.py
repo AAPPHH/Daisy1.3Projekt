@@ -25,12 +25,7 @@ class Game:
             choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2):")
             if choice == "1":
                 self.player2.name = input("Spieler 2: ")
-                order_choice = input(f"Möchtest du anfangen, {self.player1.name}? (j/n): ")
-                if order_choice.lower() == 'n':
-                    self.current_player = self.player2 
-                    self.game_loop()
-                else:
-                    self.game_loop() #ändern
+                self.whos_first()
             elif choice == "2":
                 choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen RandomBot, TreeBot einen MinimaxBot spielen? (1/2/3):")
                 if choice == "1":
