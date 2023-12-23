@@ -120,6 +120,7 @@ class Game:
                 game_over = True
                 self.board.print_board()
                 winner = "Unentschieden"
+                Daisy.save_game_state(game)
                 print("Das Spiel endet unentschieden!")
             else:
                 if valid_move == True: 
