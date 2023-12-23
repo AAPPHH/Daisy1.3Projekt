@@ -8,11 +8,11 @@ class MinimaxBot(Player):
         super().__init__(name, player_number)
 
     def make_move(self, row, col, game, board):
-        # Assuming 'board' is an instance of the Board class
+        
         best_score = float('-inf')
         best_move = None
-        for move in self.get_possible_moves(board):  # Access the Board instance directly
-            board_copy = np.copy(board.board)  # Create a copy of the NumPy array
+        for move in self.get_possible_moves(board): 
+            board_copy = np.copy(board.board) 
             score = self.minimax(board_copy, move, 3, True)
             if score > best_score:
                 best_score = score
