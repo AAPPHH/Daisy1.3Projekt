@@ -58,10 +58,15 @@ class Game:
             elif choice_bot_2 == "3":
                 self.player2 = MinimaxBot("MinimaxBot", 2)
             num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000):")
-            for game_number in range(int(num_games)): #try except
-                print(f"Spiel {game_number + 1} von {num_games}")
-                self.game_loop()
-                self.board.reset_board()
+            try:
+                for game_number in range(int(num_games)): #try except
+                        print(f"Spiel {game_number + 1} von {num_games}")
+                        self.game_loop()
+                        self.board.reset_board()
+                print("Alle Spiele wurden gespielt.")
+            except ValueError:
+                print("Bitte geben Sie eine gültige Zahl ein.")
+
         else:
             print("Bitte geben Sie eine gültige Zahl ein.")
 
@@ -90,8 +95,8 @@ class Game:
             elif isinstance(self.current_player, MinimaxBot):
                 MinimaxBot.make_move(self.current_player, row, col, self, self.board)
             
-            # elif isinstance(self.current_player, GomokuBot_2):
-            #     GomokuBot_2.place_piece(self.current_player, row, col, self, self.board)    
+            elif isinstance(self.current_player, TreeBot):
+                 TreeBot.place_piece(self.current_player, row, col, self, self.board)    
 
             elif isinstance(self.current_player, Player):
                 try:
@@ -108,19 +113,19 @@ class Game:
             if self.board.is_winner(self.current_player.player_number):
                 game_over = True
                 self.board.print_board()
+                winner = self.current_player.name
+                Daisy.save_game_state(game)
                 print(f"Spieler {self.current_player.name} hat gewonnen!")
-                game_data = Data_Science()
-                game_data.save_game_state(self)
             elif self.board.is_full():
                 game_over = True
                 self.board.print_board()
+                winner = "Unentschieden"
                 print("Das Spiel endet unentschieden!")
-                game_data = Data_Science()
-                game_data.save_game_state(self)
             else:
                 if valid_move == True: 
                     self.switch_player()
 
+Daisy = Data_Science("game_history.pkl")
 Spielbrett = Board()
 game = Game(Spielbrett)
 game.start()
