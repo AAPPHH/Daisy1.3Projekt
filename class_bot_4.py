@@ -4,10 +4,10 @@ from copy import deepcopy
 from class_player import Player
 
 class MonteCarloBot(Player):
-    NTRIALS = 5000
+    NTRIALS = 2500
     SCORE_CURRENT = 1.0
     SCORE_OTHER = 2.0
-    DEP = 15
+    DEP = 5
 
     def __init__(self, name, player_number):
         super().__init__(name, player_number)

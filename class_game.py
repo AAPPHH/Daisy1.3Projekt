@@ -67,7 +67,7 @@ class Game:
                 self.player2 = MonteCarloBot("MonteCarloBot", 2)
             num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000):")
             try:
-                for game_number in range(int(num_games)): 
+                for game_number in range(int(num_games)):
                         print(f"Spiel {game_number + 1} von {num_games}")
                         self.game_loop()
                         self.board.reset_board()
