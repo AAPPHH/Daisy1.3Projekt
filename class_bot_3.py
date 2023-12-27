@@ -5,7 +5,7 @@ from class_board import Board  # Allgemeiner Import der Klasse class_board
 
 class MinimaxBot(Player):  # Erstellung der Klasse MinimaxBot mit Vererbung der Attribute und Methoden der Klasse Player 
     def __init__(self, name, player_number):  # Konstruktor und Parameter: Name, Spielernummer
-        super().__init__(name, player_number)
+        super().__init__(name, player_number)  # Initialisierung der übergeordneten Klasse (parent class: Player)
 
     def make_move(self, row, col, game, board):  # Methode, mit der der Stein gesetzt wird
         best_score = float('-inf')  # der beste Wert wird einem negativ-unendlich-Float gleichgesetzt
