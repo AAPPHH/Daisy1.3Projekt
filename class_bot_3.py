@@ -17,18 +17,18 @@ class MinimaxBot(Player):  # Erstellung der Klasse MinimaxBot mit Vererbung der 
                 best_score = score  # ... dann überschreibe den Score mit dem besten Score...
                 best_move = move  # ... und überschreibe den besten Zug mit dem Zug
 
-        if best_move and board.is_valid_move(best_move[0], best_move[1]):
-            board.place_piece(best_move[0], best_move[1], self.player_number)
-        else:
-            print("Kein gültiger Zug gefunden für MinimaxBot")
+        if best_move and board.is_valid_move(best_move[0], best_move[1]):  # Wenn der beste Zug (== True) UND der Zug gültig ist, ...
+            board.place_piece(best_move[0], best_move[1], self.player_number)  # ... dann wird der Stein gesetzt
+        else:  # Andernfalls...
+            print("Kein gültiger Zug gefunden für MinimaxBot")  # Zeige, dass der Zug ungültig ist
 
-    def evaluate_board(self, board):
-        # Einfache Bewertung: Zähle die Steine des Spielers
+    def evaluate_board(self, board):  # Methode, die das Spielbrett bewertet
         return np.sum(board == self.player_number) - np.sum((board != 0) & (board != self.player_number))
+        # Anzahl aller Felder mit der Spielernummer subtrahiert mit der Anzahl aller Felder mit 0 UND der Anzahl aller Felder mit der Spielernummer des aktuellen Spielers
+        # (Intern: Berechnung mit booleschen Werten, z.B. Anzahl der Trues)
 
-    def get_possible_moves(self, board):
-            # Now 'board' is a Board instance, so we access the NumPy array with 'board.board'
-            return [(row, col) for row, col in np.ndindex(board.board.shape) if board.board[row, col] == 0]
+    def get_possible_moves(self, board):  # Methode, die alle möglichen Züge berechnet
+            return [(row, col) for row, col in np.ndindex(board.board.shape) if board.board[row, col] == 0]  # Erzeugung einer Liste mit Tuplen mit Koordinaten von Feldern, deren Wert 0 ist
 
     def minimax(self, board, move, depth, is_maximizing):
         # Here 'board' is a NumPy array
