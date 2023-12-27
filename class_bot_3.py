@@ -1,22 +1,21 @@
-import numpy as np
+import numpy as np  # Import der Bibliothek NumPy
 
-from class_player import Player
-from class_board import Board
+from class_player import Player  # Allgemeiner Import der Klasse class_player
+from class_board import Board  # Allgemeiner Import der Klasse class_board
 
-class MinimaxBot(Player):
-    def __init__(self, name, player_number):
+class MinimaxBot(Player):  # Erstellung der Klasse MinimaxBot mit Vererbung der Attribute und Methoden der Klasse Player 
+    def __init__(self, name, player_number):  # Konstruktor und Parameter: Name, Spielernummer
         super().__init__(name, player_number)
 
-    def make_move(self, row, col, game, board):
-        # Assuming 'board' is an instance of the Board class
-        best_score = float('-inf')
-        best_move = None
-        for move in self.get_possible_moves(board):  # Access the Board instance directly
-            board_copy = np.copy(board.board)  # Create a copy of the NumPy array
-            score = self.minimax(board_copy, move, 3, True)
-            if score > best_score:
-                best_score = score
-                best_move = move
+    def make_move(self, row, col, game, board):  # Methode, mit der der Stein gesetzt wird
+        best_score = float('-inf')  # der beste Wert wird einem negativ-unendlich-Float gleichgesetzt
+        best_move = None  # der beste Zug wird gleich None gesetzt
+        for move in self.get_possible_moves(board):  # für jeden Zug in allen möglichen Zügen...
+            board_copy = np.copy(board.board)  # ... kopiere das aktuelle Spielbrett ohne Änderungen am Original vorzunehmen...
+            score = self.minimax(board_copy, move, 3, True)  # ... und berechne den Score für den aktuellen Zug (3 entspricht der Tiefe)
+            if score > best_score:  # Wenn der Score größer ist als der beste Score, ...
+                best_score = score  # ... dann überschreibe den Score mit dem besten Score...
+                best_move = move  # ... und überschreibe den besten Zug mit dem Zug
 
         if best_move and board.is_valid_move(best_move[0], best_move[1]):
             board.place_piece(best_move[0], best_move[1], self.player_number)
