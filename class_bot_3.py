@@ -30,23 +30,24 @@ class MinimaxBot(Player):  # Erstellung der Klasse MinimaxBot mit Vererbung der 
     def get_possible_moves(self, board):  # Methode, die alle möglichen Züge berechnet
             return [(row, col) for row, col in np.ndindex(board.board.shape) if board.board[row, col] == 0]  # Erzeugung einer Liste mit Tuplen mit Koordinaten von Feldern, deren Wert 0 ist
 
-    def minimax(self, board, move, depth, is_maximizing):
-        # Here 'board' is a NumPy array
+    def minimax(self, board, move, depth, is_maximizing):  
         board[move[0]][move[1]] = self.player_number if is_maximizing else 3 - self.player_number
 
-        if depth == 0 or self.is_game_over(board):
-            score = self.evaluate_board(board)
-            board[move[0]][move[1]] = 0  # Undo the move on the NumPy array
-            return score
+        if depth == 0 or self.is_game_over(board):  # Wenn die Tiefe gleich 0 ist ODER das Spiel zu Ende ist...
+            score = self.evaluate_board(board)  # ... dann berechne den aktuellen Score...
+            board[move[0]][move[1]] = 0  # ... und setze das Feld auf 0...
+            return score  # ... und gebe score zurück
 
-        if is_maximizing:
-            max_eval = float('-inf')
-            for next_move in self.get_possible_moves(board):
-                board_copy = np.copy(board)
-                eval = self.minimax(board_copy, next_move, depth - 1, False)
-                max_eval = max(max_eval, eval)
-            board[move[0]][move[1]] = 0  # Zug rückgängig machen
-            return max_eval
+        if is_maximizing:  # Wenn is_maximizin True ist (is_maximizing == True), ...
+            max_eval = float('-inf')  # ... dann ist der maximale Wert ein negativ-unendlicher-Float
+            for next_move in self.get_possible_moves(board):  # Für jeden nächsten Zug in allen möglichen Zügen...
+                board_copy = np.copy(board)  # kopiere das aktuelle Spielbrett...
+                eval = self.minimax(board_copy, next_move, depth - 1, False)  # ... und rekursiver Aufruf der Minimax-Funktion für den nächsten Zug. Die Tiefe (depth) wird um 1 reduziert...
+                                                                              # ... und is_maximizing wird auf False gesetzt, da der nächste Zug vom Gegner gemacht wird.
+                
+                max_eval = max(max_eval, eval)  # Aktualisiere den maximalen Wert mit dem Wert des gerade berechneten Zuges...
+            board[move[0]][move[1]] = 0  # und setze den vorherigen Zug auf dem Spielbrett zurück...
+            return max_eval  # ... und gebe den maximalen Wert zurück
         else:
             min_eval = float('inf')
             for next_move in self.get_possible_moves(board):
