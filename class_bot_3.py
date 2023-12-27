@@ -43,19 +43,22 @@ class MinimaxBot(Player):  # Erstellung der Klasse MinimaxBot mit Vererbung der 
             for next_move in self.get_possible_moves(board):  # Für jeden nächsten Zug in allen möglichen Zügen...
                 board_copy = np.copy(board)  # kopiere das aktuelle Spielbrett...
                 eval = self.minimax(board_copy, next_move, depth - 1, False)  # ... und rekursiver Aufruf der Minimax-Funktion für den nächsten Zug. Die Tiefe (depth) wird um 1 reduziert...
-                                                                              # ... und is_maximizing wird auf False gesetzt, da der nächste Zug vom Gegner gemacht wird.
+                                                                              # ... und is_maximizing wird auf False gesetzt, da der nächste Zug vom Gegner gemacht wird
                 
                 max_eval = max(max_eval, eval)  # Aktualisiere den maximalen Wert mit dem Wert des gerade berechneten Zuges...
             board[move[0]][move[1]] = 0  # und setze den vorherigen Zug auf dem Spielbrett zurück...
             return max_eval  # ... und gebe den maximalen Wert zurück
-        else:
-            min_eval = float('inf')
-            for next_move in self.get_possible_moves(board):
-                board_copy = np.copy(board)
-                eval = self.minimax(board_copy, next_move, depth - 1, True)
-                min_eval = min(min_eval, eval)
-            board[move[0]][move[1]] = 0  # Zug rückgängig machen
-            return min_eval
+        
+        else:  # Andernfalls (elif is_maximizing == False)...
+            min_eval = float('inf')  # ... dann ist der minimale Wert ein positiv-unendlicher-Float
+            for next_move in self.get_possible_moves(board):  # Für jeden nächsten Zug in allen möglichen Zügen...
+                board_copy = np.copy(board)  # kopiere das aktuelle Spielbrett...
+                eval = self.minimax(board_copy, next_move, depth - 1, True)  # ... und rekursiver Aufruf der Minimax-Funktion für den nächsten Zug. Die Tiefe (depth) wird um 1 reduziert...
+                                                                             # ... und is_maximizing wird auf True gesetzt, da der nächste Zug vom Gegner gemacht wird
+                
+                min_eval = min(min_eval, eval)  # Aktualisierung des minimalen Wertes
+            board[move[0]][move[1]] = 0  # der vorherige Zug wird auf dem Spielbrett rückgängig gemacht
+            return min_eval  # der minimale Wert wird zurückgegeben
 
     def is_game_over(self, board):
         # Diese Methode sollte implementiert werden, um zu prüfen, ob das Spiel vorbei ist
