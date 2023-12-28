@@ -1,9 +1,10 @@
 import numpy as np
 import random
 from class_player import *
+from class_board import *
 
-class Bot_2:
-    def __init__(self, m, n, board): 
+class Silly:
+    def __init__(self, m, n):
         self.m = m
         self.n = n
         self.board = np.zeros((m, n), dtype=int)
@@ -25,7 +26,4 @@ class Bot_2:
             valid_columns = [i for i in range(self.n) if i not in exceptional_list]
             random_row = random.choice(valid_rows)
             random_column = random.choice(valid_columns)
-            # self.board[random_row][random_column] = 2
-            Player.place_piece(self, random_row, random_column, game, board)
-
-
+            self.board[random_row][random_column] = 2
