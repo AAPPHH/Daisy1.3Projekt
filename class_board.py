@@ -8,9 +8,15 @@ class Board:
         self.k = k  # Länge der Gewinnsequenz
         self.board = np.zeros((m, n))  # Board als Numpy-Array mit allen Feldern auf 0
 
-    def print_board(self):  # Definition der Funktion, die das Baord printed
-        for row in self.board:  # "Für jede Zeile im Numpy-Array"
-            print(' '.join(str(int(val)) for val in row))  # "Konvertiere jeden Wert in einen Int und dann in einen Str. Anschließend verbinde alle Str und setzt Leerzeichen
+    def reset_board(self):
+        self.board = np.zeros((self.m, self.n))
+
+    def reset_board(self):
+        self.board = np.zeros((self.m, self.n))
+
+    def print_board(self):
+        for row in self.board:
+            print(' '.join(str(int(val)) for val in row))
 
     def is_valid_move(self, row, col):  # Definition der Funktion, die die Gültigkeit eines Spielzuges eruiert
         m, n = self.board.shape  # Erstellung eines Numpy-Arrays mit zwei Dimensionen, Zuweisung der Dimensionen
