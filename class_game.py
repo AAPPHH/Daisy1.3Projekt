@@ -75,21 +75,32 @@ class Game:
             except ValueError:
                 print("Bitte geben Sie eine gültige Zahl ein.")
 
+    def start(self):  # Definition der Funktion, die das Spiel startet
+        print("Let's play five in row!\n Bitte geben Sie Ihre Namen ein: ")  # Willkommenheißung
+        time.sleep(1)  # Verzögerung von einer Sekunde
+        self.player1.name = input("Spieler 1: ")  # Der eingegebene Name entspricht dem Namen des Player 1
+        time.sleep(1)  # Verzögerung von einer Sekunde
+        choice = input(
+            f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2): "
+        )  # Abfrage durch Input-Funktion. Gegen wen / was möchte gespielt werden?
+        time.sleep(1)  # Verzögerung von einer Sekunde
+        if choice == "1":  # Wenn die Wahl 1 ist, ...
+            self.player2.name = input("Spieler 2: ")  # ... dann ist der Name des Spieler 2 der eingegebene Name des menschlichen Spielers
+            self.game_loop()  # Das Spiel wird fortgesetzt
+        elif choice == "2":  # Wenn die Wahl 2 ist, ...
+            self.player2 = GomokuBot("GomokuBot", 2)  # dann wird eine Instanz der Klasse GomokuBot mit entsprechendem Namen und entsprechender Spielernummer erzeugt
+            self.game_loop()  # Das Spiel wird fortgesetzt
+        elif choice == "3":
+            pass#self.player2 = GomokuBot_2("GomokuBot_2", 2)
         else:
-            print("Bitte geben Sie eine gültige Zahl ein.")
-
-    def whos_first(self):
-        order_choice = input(f"Möchtest du anfangen, {self.player1.name}? (j/n): ")
-        if order_choice.lower() == 'n':
-            self.current_player = self.player2 
-            self.game_loop()
-        else:
-            self.game_loop()
-
-    def switch_player(self):
+            self.player2 = MinimaxBot("MinimaxBot", 2)
+            self.game_loop()  # Das Spiel wird fortgesetzt
+        #choice player oder bot dann choice bot1 oder bot2...
+    
+    def switch_player(self):  # Definition der Funktion, die den Spieler "switched" (wechselt)
         self.current_player = (
             self.player2 if self.current_player == self.player1 else self.player1
-        )
+        )  # der aktuelle Spieler wird Player 2, wenn der aktuelle Spieler 1 ist. Ansonsten ist der aktuelle Spieler 1
 
     def game_loop(self):
         game_over = False

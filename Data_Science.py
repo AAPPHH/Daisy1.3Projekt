@@ -1,9 +1,9 @@
 import pandas as pd
 import pickle
 
-class Data_Science:
-    def __init__(self, filename="game_history.pkl"):
-        self.filename = filename
+class Data_Science:  # Erstellung der Klasse Data_Science
+    def __init__(self, filename="game_history.pkl"):  # Konstruktor und Parameter: Name der Datei (Default)
+        self.filename = filename  # -> self.filename = "game_history.pkl"
 
     def save_game_state(self, game):
         game_history = self.load_game_history()
