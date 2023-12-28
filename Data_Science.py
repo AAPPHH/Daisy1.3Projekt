@@ -17,11 +17,11 @@ class Data_Science:  # Erstellung der Klasse Data_Science
         self.save_game_history(game_history)  # Speicherung des aktualisierten Spielverlaufes
     
 
-    def save_game_history(self, game_history):
-        game_history.to_pickle(self.filename)
+    def save_game_history(self, game_history):  # Methode, die game_history (den Spielverlauf) als Binärdatei (pickle) speichert
+        game_history.to_pickle(self.filename)  # filename als default festgelegt (Z. 5)
 
-    def load_game_history(self):
-        try:
-            return pd.read_pickle(self.filename)
-        except FileNotFoundError:
-            return pd.DataFrame()
+    def load_game_history(self):  # Methode, die die Pickle-Datei (Binärdatei) lädt
+        try:  # Versuch...
+            return pd.read_pickle(self.filename)  # ... die Datei zurückzugeben
+        except FileNotFoundError:  # Wird die Datei allerdings nicht gefunden, ...
+            return pd.DataFrame()  # ... dann soll das DataFrame zurückgegeben werden
