@@ -1,12 +1,13 @@
 import numpy as np
+
 import random
 from class_player import *
 
-class TreeBot(Player):
-    def __init__(self, name, player_number, board): 
-        super().__init__(name, player_number)
-        self.m = board.m
-        self.n = board.n
+class Bot_2:
+    def __init__(self, m, n, board): 
+        self.m = m
+        self.n = n
+        self.board = np.zeros((m, n), dtype=int)
 
     def make_intelligent_move(self, game, board):
         if self.board[self.m // 2][self.n // 2] == 0:  # Zentrum
@@ -27,6 +28,5 @@ class TreeBot(Player):
             random_column = random.choice(valid_columns)
             # self.board[random_row][random_column] = 2
             Player.place_piece(self, random_row, random_column, game, board)
-
 
 

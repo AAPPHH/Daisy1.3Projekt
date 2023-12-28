@@ -2,16 +2,78 @@ from class_board import *
 from class_player import *
 from class_bot_1 import *
 from class_bot_2 import *
+from class_bot_3 import *
+from class_bot_4 import *
+from Data_Science import *
 
-class Game:  # Erstellung der Klasse Game
+import numpy as np
+
+class Game:
     def __init__(self, board):
         self.m = board.m  # Zeilen
         self.n = board.n  # Spalten
         self.k = board.k  # Gewinnbedingung
-        self.board = board
-        self.player1 = Player("", 1)  # Erzeugung einer Instanz der Klasse Player, der Name ist ein leerer String und die Spielernummer ist 1
-        self.player2 = Player("", 2)  # ... die Spielernummer ist 2
-        self.current_player = self.player1  # der aktuelle Spieler ist der Spieler 1
+        self.board = board #array objekt der klasse board
+        self.player1 = Player("", 1)
+        self.player2 = Player("", 2)
+        self.current_player = self.player1
+        self.game_arrays = []
+
+    def start(self):
+        start_choice = input("Let's play five in row!/n wollen sie oder soll der Computer spielen? (1/2):")
+        if start_choice == "1":
+            self.player1.name = input("Bitte geben sie ihre Namen ein:")
+            choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2):")
+            if choice == "1":
+                self.player2.name = input("Spieler 2: ")
+                self.whos_first()
+            elif choice == "2":
+                choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot spielen? (1/2/3/4):")
+                if choice == "1":
+                    self.player2 = GomokuBot("GomokuBot", 2)
+                    self.whos_first()
+                elif choice == "2":
+                    self.player2 = TreeBot("TreeBot", 2)
+                    self.whos_first()
+                elif choice == "3":
+                    self.player2 = MinimaxBot("MinimaxBot", 2)
+                    self.whos_first()
+                elif choice == "4":
+                    self.player2 = MonteCarloBot("MonteCarloBot", 2)
+                    self.whos_first()
+                else:
+                    print("Bitte geben Sie eine gültige Zahl ein.")
+        elif start_choice == "2":
+            choice_bot_1 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player One ist? (1/2/3/4):")
+            if choice_bot_1 == "1":
+                self.player1 = GomokuBot("GomokuBot", 1)
+            elif choice_bot_1 == "2":
+                self.player1 = TreeBot("TreeBot", 1)
+            elif choice_bot_1 == "3":
+                self.player1 = MinimaxBot("MinimaxBot", 1)
+            elif choice_bot_1 == "4":
+                self.player1 = MonteCarloBot("MonteCarloBot", 1)
+            else:
+                print("Bitte geben Sie eine gültige Zahl ein.")
+            self.current_player = self.player1
+            choice_bot_2 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player Two ist? (1/2/3/4):")
+            if choice_bot_2 == "1":
+                self.player2 = GomokuBot("GomokuBot", 2)
+            elif choice_bot_2 == "2":
+                self.player2 = TreeBot("TreeBot", 2)
+            elif choice_bot_2 == "3":
+                self.player2 = MinimaxBot("MinimaxBot", 2)
+            elif choice_bot_2 == "4":
+                self.player2 = MonteCarloBot("MonteCarloBot", 2)
+            num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000):")
+            try:
+                for game_number in range(int(num_games)):
+                        print(f"Spiel {game_number + 1} von {num_games}")
+                        self.game_loop()
+                        self.board.reset_board()
+                print("Alle Spiele wurden gespielt.")
+            except ValueError:
+                print("Bitte geben Sie eine gültige Zahl ein.")
 
     def start(self):  # Definition der Funktion, die das Spiel startet
         print("Let's play five in row!\n Bitte geben Sie Ihre Namen ein: ")  # Willkommenheißung
@@ -40,45 +102,53 @@ class Game:  # Erstellung der Klasse Game
             self.player2 if self.current_player == self.player1 else self.player1
         )  # der aktuelle Spieler wird Player 2, wenn der aktuelle Spieler 1 ist. Ansonsten ist der aktuelle Spieler 1
 
-    def game_loop(self):  # Definition der Funktion, die das Spiel nicht ohne Gewinn beendet
-        game_over = False  # game_over ist False
-        while not game_over:  # Während das Spiel nicht vorbei ist...
-            valid_move = True  # ... wird ein valider Spielzug für gültig erklärt
-            self.board.print_board()  # Demnach wird das Board (weiterhin) geprintet
-            if isinstance(self.current_player, GomokuBot):  # Wenn der aktuelle Spieler der GomokuBot ist...
-                GomokuBot.place_piece(self.current_player, self, self.board)  # ... dann setzt der GomokuBot einen Stein
+    def game_loop(self):
+        game_over = False
+        while not game_over:
+            valid_move = True
+            self.game_arrays.append(self.board.board)
+            self.board.print_board()
+            if isinstance(self.current_player, GomokuBot):
+                GomokuBot.place_piece(self.current_player, self, self.board)
 
-            elif isinstance(self.current_player, MinimaxBot):  # Wenn der aktuelle Spieler der MinimaxBot ist...
-                MinimaxBot.make_move(self.current_player, row, col, self, self.board)  # ... dann macht der MinimaxBot einen Zug
+            elif isinstance(self.current_player, TreeBot):
+                 TreeBot.place_piece(self.current_player, row, col, self, self.board)  
+
+            elif isinstance(self.current_player, MinimaxBot):
+                MinimaxBot.make_move(self.current_player, row, col, self, self.board)
+
+            elif isinstance(self.current_player, MonteCarloBot):
+                MonteCarloBot.place_piece(self.current_player, self, self.board)
             
-            # elif isinstance(self.current_player, GomokuBot_2):
-            #     GomokuBot_2.place_piece(self.current_player, row, col, self, self.board)    
+            elif isinstance(self.current_player, Player):
+                try:
+                    row = int(input(f"Spieler {self.current_player.name}, geben Sie die Zeilennummer ein (0-{self.m-1}): "))
+                    col = int(input(f"Spieler {self.current_player.name}, geben Sie die Spaltennummer ein (0-{self.n-1}): "))
+                except ValueError:
+                    print("Bitte geben Sie gültige ganze Zahlen ein.")
+                    continue
+                valid_move = Player.place_piece(self.current_player, row, col, self, self.board)  
+                if not valid_move:
+                    print("Bitte geben Sie eine gültige Zahl ein.")
+                    continue
 
-            elif isinstance(self.current_player, Player):  # Wenn der aktuelle Spieler der menschliche Spieler ist...
-                try:  # ... dann VERSUCHE Folgendes:
-                    row = int(input(f"Spieler {self.current_player.name}, geben Sie die Zeilennummer ein (0-{self.m-1}): "))  # der aktuelle Spieler gibt eine Eingabe für die Zeile ein, die in einen Int konvertiert wird
-                    col = int(input(f"Spieler {self.current_player.name}, geben Sie die Spaltennummer ein (0-{self.n-1}): "))  # ...Eingabe für die Spalte ein, die ...
-                except ValueError:  # Wenn die Eingabe ungültig ist...
-                    print("Bitte geben Sie gültige ganze Zahlen ein.")  # ... dann soll erneut versucht werden, eine gültige Zahl eingegeben zu werden
-                    continue  # Falls erneut eine ungültige Eingabe getätigt wurde, wird 59 - 60 solange ausgeführt bis eine Eingabe gültig ist
-                valid_move = Player.place_piece(self.current_player, row, col, self, self.board)  # ein valider Spielzug wird definiert
-                if not valid_move:  # Wenn der valide Spielzug nicht wahr (True) ist...
-                    print("Bitte geben Sie eine gültige Zahl ein.")  # ... dann wird der Spieler dazu aufgefordert, eine gültige Zahl einzugeben, sodass der Zug valide wird
-                    continue  # Initiation einer internen Schleife zur Gewährleistung eines gültigen Spielzuges und der Kontinuation des Spiels bis zum Ende
+            if self.board.is_winner(self.current_player.player_number):
+                game_over = True
+                self.board.print_board()
+                winner = self.current_player.name
+                Daisy.save_game_state(game)
+                print(f"Spieler {self.current_player.name} hat gewonnen!")
+            elif self.board.is_full():
+                game_over = True
+                self.board.print_board()
+                winner = "Unentschieden"
+                Daisy.save_game_state(game)
+                print("Das Spiel endet unentschieden!")
+            else:
+                if valid_move == True: 
+                    self.switch_player()
 
-            if self.board.is_winner(self.current_player.player_number):  # Wenn es einen Gewinner gibt...
-                game_over = True  # ... ist das Spiel zu Ende
-                self.board.print_board()  # das Board wird noch ein letztes Mal geprintet
-                print(f"Spieler {self.current_player.name} hat gewonnen!")  # und es wird gezeigt, wer gewonnen hat
-            elif self.board.is_full():  # Wenn das Board voll ist...
-                game_over = True  # ... dann ist das Spiel auch zu Ende
-                self.board.print_board()  # das Board wird ein letztes Mal geprintet
-                print("Das Spiel endet unentschieden!")  # und es wird gesagt, dass keiner gewonnen hat
-            else:  # andernfalls:
-                if valid_move == True:  # Wenn ein Spielzug gültig ist...
-                    self.switch_player()  # ... dann werden die Spieler erneut gewechselt
-
-Spielbrett = Board()  # Die Instanz namens "Spielbrett" ist eine von der Klasse Board
-game = Game(Spielbrett)  # Die Instanz namens "game" ist eine von der Klasse Game, wobei das Spiel (Game) die Methoden vom Board (Spielbrett) übernimmt
-game.start()  # Das Spiel wird gestartet
-
+Daisy = Data_Science("game_history.pkl")
+Spielbrett = Board()
+game = Game(Spielbrett)
+game.start()
