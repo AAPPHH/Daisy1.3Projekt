@@ -28,12 +28,12 @@ class Game:
                 self.player2.name = input("Spieler 2: ")
                 self.whos_first()
             elif choice == "2":
-                choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot spielen? (1/2/3/4):")
+                choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen RandomBot, Silly, MinimaxBot oder einen MonteCarloBot spielen? (1/2/3/4):")
                 if choice == "1":
                     self.player2 = GomokuBot("GomokuBot", 2)
                     self.whos_first()
                 elif choice == "2":
-                    self.player2 = TreeBot("TreeBot", 2)
+                    self.player2 = Silly("Silly", 2)
                     self.whos_first()
                 elif choice == "3":
                     self.player2 = MinimaxBot("MinimaxBot", 2)
@@ -44,11 +44,11 @@ class Game:
                 else:
                     print("Bitte geben Sie eine gültige Zahl ein.")
         elif start_choice == "2":
-            choice_bot_1 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player One ist? (1/2/3/4):")
+            choice_bot_1 = input(f"Möchtest du das einen RandomBot, Silly, MinimaxBot oder einen MonteCarloBot Player One ist? (1/2/3/4):")
             if choice_bot_1 == "1":
                 self.player1 = GomokuBot("GomokuBot", 1)
             elif choice_bot_1 == "2":
-                self.player1 = TreeBot("TreeBot", 1)
+                self.player1 = Silly("Silly", 1)
             elif choice_bot_1 == "3":
                 self.player1 = MinimaxBot("MinimaxBot", 1)
             elif choice_bot_1 == "4":
@@ -56,11 +56,11 @@ class Game:
             else:
                 print("Bitte geben Sie eine gültige Zahl ein.")
             self.current_player = self.player1
-            choice_bot_2 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player Two ist? (1/2/3/4):")
+            choice_bot_2 = input(f"Möchtest du das einen RandomBot, Silly, MinimaxBot oder einen MonteCarloBot Player Two ist? (1/2/3/4):")
             if choice_bot_2 == "1":
                 self.player2 = GomokuBot("GomokuBot", 2)
             elif choice_bot_2 == "2":
-                self.player2 = TreeBot("TreeBot", 2)
+                self.player2 = Silly("Silly", 2)
             elif choice_bot_2 == "3":
                 self.player2 = MinimaxBot("MinimaxBot", 2)
             elif choice_bot_2 == "4":
@@ -111,8 +111,8 @@ class Game:
             if isinstance(self.current_player, GomokuBot):
                 GomokuBot.place_piece(self.current_player, self, self.board)
 
-            elif isinstance(self.current_player, TreeBot):
-                 TreeBot.place_piece(self.current_player, row, col, self, self.board)  
+            elif isinstance(self.current_player, Silly):
+                 Silly.place_piece(self.current_player, row, col, self, self.board)  
 
             elif isinstance(self.current_player, MinimaxBot):
                 MinimaxBot.make_move(self.current_player, row, col, self, self.board)
