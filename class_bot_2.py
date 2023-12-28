@@ -3,11 +3,9 @@ import random
 from class_player import *
 from class_board import *
 
-class Silly:
-    def __init__(self, m, n):
-        self.m = m
-        self.n = n
-        self.board = np.zeros((m, n), dtype=int)
+class Silly(Player):
+    def __init__(self, name, player_number):
+        super().__init__(name, player_number)
 
     def make_intelligent_move(self, game, board):
         if self.board[self.m // 2][self.n // 2] == 0:  # Zentrum
@@ -26,4 +24,4 @@ class Silly:
             valid_columns = [i for i in range(self.n) if i not in exceptional_list]
             random_row = random.choice(valid_rows)
             random_column = random.choice(valid_columns)
-            self.board[random_row][random_column] = 2
+            self.board[random_row][random_column] = self.player_number
