@@ -24,4 +24,4 @@ class Silly(Player):
             valid_columns = [i for i in range(self.n) if i not in exceptional_list]
             random_row = random.choice(valid_rows)
             random_column = random.choice(valid_columns)
-            self.board[random_row][random_column] = 2
+            self.board[random_row][random_column] = self.player_number
