@@ -20,7 +20,7 @@ class Game:
         self.game_arrays = []
 
     def start(self):
-        start_choice = input("Let's play five in row!/n wollen sie oder soll der Computer spielen? (1/2):")
+        start_choice = input("Let's play five in row! wollen sie oder soll der Computer spielen? (1/2):")
         if start_choice == "1":
             self.player1.name = input("Bitte geben sie ihre Namen ein:")
             choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2):")
@@ -33,7 +33,7 @@ class Game:
                     self.player2 = GomokuBot("GomokuBot", 2)
                     self.whos_first()
                 elif choice == "2":
-                    self.player2 = TreeBot("TreeBot", 2)
+                    #self.player2 = TreeBot("TreeBot", 2)
                     self.whos_first()
                 elif choice == "3":
                     self.player2 = MinimaxBot("MinimaxBot", 2)
@@ -48,7 +48,8 @@ class Game:
             if choice_bot_1 == "1":
                 self.player1 = GomokuBot("GomokuBot", 1)
             elif choice_bot_1 == "2":
-                self.player1 = TreeBot("TreeBot", 1)
+                #self.player1 = TreeBot("TreeBot", 1)
+                pass
             elif choice_bot_1 == "3":
                 self.player1 = MinimaxBot("MinimaxBot", 1)
             elif choice_bot_1 == "4":
@@ -60,7 +61,8 @@ class Game:
             if choice_bot_2 == "1":
                 self.player2 = GomokuBot("GomokuBot", 2)
             elif choice_bot_2 == "2":
-                self.player2 = TreeBot("TreeBot", 2)
+                #self.player2 = TreeBot("TreeBot", 2)
+                pass
             elif choice_bot_2 == "3":
                 self.player2 = MinimaxBot("MinimaxBot", 2)
             elif choice_bot_2 == "4":
@@ -75,24 +77,24 @@ class Game:
             except ValueError:
                 print("Bitte geben Sie eine gültige Zahl ein.")
 
-    def start(self):  # Definition der Funktion, die das Spiel startet
-        print("Let's play five in row!\n Bitte geben Sie Ihre Namen ein: ")  # Willkommenheißung
-        self.player1.name = input("Spieler 1: ")  # Der eingegebene Name entspricht dem Namen des Player 1
-        choice = input(
-            f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2): "
-        )  # Abfrage durch Input-Funktion. Gegen wen / was möchte gespielt werden?
-        if choice == "1":  # Wenn die Wahl 1 ist, ...
-            self.player2.name = input("Spieler 2: ")  # ... dann ist der Name des Spieler 2 der eingegebene Name des menschlichen Spielers
-            self.game_loop()  # Das Spiel wird fortgesetzt
-        elif choice == "2":  # Wenn die Wahl 2 ist, ...
-            self.player2 = GomokuBot("GomokuBot", 2)  # dann wird eine Instanz der Klasse GomokuBot mit entsprechendem Namen und entsprechender Spielernummer erzeugt
-            self.game_loop()  # Das Spiel wird fortgesetzt
-        elif choice == "3":
-            pass#self.player2 = GomokuBot_2("GomokuBot_2", 2)
-        else:
-            self.player2 = MinimaxBot("MinimaxBot", 2)
-            self.game_loop()  # Das Spiel wird fortgesetzt
-        #choice player oder bot dann choice bot1 oder bot2...
+    # def start(self):  # Definition der Funktion, die das Spiel startet
+    #     print("Let's play five in row!\n Bitte geben Sie Ihre Namen ein: ")  # Willkommenheißung
+    #     self.player1.name = input("Spieler 1: ")  # Der eingegebene Name entspricht dem Namen des Player 1
+    #     choice = input(
+    #         f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2): "
+    #     )  # Abfrage durch Input-Funktion. Gegen wen / was möchte gespielt werden?
+    #     if choice == "1":  # Wenn die Wahl 1 ist, ...
+    #         self.player2.name = input("Spieler 2: ")  # ... dann ist der Name des Spieler 2 der eingegebene Name des menschlichen Spielers
+    #         self.game_loop()  # Das Spiel wird fortgesetzt
+    #     elif choice == "2":  # Wenn die Wahl 2 ist, ...
+    #         self.player2 = GomokuBot("GomokuBot", 2)  # dann wird eine Instanz der Klasse GomokuBot mit entsprechendem Namen und entsprechender Spielernummer erzeugt
+    #         self.game_loop()  # Das Spiel wird fortgesetzt
+    #     elif choice == "3":
+    #         pass#self.player2 = GomokuBot_2("GomokuBot_2", 2)
+    #     else:
+    #         self.player2 = MinimaxBot("MinimaxBot", 2)
+    #         self.game_loop()  # Das Spiel wird fortgesetzt
+    #     #choice player oder bot dann choice bot1 oder bot2...
     
     def switch_player(self):  # Definition der Funktion, die den Spieler "switched" (wechselt)
         self.current_player = (
@@ -108,8 +110,8 @@ class Game:
             if isinstance(self.current_player, GomokuBot):
                 GomokuBot.place_piece(self.current_player, self, self.board)
 
-            elif isinstance(self.current_player, TreeBot):
-                 TreeBot.place_piece(self.current_player, row, col, self, self.board)  
+           #elif isinstance(self.current_player, TreeBot):
+                 #TreeBot.place_piece(self.current_player, row, col, self, self.board)  
 
             elif isinstance(self.current_player, MinimaxBot):
                 MinimaxBot.make_move(self.current_player, row, col, self, self.board)

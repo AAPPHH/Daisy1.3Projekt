@@ -3,7 +3,7 @@ import numpy as np
 import random
 from class_player import *
 
-class Bot_2:
+class Treebot(Player):
     def __init__(self, m, n, board): 
         self.m = m
         self.n = n
