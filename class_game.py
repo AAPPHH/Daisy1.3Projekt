@@ -5,7 +5,7 @@ from class_bot_2 import *
 from class_bot_3 import *
 from class_bot_4 import *
 from Data_Science import *
-import time
+
 import numpy as np
 
 class Game:
@@ -77,13 +77,10 @@ class Game:
 
     def start(self):  # Definition der Funktion, die das Spiel startet
         print("Let's play five in row!\n Bitte geben Sie Ihre Namen ein: ")  # Willkommenheißung
-        time.sleep(1)  # Verzögerung von einer Sekunde
         self.player1.name = input("Spieler 1: ")  # Der eingegebene Name entspricht dem Namen des Player 1
-        time.sleep(1)  # Verzögerung von einer Sekunde
         choice = input(
             f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2): "
         )  # Abfrage durch Input-Funktion. Gegen wen / was möchte gespielt werden?
-        time.sleep(1)  # Verzögerung von einer Sekunde
         if choice == "1":  # Wenn die Wahl 1 ist, ...
             self.player2.name = input("Spieler 2: ")  # ... dann ist der Name des Spieler 2 der eingegebene Name des menschlichen Spielers
             self.game_loop()  # Das Spiel wird fortgesetzt
