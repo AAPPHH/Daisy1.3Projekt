@@ -5,7 +5,7 @@ from class_bot_2 import *
 from class_bot_3 import *
 from class_bot_4 import *
 from Data_Science import *
-
+import time
 import numpy as np
 
 class Game:
