@@ -18,5 +18,5 @@ class Player:  # Erstellung der Klasse Player
         """  
         if board.is_valid_move(row, col): 
             board.board[row][col] =  self.player_number 
-            return True  #
+            return True  
         return False  

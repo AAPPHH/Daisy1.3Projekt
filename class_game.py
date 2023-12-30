@@ -1,3 +1,4 @@
+import time
 from class_board import *
 from class_player import *
 from class_bot_1 import *
@@ -15,6 +16,7 @@ class Game:
         self.player1 = Player("", 1)
         self.player2 = Player("", 2)
         self.current_player = self.player1
+        #self.start_time = time.time()
         self.game_arrays = []
 
     def start(self):
@@ -124,18 +126,24 @@ class Game:
             if self.board.is_winner(self.current_player.player_number):
                 game_over = True
                 self.board.print_board()
-                winner = self.current_player.name
+                #end_time = time.time()
+                #print(f'Gesamtspieldauer: {end_time - self.start_time} Sekunden')
                 Daisy.save_game_state(game)
                 print(f"Spieler {self.current_player.name} hat gewonnen!")
             elif self.board.is_full():
                 game_over = True
                 self.board.print_board()
-                winner = "Unentschieden"
+                #end_time = time.time()
+                #print(f'Gesamtspieldauer: {end_time - self.start_time} Sekunden')
                 Daisy.save_game_state(game)
                 print("Das Spiel endet unentschieden!")
             else:
-                if valid_move == True: 
+                if valid_move == True:
+                    #end_time = self.time.time() 
+                    #print(f'Spielzugdauer: {end_time - start_time} Sekunden')
                     self.switch_player()
+                    #start_time = self.time.time()
+
 
 Daisy = Data_Science("game_history.pkl")
 Spielbrett = Board()
