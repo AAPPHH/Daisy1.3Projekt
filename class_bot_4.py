@@ -4,10 +4,10 @@ from copy import deepcopy
 from class_player import Player
 
 class MonteCarloBot(Player):
-    NTRIALS = 5000
+    NTRIALS = 50000
     SCORE_CURRENT = 1.0
     SCORE_OTHER = 2.0
-    DEP = 6
+    DEP = 20
 
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
@@ -77,10 +77,11 @@ class MonteCarloBot(Player):
             self.mc_trial(clone)
             self.mc_update_scores(scores, clone)
             num += 1
-
+        print(f"Computer wählt aus {num} Möglichkeiten.")
         return self.get_best_move(position, scores)
 
     def place_piece(self, game, board):
+        print("Computer denkt nach...")
         clone = deepcopy(board)
         move = self.mc_move(clone)
         Player.place_piece(self, move[0], move[1], game, board)

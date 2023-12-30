@@ -6,8 +6,6 @@ from class_bot_3 import *
 from class_bot_4 import *
 from Data_Science import *
 
-import numpy as np
-
 class Game:
     def __init__(self, board):
         self.m = board.m  # Zeilen
@@ -20,82 +18,74 @@ class Game:
         self.game_arrays = []
 
     def start(self):
-        start_choice = input("Let's play five in row! wollen sie oder soll der Computer spielen? (1/2):")
-        if start_choice == "1":
-            self.player1.name = input("Bitte geben sie ihre Namen ein:")
-            choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2):")
-            if choice == "1":
-                self.player2.name = input("Spieler 2: ")
-                self.whos_first()
-            elif choice == "2":
-                choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot spielen? (1/2/3/4):")
+        try:
+            start_choice = input("Let's play five in row! wollen sie oder soll der Computer spielen? (1/2):")
+            if start_choice == "1":
+                self.player1.name = input("Bitte geben sie ihre Namen ein:")
+                choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2):")
                 if choice == "1":
-                    self.player2 = GomokuBot("GomokuBot", 2)
+                    self.player2.name = input("Spieler 2: ")
                     self.whos_first()
                 elif choice == "2":
-                    #self.player2 = TreeBot("TreeBot", 2)
-                    self.whos_first()
-                elif choice == "3":
-                    self.player2 = MinimaxBot("MinimaxBot", 2)
-                    self.whos_first()
-                elif choice == "4":
-                    self.player2 = MonteCarloBot("MonteCarloBot", 2)
-                    self.whos_first()
+                    choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot spielen? (1/2/3/4):")
+                    if choice == "1":
+                        self.player2 = GomokuBot("GomokuBot", 2)
+                        self.whos_first()
+                    elif choice == "2":
+                        #self.player2 = TreeBot("TreeBot", 2)
+                        self.whos_first()
+                    elif choice == "3":
+                        self.player2 = MinimaxBot("MinimaxBot", 2)
+                        self.whos_first()
+                    elif choice == "4":
+                        self.player2 = MonteCarloBot("MonteCarloBot", 2)
+                        self.whos_first()
+                    else:
+                        print("Bitte geben Sie eine gültige Zahl ein.")
+            elif start_choice == "2":
+                choice_bot_1 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player One ist? (1/2/3/4):")
+                if choice_bot_1 == "1":
+                    self.player1 = GomokuBot("GomokuBot", 1)
+                elif choice_bot_1 == "2":
+                    #self.player1 = TreeBot("TreeBot", 1)
+                    pass
+                elif choice_bot_1 == "3":
+                    self.player1 = MinimaxBot("MinimaxBot", 1)
+                elif choice_bot_1 == "4":
+                    self.player1 = MonteCarloBot("MonteCarloBot", 1)
                 else:
                     print("Bitte geben Sie eine gültige Zahl ein.")
-        elif start_choice == "2":
-            choice_bot_1 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player One ist? (1/2/3/4):")
-            if choice_bot_1 == "1":
-                self.player1 = GomokuBot("GomokuBot", 1)
-            elif choice_bot_1 == "2":
-                #self.player1 = TreeBot("TreeBot", 1)
-                pass
-            elif choice_bot_1 == "3":
-                self.player1 = MinimaxBot("MinimaxBot", 1)
-            elif choice_bot_1 == "4":
-                self.player1 = MonteCarloBot("MonteCarloBot", 1)
-            else:
-                print("Bitte geben Sie eine gültige Zahl ein.")
-            self.current_player = self.player1
-            choice_bot_2 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player Two ist? (1/2/3/4):")
-            if choice_bot_2 == "1":
-                self.player2 = GomokuBot("GomokuBot", 2)
-            elif choice_bot_2 == "2":
-                #self.player2 = TreeBot("TreeBot", 2)
-                pass
-            elif choice_bot_2 == "3":
-                self.player2 = MinimaxBot("MinimaxBot", 2)
-            elif choice_bot_2 == "4":
-                self.player2 = MonteCarloBot("MonteCarloBot", 2)
-            num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000):")
-            try:
-                for game_number in range(int(num_games)):
-                        print(f"Spiel {game_number + 1} von {num_games}")
-                        self.game_loop()
-                        self.board.reset_board()
-                print("Alle Spiele wurden gespielt.")
-            except ValueError:
-                print("Bitte geben Sie eine gültige Zahl ein.")
-
-    # def start(self):  # Definition der Funktion, die das Spiel startet
-    #     print("Let's play five in row!\n Bitte geben Sie Ihre Namen ein: ")  # Willkommenheißung
-    #     self.player1.name = input("Spieler 1: ")  # Der eingegebene Name entspricht dem Namen des Player 1
-    #     choice = input(
-    #         f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2): "
-    #     )  # Abfrage durch Input-Funktion. Gegen wen / was möchte gespielt werden?
-    #     if choice == "1":  # Wenn die Wahl 1 ist, ...
-    #         self.player2.name = input("Spieler 2: ")  # ... dann ist der Name des Spieler 2 der eingegebene Name des menschlichen Spielers
-    #         self.game_loop()  # Das Spiel wird fortgesetzt
-    #     elif choice == "2":  # Wenn die Wahl 2 ist, ...
-    #         self.player2 = GomokuBot("GomokuBot", 2)  # dann wird eine Instanz der Klasse GomokuBot mit entsprechendem Namen und entsprechender Spielernummer erzeugt
-    #         self.game_loop()  # Das Spiel wird fortgesetzt
-    #     elif choice == "3":
-    #         pass#self.player2 = GomokuBot_2("GomokuBot_2", 2)
-    #     else:
-    #         self.player2 = MinimaxBot("MinimaxBot", 2)
-    #         self.game_loop()  # Das Spiel wird fortgesetzt
-    #     #choice player oder bot dann choice bot1 oder bot2...
+                self.current_player = self.player1
+                choice_bot_2 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player Two ist? (1/2/3/4):")
+                if choice_bot_2 == "1":
+                    self.player2 = GomokuBot("GomokuBot", 2)
+                elif choice_bot_2 == "2":
+                    #self.player2 = TreeBot("TreeBot", 2)
+                    pass
+                elif choice_bot_2 == "3":
+                    self.player2 = MinimaxBot("MinimaxBot", 2)
+                elif choice_bot_2 == "4":
+                    self.player2 = MonteCarloBot("MonteCarloBot", 2)
+                num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000):")
+                try:
+                    for game_number in range(int(num_games)):
+                            print(f"Spiel {game_number + 1} von {num_games}")
+                            self.game_loop()
+                            self.board.reset_board()
+                    print("Alle Spiele wurden gespielt.")
+                except ValueError:
+                    print("Bitte geben Sie eine gültige Zahl ein.")
+        except ValueError:
+            print("Bitte geben Sie eine gültige Zahl ein.")
     
+    def whos_first(self):
+        order_choice = input(f"Möchtest du anfangen, {self.player1.name}? (j/n): ")
+        if order_choice.lower() == 'n':
+            self.current_player = self.player2 
+            self.game_loop()
+        else:
+            self.game_loop()
+
     def switch_player(self):  # Definition der Funktion, die den Spieler "switched" (wechselt)
         self.current_player = (
             self.player2 if self.current_player == self.player1 else self.player1
@@ -110,7 +100,7 @@ class Game:
             if isinstance(self.current_player, GomokuBot):
                 GomokuBot.place_piece(self.current_player, self, self.board)
 
-           #elif isinstance(self.current_player, TreeBot):
+            #elif isinstance(self.current_player, TreeBot):
                  #TreeBot.place_piece(self.current_player, row, col, self, self.board)  
 
             elif isinstance(self.current_player, MinimaxBot):

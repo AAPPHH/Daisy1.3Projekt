@@ -11,9 +11,6 @@ class Board:
     def reset_board(self):
         self.board = np.zeros((self.m, self.n))
 
-    def reset_board(self):
-        self.board = np.zeros((self.m, self.n))
-
     def print_board(self):
         for row in self.board:
             print(' '.join(str(int(val)) for val in row))
