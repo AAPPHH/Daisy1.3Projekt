@@ -7,6 +7,14 @@ class Data_Science:  # Erstellung der Klasse Data_Science
 
 
     def save_game_state(self, game):  # Methode, die Spielzustände speichert
+    """
+    Methode, die Spielzustände speichert.
+    Ladung des bisherigen Spielverlaufes.
+    For-Schleife durchläuft jedes Element in game.game_arrays.
+    Erstellung eines Data-Frames mit dem Namen "new_row", dictionary mit drei Keys.
+    new_row wird dem DataFrame game_history hinzugefügt, concat: Verbindung der DataFrames, Index wird neu erstellt.
+    Speicherung des aktualisierten Spielverlaufes.
+    """
         game_history = self.load_game_history()  # Ladung des bisherigen Spielverlaufes
         for state in game.game_arrays:  # For-Schleife durchläuft jedes Element in game.game_arrays
             new_row = pd.DataFrame([{  # Erstellung eines Data-Frames mit dem Namen "new_row", dictionary mit drei Keys
@@ -20,10 +28,19 @@ class Data_Science:  # Erstellung der Klasse Data_Science
     
     
     def save_game_history(self, game_history):  # Methode, die game_history (den Spielverlauf) als Binärdatei (pickle) speichert
+    """
+    Methode, die game_history (den Spielverlauf) als Binärdatei (pickle) speichert.
+    filename als default festgelegt.
+    """  
         game_history.to_pickle(self.filename)  # filename als default festgelegt (Z. 5)
     
     
     def load_game_history(self):  # Methode, die die Pickle-Datei (Binärdatei) lädt
+        """
+        Methode, die die Pickle-Datei (Binärdatei) lädt
+        Versuch, die Datei zurückzugeben.
+        Wird die Datei allerdings nicht gefunden, dann soll das DataFrame zurückgegeben werden.
+        """
         try:  # Versuch...
             return pd.read_pickle(self.filename)  # ... die Datei zurückzugeben
         except FileNotFoundError:  # Wird die Datei allerdings nicht gefunden, ...
