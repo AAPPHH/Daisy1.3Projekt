@@ -76,6 +76,19 @@ class Game:
                 print("Bitte geben Sie eine gültige Zahl ein.")
 
     def start(self):  # Definition der Funktion, die das Spiel startet
+    """
+    Definition der Funktion, die das Spiel startet.
+    Willkommenheißung.
+    Verzögerung von einer Sekunde.
+    Der eingegebene Name entspricht dem Namen des Player 1.
+    Verzögerung von einer Sekunde.
+    Wenn die Wahl 1 ist, ...
+    ... dann ist der Name des Spieler 2 der eingegebene Name des menschlichen Spielers.
+    Das Spiel wird fortgesetzt.
+    Wenn die Wahl 2 ist, ...
+    dann wird eine Instanz der Klasse GomokuBot mit entsprechendem Namen und entsprechender Spielernummer erzeugt.
+    Das Spiel wird fortgesetzt.
+    """
         print("Let's play five in row!\n Bitte geben Sie Ihre Namen ein: ")  # Willkommenheißung
         time.sleep(1)  # Verzögerung von einer Sekunde
         self.player1.name = input("Spieler 1: ")  # Der eingegebene Name entspricht dem Namen des Player 1
