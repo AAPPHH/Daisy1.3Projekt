@@ -5,7 +5,7 @@ from class_bot_1 import *
 from class_bot_2 import *
 from class_bot_3 import *
 from class_bot_4 import *
-from Data_Science import *
+from Data import *
 
 class Game:
     def __init__(self, board):

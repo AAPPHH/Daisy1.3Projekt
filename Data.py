@@ -1,4 +1,3 @@
-
 import pandas as pd
 import pickle
 
@@ -17,7 +16,6 @@ class Data_Science:  # Erstellung der Klasse Data_Science
             game_history = pd.concat([game_history, new_row], ignore_index=True)
         self.save_game_history(game_history)
     
-
     def save_game_history(self, game_history):
         game_history.to_pickle(self.filename)
 
