@@ -4,7 +4,6 @@ from copy import deepcopy
 from functools import lru_cache
 from class_player import Player
 
-
 class MonteCarloBot(Player):
     NTRIALS = 100000
     SCORE_CURRENT = 1.0
@@ -71,8 +70,6 @@ class MonteCarloBot(Player):
             return best_square
         else:
             return random.choice([(i, j) for i in range(position.m) for j in range(position.n) if position.board[i][j] == 0])
-
-
 
     @ray.remote
     def mc_trial_remote(self, position):
