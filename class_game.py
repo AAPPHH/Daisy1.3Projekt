@@ -16,7 +16,6 @@ class Game:
         self.player1 = Player("", 1)
         self.player2 = Player("", 2)
         self.current_player = self.player1
-        #self.start_time = time.time()
         self.game_arrays = []
 
     def start(self):
@@ -88,17 +87,19 @@ class Game:
         else:
             self.game_loop()
 
-    def switch_player(self):  # Definition der Funktion, die den Spieler "switched" (wechselt)
+    def switch_player(self):
         self.current_player = (
             self.player2 if self.current_player == self.player1 else self.player1
-        )  # der aktuelle Spieler wird Player 2, wenn der aktuelle Spieler 1 ist. Ansonsten ist der aktuelle Spieler 1
+        )
 
     def game_loop(self):
         game_over = False
+        start_time = time.time()
         while not game_over:
             valid_move = True
             self.game_arrays.append(self.board.board)
             self.board.print_board()
+            start_turn_time = time.time()
             if isinstance(self.current_player, GomokuBot):
                 GomokuBot.place_piece(self.current_player, self, self.board)
 
@@ -126,25 +127,28 @@ class Game:
             if self.board.is_winner(self.current_player.player_number):
                 game_over = True
                 self.board.print_board()
-                #end_time = time.time()
-                #print(f'Gesamtspieldauer: {end_time - self.start_time} Sekunden')
+                end_time = time.time()
+                print(f'Gesamtspieldauer: {end_time - start_time} Sekunden')
                 Daisy.save_game_state(game)
                 print(f"Spieler {self.current_player.name} hat gewonnen!")
+
             elif self.board.is_full():
                 game_over = True
                 self.board.print_board()
-                #end_time = time.time()
-                #print(f'Gesamtspieldauer: {end_time - self.start_time} Sekunden')
+                end_time = time.time()
+                print(f'Gesamtspieldauer: {end_time - start_time} Sekunden')
                 Daisy.save_game_state(game)
                 print("Das Spiel endet unentschieden!")
+
             else:
                 if valid_move == True:
-                    #end_time = self.time.time() 
-                    #print(f'Spielzugdauer: {end_time - start_time} Sekunden')
+                    end_turn_time = time.time()
+                    try:
+                        print(f'Spielzugdauer: {end_turn_time - start_turn_time} Sekunden')
+                    except:
+                        pass
                     self.switch_player()
-                    #start_time = self.time.time()
-
-
+                    
 Daisy = Data_Science("game_history.pkl")
 Spielbrett = Board()
 game = Game(Spielbrett)
