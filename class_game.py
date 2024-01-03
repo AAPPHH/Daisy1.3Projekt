@@ -108,7 +108,7 @@ class Game:
                  #TreeBot.place_piece(self.current_player, row, col, self, self.board)  
 
             elif isinstance(self.current_player, MinimaxBot):
-                MinimaxBot.make_move(self.current_player, self, self.board.board)
+                MinimaxBot.make_move(self.current_player, self, self.board)
 
             elif isinstance(self.current_player, MonteCarloBot):
                 MonteCarloBot.place_piece(self.current_player, self, self.board)

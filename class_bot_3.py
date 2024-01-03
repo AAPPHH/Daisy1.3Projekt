@@ -7,8 +7,8 @@ import random
 class MinimaxBot(Player):
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
-        self.use_minimax = True  # Setzen Sie dies auf False, um Alpha-Beta-Pruning zu verwenden
-        self.depth = 2  # Tiefe der Minimax-Suche
+        self.use_minimax = False  # Setzen Sie dies auf False, um Alpha-Beta-Pruning zu verwenden
+        self.depth = 6  # Tiefe der Minimax-Suche
 
     # Hauptfunktion, um einen Zug zu machen
     def make_move(self, game, board):
@@ -92,13 +92,8 @@ class MinimaxBot(Player):
 
     # Alpha-Beta-Pruning
     def alphabeta(self, position, lastmove, player, alpha, beta, depth):
-        if position.is_gameover(lastmove, self.get_enemy()) or depth == 0:
-            cur_player = self.player_number
-            if cur_player == -1:
-                return position.winner * (-1)
-            elif cur_player == 1:
-                return position.winner
-            return 0
+        if position.is_winner(player) or position.is_full() or depth == 0:
+            return self.evaluate(position, depth)
         for move in self.get_empty_squares(position):
             clone = deepcopy(position)
             self.perform_move(clone, move, player)
@@ -121,9 +116,9 @@ class MinimaxBot(Player):
     def alphabeta_bot(self, game, position, player):
         a = -2
         choices = []
-        if len(self.get_empty_squares(position)) == position.size ** 2: # bester erster Zug
-            return position.size ** 2 // 2 + 1
-        for move in self.get_empty_squares():
+        if len(self.get_empty_squares(position)) == position.board.size ** 2: # bester erster Zug
+            return position.board.size ** 2 // 2 + 1
+        for move in self.get_empty_squares(position):
             clone = deepcopy(position)
             self.perform_move(clone, move, player)
             val = self.alphabeta(clone, move, self.get_enemy(), -2, 2, self.depth)
