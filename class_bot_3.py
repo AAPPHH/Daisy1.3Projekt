@@ -49,7 +49,6 @@ class MinimaxBot(Player):
             if score > best_score:
                 best_score = score
                 best_move = move
-
         return best_move
 
     def min_play(self, game, position, depth, move, player):
@@ -58,7 +57,6 @@ class MinimaxBot(Player):
         moves = self.get_empty_squares(position)
         player = self.get_enemy()
         best_score = float('inf')
-        print(best_score)
         for move in moves:
             clone = deepcopy(position)
             self.perform_move(clone, move, player)
