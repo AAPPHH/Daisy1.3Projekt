@@ -1,4 +1,5 @@
 import time
+import copy
 from class_board import *
 from class_player import *
 from class_bot_1 import *
@@ -97,7 +98,7 @@ class Game:
         start_time = time.time()
         while not game_over:
             valid_move = True
-            self.game_arrays.append(self.board.board)
+            self.game_arrays.append(copy.deepcopy(self.board.board))
             self.board.print_board()
             start_turn_time = time.time()
             if isinstance(self.current_player, GomokuBot):
