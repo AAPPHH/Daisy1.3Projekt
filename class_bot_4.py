@@ -2,7 +2,7 @@ import random
 import ray
 from copy import deepcopy
 from functools import lru_cache
-from class_player import Player
+from class_player import *
 
 class MonteCarloBot(Player):
     NTRIALS = 100000
