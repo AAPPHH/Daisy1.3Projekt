@@ -84,9 +84,10 @@ class MinimaxBot(Player):
 
     def evaluate(self, pos, dep):
         cur_player = self.player_number
-        if pos.is_winner == cur_player:
+        print(pos.board)
+        if pos.is_winner(self.player_number) == True:
             return 10 * (dep+1)
-        elif pos.is_winner == cur_player * (-1):
+        elif pos.is_winner(self.player_number) == False:
             return -10 * (dep+1)
         return 0
 
