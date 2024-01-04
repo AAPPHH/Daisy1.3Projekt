@@ -65,7 +65,7 @@ class MonteCarloBot(Player):
             if scores[r][s] > best_score and position.board[r][s] == 0:
                 best_square = square
                 best_score = scores[r][s]
-
+                print(f"Beste Position: {best_square} mit Score {best_score}")
         if best_square is not None:
             return best_square
         else:
