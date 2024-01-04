@@ -10,8 +10,8 @@ pd.set_option('display.width', None)  # Passt die Breite an, um Zeilenumbrüche 
 pd.set_option('display.max_colwidth', None)  # Zeigt den vollen Inhalt der Zellen an
 
 # # Anzeigen des DataFrames
-print(df)
-# board_state_first_row = df.loc[25, 'board_state']
-# print(board_state_first_row)
+# print(df.head(5))
+board_state_first_row = df.loc[25, 'board_state']
+print(board_state_first_row)
 # board_state = df['board_state'][:1]
 # print(board_state)
