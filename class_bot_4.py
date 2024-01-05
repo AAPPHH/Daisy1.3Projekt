@@ -13,7 +13,6 @@ class MonteCarloBot(Player):
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
         
-    @lru_cache(maxsize=None)
     def mc_trial(self, position):
         current_player = self.player_number
         winner = position.is_winner(self.player_number)
@@ -72,11 +71,13 @@ class MonteCarloBot(Player):
             return random.choice([(i, j) for i in range(position.m) for j in range(position.n) if position.board[i][j] == 0])
 
     @ray.remote
+    @lru_cache(maxsize=None)
     def mc_trial_remote(self, position):
         clone = deepcopy(position)
         self.mc_trial(clone)
         return clone
-
+    
+    
     def mc_move(self, position):
         scores = [[0] * position.n for _ in range(position.m)]
         num = 0
@@ -98,5 +99,5 @@ class MonteCarloBot(Player):
         clone = deepcopy(board)
         move = self.mc_move(clone)
         ray.shutdown()
-        self.mc_trial.cache_clear()
+        self.mc_trial_remote.cache_clear()
         Player.place_piece(self, move[0], move[1], game, board)
