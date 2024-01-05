@@ -18,6 +18,7 @@ class Game:
         self.player2 = Player("", 2)
         self.current_player = self.player1
         self.game_arrays = []
+        self.winner = None
 
     def start(self):
         try:
@@ -127,6 +128,7 @@ class Game:
                 game_over = True
                 self.board.print_board()
                 end_time = time.time()
+                self.winner = self.current_player.name
                 print(f'Gesamtspieldauer: {end_time - start_time} Sekunden')
                 Daisy.save_game_state(game)
                 print(f"Spieler {self.current_player.name} hat gewonnen!")

@@ -11,7 +11,8 @@ class Data_Science:  # Erstellung der Klasse Data_Science
             new_row = pd.DataFrame([{
                 'player1': game.player1.name,
                 'player2': game.player2.name,
-                'board_state': state
+                'board_state': state,
+                'winner': game.winner
             }])
             game_history = pd.concat([game_history, new_row], ignore_index=True)
         self.save_game_history(game_history)

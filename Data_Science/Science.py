@@ -11,7 +11,7 @@ pd.set_option('display.max_colwidth', None)  # Zeigt den vollen Inhalt der Zelle
 
 # # Anzeigen des DataFrames
 # print(df.head(5))
-board_state_first_row = df.loc[25, 'board_state']
-print(board_state_first_row)
-# board_state = df['board_state'][:1]
-# print(board_state)
+# board_state_first_row = df.loc[25, 'board_state']
+# print(board_state_first_row)
+board_state = df['winner'][:1]
+print(board_state)
