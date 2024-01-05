@@ -72,6 +72,7 @@ class Game:
                     for game_number in range(int(num_games)):
                             print(f"Spiel {game_number + 1} von {num_games}")
                             self.game_loop()
+                            self.game_arrays = []
                             self.board.reset_board()
                     print("Alle Spiele wurden gespielt.")
                 except ValueError:

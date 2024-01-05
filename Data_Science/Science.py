@@ -13,7 +13,12 @@ pd.set_option('display.max_colwidth', None)  # Zeigt den vollen Inhalt der Zelle
 # print(df.head(5))
 # board_state_first_row = df.loc[25, 'board_state']
 # print(board_state_first_row)
-board_state = df['winner'].value_counts()
-print(board_state)
 
-df.to_excel("Data_Science/game_history.xlsx")
+winner = df['winner'].value_counts()
+print(winner)
+
+treebot_wins = df[df['winner'] == 'TreeBot']
+average_moves_treebot_wins = treebot_wins['N_turn'].mean()
+print(average_moves_treebot_wins)
+
+#df.to_excel("Data_Science/game_history.xlsx")
