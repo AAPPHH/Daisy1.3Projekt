@@ -18,38 +18,38 @@ class Board:
         self.board = np.zeros((self.m, self.n))
 
     def print_board(self):
-    """
-    print(' '.join(str(int(val)) for val in row))
-    For-Schleife geht durch alle Zeilen im Board.
-    Alle Werte (in den Feldern) werden in eine ganze Zahl (int) und dann in einen String konvertiert.
-    ' '.join -> verbindet die Strings miteinander, hält sie jedoch mit einem Leerzeichen getrennt.
-    Das Board wird geprintet.
-    """
+        """
+        print(' '.join(str(int(val)) for val in row))
+        For-Schleife geht durch alle Zeilen im Board.
+        Alle Werte (in den Feldern) werden in eine ganze Zahl (int) und dann in einen String konvertiert.
+        ' '.join -> verbindet die Strings miteinander, hält sie jedoch mit einem Leerzeichen getrennt.
+        Das Board wird geprintet.
+        """
         for row in self.board:
             print(' '.join(str(int(val)) for val in row))
 
     def is_valid_move(self, row, col):  # Definition der Funktion, die die Gültigkeit eines Spielzuges eruiert
-    """
-    Definition der Funktion, die die Gültigkeit eines Spielzuges eruiert.
-    Erstellung eines Numpy-Arrays mit zwei Dimensionen, Zuweisung der Dimensionen.
-    "Liegt row zwischen 0 und m und liegt col zwischen 0 und n und ist der Wert des Feldes 0?"
-    "... dann wahr -> valider Zug"
-    "andernfalls falsch"
-    """
+        """
+        Definition der Funktion, die die Gültigkeit eines Spielzuges eruiert.
+        Erstellung eines Numpy-Arrays mit zwei Dimensionen, Zuweisung der Dimensionen.
+        "Liegt row zwischen 0 und m und liegt col zwischen 0 und n und ist der Wert des Feldes 0?"
+        "... dann wahr -> valider Zug"
+        "andernfalls falsch"
+        """
         m, n = self.board.shape  # Erstellung eines Numpy-Arrays mit zwei Dimensionen, Zuweisung der Dimensionen
         if 0 <= row < m and 0 <= col < n and self.board[row][col] == 0:  # "Liegt row zwischen 0 und m und liegt col zwischen 0 und n und ist der Wert des Feldes 0?"
             return True  # "... dann wahr -> valider Zug"
         return False  # "andernfalls falsch"
     
     def is_winner(self, piece):  # Definition der Funktion, die einen Gewinner feststellt
-    """
-    Definition der Funktion, die einen Gewinner feststellt.
-    Gewinnsequenz entspricht dem k-fachen von Piece als Str.
-    "Für jede Zeile im Board..."
-    "...wenn die Gewinnsequenz in einer Zeile vorhanden ist"
-    "... dann gebe 'wahr' wieder"
-    Gleiches Verfahren wie davor, wobei nun die Gewinnsequenz in einer Spalte analysiert wird.
-    """
+        """
+        Definition der Funktion, die einen Gewinner feststellt.
+        Gewinnsequenz entspricht dem k-fachen von Piece als Str.
+        "Für jede Zeile im Board..."
+        "...wenn die Gewinnsequenz in einer Zeile vorhanden ist"
+        "... dann gebe 'wahr' wieder"
+        Gleiches Verfahren wie davor, wobei nun die Gewinnsequenz in einer Spalte analysiert wird.
+        """
         win_sequence = str(piece) * self.k  # Gewinnsequenz entspricht dem k-fachen von Piece als Str
 
         for row in self.board:  # "Für jede Zeile im Board..."
