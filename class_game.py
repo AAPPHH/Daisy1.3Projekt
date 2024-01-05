@@ -34,7 +34,7 @@ class Game:
                         self.player2 = GomokuBot("GomokuBot", 2)
                         self.whos_first()
                     elif choice == "2":
-                        #self.player2 = TreeBot("TreeBot", 2)
+                        self.player2 = TreeBot("TreeBot", 2)
                         self.whos_first()
                     elif choice == "3":
                         self.player2 = MinimaxBot("MinimaxBot", 2)
@@ -49,8 +49,7 @@ class Game:
                 if choice_bot_1 == "1":
                     self.player1 = GomokuBot("GomokuBot", 1)
                 elif choice_bot_1 == "2":
-                    #self.player1 = TreeBot("TreeBot", 1)
-                    pass
+                    self.player1 = TreeBot("TreeBot", 1)
                 elif choice_bot_1 == "3":
                     self.player1 = MinimaxBot("MinimaxBot", 1)
                 elif choice_bot_1 == "4":
@@ -62,8 +61,7 @@ class Game:
                 if choice_bot_2 == "1":
                     self.player2 = GomokuBot("GomokuBot", 2)
                 elif choice_bot_2 == "2":
-                    #self.player2 = TreeBot("TreeBot", 2)
-                    pass
+                    self.player2 = TreeBot("TreeBot", 2)
                 elif choice_bot_2 == "3":
                     self.player2 = MinimaxBot("MinimaxBot", 2)
                 elif choice_bot_2 == "4":
@@ -104,8 +102,8 @@ class Game:
             if isinstance(self.current_player, GomokuBot):
                 GomokuBot.place_piece(self.current_player, self, self.board)
 
-            #elif isinstance(self.current_player, TreeBot):
-                 #TreeBot.place_piece(self.current_player, row, col, self, self.board)  
+            elif isinstance(self.current_player, TreeBot):
+                TreeBot.make_move(self.current_player, self, self.board)  
 
             elif isinstance(self.current_player, MinimaxBot):
                 MinimaxBot.make_move(self.current_player, self, self.board)

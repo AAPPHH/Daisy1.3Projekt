@@ -2,13 +2,14 @@ import numpy as np
 import random
 from class_player import *
 
-class Treebot(Player):
+class TreeBot(Player):
     def __init__(self, m, n, board): 
         self.m = m
         self.n = n
         self.board = np.zeros((m, n), dtype=int)
 
-    def make_intelligent_move(self, game, board):
+    # TreeBot.place_piece(self.current_player, row, col, self, self.board) 
+    def make_move(self, game, board):
         if self.board[self.m // 2][self.n // 2] == 0:  # Zentrum
             self.board[self.m // 2][self.n // 2] = 2
         elif self.board[self.m // 2 + 1][self.n // 2] == 0:  # Oben von der Mitte
