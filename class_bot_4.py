@@ -5,10 +5,10 @@ from functools import lru_cache
 from class_player import *
 
 class MonteCarloBot(Player):
-    NTRIALS = 100000
+    NTRIALS = 250000
     SCORE_CURRENT = 1.0
-    SCORE_OTHER = 10.0
-    DEP = 50
+    SCORE_OTHER = 2.0
+    DEP = 4
 
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
@@ -43,6 +43,7 @@ class MonteCarloBot(Player):
             depth -= 1
 
     def mc_update_scores(self, scores, position):
+        #print(position.board)
         winner = position.is_winner
         if winner == 0:
             return
@@ -85,7 +86,7 @@ class MonteCarloBot(Player):
 
         futures = [self.mc_trial_remote.remote(self, deepcopy(position)) for _ in range(self.NTRIALS)]
         results = ray.get(futures)
-
+        #print(results)
         for clone in results:
             self.mc_update_scores(scores, clone)
             num += 1
@@ -95,8 +96,7 @@ class MonteCarloBot(Player):
     
     def place_piece(self, game, board):
         print("Computer denkt nach...")
-        clone = deepcopy(board)
-        move = self.mc_move(clone)
+        move = self.mc_move(board)
         ray.shutdown()
         self.mc_move.cache_clear()
         Player.place_piece(self, move[0], move[1], game, board)
