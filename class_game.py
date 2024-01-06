@@ -102,16 +102,16 @@ class Game:
             self.board.print_board()
             start_turn_time = time.time()
             if isinstance(self.current_player, GomokuBot):
-                GomokuBot.place_piece(self.current_player, self, self.board)
+                valid_move = GomokuBot.place_piece(self.current_player, self, self.board)
 
             elif isinstance(self.current_player, TreeBot):
-                TreeBot.make_move(self.current_player, self, self.board)  
+                valid_move = TreeBot.make_move(self.current_player, self, self.board)  
 
             elif isinstance(self.current_player, MinimaxBot):
                 MinimaxBot.make_move(self.current_player, self, self.board)
 
             elif isinstance(self.current_player, MonteCarloBot):
-                MonteCarloBot.place_piece(self.current_player, self, self.board)
+                valid_move = MonteCarloBot.place_piece(self.current_player, self, self.board)
             
             elif isinstance(self.current_player, Player):
                 try:

@@ -7,8 +7,8 @@ from class_player import *
 class MonteCarloBot(Player):
     NTRIALS = 250000
     SCORE_CURRENT = 1.0
-    SCORE_OTHER = 2.0
-    DEP = 4
+    SCORE_OTHER = 10.0
+    DEP = 50
 
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
@@ -18,7 +18,7 @@ class MonteCarloBot(Player):
         winner = position.is_winner(self.player_number)
         board_full = position.is_full()
         game_over = winner or board_full
-
+        #print(f"Game Over: {game_over}")
         empty_squares = [(i, j) for i in range(position.m) for j in range(position.n) if position.board[i][j] == 0]
         if not empty_squares:
             return
@@ -43,7 +43,7 @@ class MonteCarloBot(Player):
             depth -= 1
 
     def mc_update_scores(self, scores, position):
-        #print(position.board)
+        # print(position.board)
         winner = position.is_winner
         if winner == 0:
             return
@@ -69,6 +69,7 @@ class MonteCarloBot(Player):
         if best_square is not None:
             return best_square
         else:
+            print("Keine beste Position gefunden.")
             return random.choice([(i, j) for i in range(position.m) for j in range(position.n) if position.board[i][j] == 0])
 
     @ray.remote
@@ -86,7 +87,7 @@ class MonteCarloBot(Player):
 
         futures = [self.mc_trial_remote.remote(self, deepcopy(position)) for _ in range(self.NTRIALS)]
         results = ray.get(futures)
-        #print(results)
+        # print(results)
         for clone in results:
             self.mc_update_scores(scores, clone)
             num += 1
@@ -99,4 +100,4 @@ class MonteCarloBot(Player):
         move = self.mc_move(board)
         ray.shutdown()
         self.mc_move.cache_clear()
-        Player.place_piece(self, move[0], move[1], game, board)
+        return Player.place_piece(self, move[0], move[1], game, board)

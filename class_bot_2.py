@@ -25,4 +25,4 @@ class TreeBot(Player):
             else:
                 row = random.randint(0, 4)
                 col = random.randint(0, 4)
-                Player.place_piece(self, row, col, game, board) #Parameter die die Rausgehen
+                return Player.place_piece(self, row, col, game, board) #Parameter die die Rausgehen
