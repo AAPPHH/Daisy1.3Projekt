@@ -8,20 +8,20 @@ class TreeBot(Player):
 
     def make_move(self, game, board):
             if board.board[board.m // 2][board.n // 2] == 0:
-                Player.place_piece(self, board.m // 2, board.n // 2, game, board)
                 print("Zentrum")
+                return Player.place_piece(self, board.m // 2, board.n // 2, game, board)
             elif board.board[board.m // 2+1][board.n // 2+1] == 0:
-                Player.place_piece(self, board.m // 2+1, board.n // 2+1, game, board)
                 print("Oben von der Mitte")
+                return Player.place_piece(self, board.m // 2+1, board.n // 2+1, game, board)
             elif board.board[board.m // 2-1][board.n // 2-1] == 0:
-                Player.place_piece(self, board.m // 2-1, board.n // 2-1, game, board)
                 print("Unten von der Mitte")
+                return Player.place_piece(self, board.m // 2-1, board.n // 2-1, game, board)         
             elif board.board[board.m // 2+2][board.n // 2+2] == 0:
-                Player.place_piece(self, board.m // 2+2, board.n // 2+2, game, board)
                 print("Rechts von der Mitte")
+                return Player.place_piece(self, board.m // 2+2, board.n // 2+2, game, board)
             elif board.board[board.m // 2-2][board.n // 2-2] == 0:
-                Player.place_piece(self, board.m // 2-2, board.n // 2-2, game, board)
                 print("Links von der Mitte")
+                return Player.place_piece(self, board.m // 2-2, board.n // 2-2, game, board)   
             else:
                 row = random.randint(0, 4)
                 col = random.randint(0, 4)

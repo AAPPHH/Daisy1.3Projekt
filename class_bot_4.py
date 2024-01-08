@@ -122,19 +122,15 @@ class MonteCarloBot(Player):
     def mc_move(self, position):
         board_state = str(position.board)
 
-        if board_state in self.memo:
-            print("Memoization!")
-            return self.get_best_move(self.memo[board_state][0], self.memo[board_state][1])
+        # if board_state in self.memo:
+        #     print("Memoization!")
+        #     best_square = self.memo[board_state][0]
+        #     best_score = self.memo[board_state][1]
+        #     print(f"Beste Position: {best_square} mit Score {best_score}")
+        #     return best_square
         scores = [[0] * position.n for _ in range(position.m)]
         num = 0
-        # while num < self.NTRIALS:
-        #     clone = deepcopy(position)
-        #     self.mc_trial(clone)
-        #     self.mc_update_scores(scores, clone)
-        #     num += 1
 
-        # print(f"Computer wählt aus {num} Möglichkeiten.")
-        # return self.get_best_move(position, scores)
         ray.init(num_cpus=os.cpu_count())
 
         futures = [self.mc_trial_remote.remote(self, deepcopy(position)) for _ in range(self.NTRIALS)]
