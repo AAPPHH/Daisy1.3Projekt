@@ -7,7 +7,7 @@ import pickle
 from class_player import *
 
 class MonteCarloBot(Player):
-    NTRIALS = 250000
+    NTRIALS = 200000
     SCORE_CURRENT = 1.0
     SCORE_OTHER = 10.0
     DEP = 50
@@ -122,12 +122,12 @@ class MonteCarloBot(Player):
     def mc_move(self, position):
         board_state = str(position.board)
 
-        # if board_state in self.memo:
-        #     print("Memoization!")
-        #     best_square = self.memo[board_state][0]
-        #     best_score = self.memo[board_state][1]
-        #     print(f"Beste Position: {best_square} mit Score {best_score}")
-        #     return best_square
+        if board_state in self.memo:
+            print("Memoization!")
+            best_square = self.memo[board_state][0]
+            best_score = self.memo[board_state][1]
+            print(f"Beste Position: {best_square} mit Score {best_score}")
+            return best_square
         scores = [[0] * position.n for _ in range(position.m)]
         num = 0
 
