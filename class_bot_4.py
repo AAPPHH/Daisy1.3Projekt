@@ -5,7 +5,7 @@ from functools import lru_cache
 from class_player import *
 
 class MonteCarloBot(Player):
-    NTRIALS = 250000
+    NTRIALS = 5000
     SCORE_CURRENT = 1.0
     SCORE_OTHER = 10.0
     DEP = 50
