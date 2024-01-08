@@ -2,7 +2,7 @@ import numpy as np
 from class_player import *
 
 class Board:
-    def __init__(self, m=3, n=3, k=3):
+    def __init__(self, m=5, n=5, k=4):
         self.m = m  
         self.n = n  
         self.k = k  

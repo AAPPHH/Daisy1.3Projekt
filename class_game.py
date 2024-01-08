@@ -60,13 +60,13 @@ class Game:
                 self.current_player = self.player1
                 choice_bot_2 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player Two ist? (1/2/3/4):")
                 if choice_bot_2 == "1":
-                    self.player2 = GomokuBot("GomokuBot", 2)
+                    self.player2 = GomokuBot("GomokuBot_2", 2)
                 elif choice_bot_2 == "2":
-                    self.player2 = TreeBot("TreeBot", 2)
+                    self.player2 = TreeBot("TreeBot_2", 2)
                 elif choice_bot_2 == "3":
-                    self.player2 = MinimaxBot("MinimaxBot", 2)
+                    self.player2 = MinimaxBot("MinimaxBot_2", 2)
                 elif choice_bot_2 == "4":
-                    self.player2 = MonteCarloBot("MonteCarloBot", 2)
+                    self.player2 = MonteCarloBot("MonteCarloBot_2", 2)
                 num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000):")
                 try:
                     for game_number in range(int(num_games)):
