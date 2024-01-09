@@ -141,7 +141,6 @@ class MonteCarloBot(Player):
             print(self.DEP)
             self.mc_update_scores(scores, clone)
             num += 1
-
         print(f"Computer wählt aus {num} Möglichkeiten.")
         return self.get_best_move(position, scores)
     
