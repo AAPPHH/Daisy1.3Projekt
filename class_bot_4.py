@@ -22,7 +22,6 @@ class MonteCarloBot(Player):
         winner = position.is_winner(self.player_number)
         board_full = position.is_full()
         game_over = winner or board_full
-        #print(f"Game Over: {game_over}")
         empty_squares = [(i, j) for i in range(position.m) for j in range(position.n) if position.board[i][j] == 0]
         if not empty_squares:
             return
@@ -47,7 +46,6 @@ class MonteCarloBot(Player):
             depth -= 1
 
     def mc_update_scores(self, scores, position):
-        # print(position.board)
         #integrate dept as a factor
         winner = position.is_winner
         if winner == 0:
@@ -61,40 +59,7 @@ class MonteCarloBot(Player):
                     scores[row][col] += coef * self.SCORE_CURRENT
                 elif position.board[row][col] != 0:
                     scores[row][col] -= coef * self.SCORE_OTHER
-
-    # def chain(self, piece):
-    #     longeste_chain = str(piece) * (2/self.k)
-
-    #     for row in self.board:
-    #         if longeste_chain in ''.join(str(int(e)) for e in row):
-    #             return True
-
-    #     for col in self.board.T:
-    #         if longeste_chain in ''.join(str(int(e)) for e in col):
-    #             return True
-
-    #     for diag in [np.diagonal(self.board, offset) for offset in range(-self.board.shape[0] + self.k, self.board.shape[1] - self.k + 1)]:
-    #         if longeste_chain in ''.join(str(int(e)) for e in diag):
-    #             return True
-
-    #     for diag in [np.diagonal(np.fliplr(self.board), offset) for offset in range(-self.board.shape[0] + self.k, self.board.shape[1] - self.k + 1)]:
-    #         if longeste_chain in ''.join(str(int(e)) for e in diag):
-    #             return True
-
-    #     return False
-
-    # def mc_update_scores(self, scores, position):
-    #     longest_chain = position.chain(self.player_number)
-    #     coef = 1
-    #     if longest_chain:
-    #         coef = -1
-    #     for row in range(position.m):
-    #         for col in range(position.n):
-    #             if position.board[row][col] == self.player_number:
-    #                 scores[row][col] += coef * self.SCORE_CURRENT
-    #             elif position.board[row][col] != 0:
-    #                 scores[row][col] -= coef * self.SCORE_OTHER
-            
+        
     def get_best_move(self, position, scores):
         best_square = None
         best_score = float('-inf')
@@ -136,12 +101,10 @@ class MonteCarloBot(Player):
 
         futures = [self.mc_trial_remote.remote(self, deepcopy(position)) for _ in range(self.NTRIALS)]
         results = ray.get(futures)
-        # print(results)
         for clone in results:
-            print(self.DEP)
             self.mc_update_scores(scores, clone)
             num += 1
-        print(f"Computer wählt aus {num} Möglichkeiten.")
+        print(f"Computer wählt aus {len(results)} Möglichkeiten.")
         return self.get_best_move(position, scores)
     
     def load_state(self):
