@@ -6,6 +6,7 @@ from class_bot_1 import *
 from class_bot_2 import *
 from class_bot_3 import *
 from class_bot_4 import *
+from class_bot_5 import *
 from Data import *
 
 class Game:
@@ -23,15 +24,15 @@ class Game:
 
     def start(self):
         try:
-            start_choice = input("Let's play five in row! wollen sie oder soll der Computer spielen? (1/2):")
+            start_choice = input("Let's play five in row! Wollen Sie oder soll der Computer spielen? (1/2): ")
             if start_choice == "1":
-                self.player1.name = input("Bitte geben sie ihre Namen ein:")
-                choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2):")
+                self.player1.name = input("Bitte geben Sie Ihren Namen ein: ")
+                choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2): ")
                 if choice == "1":
                     self.player2.name = input("Spieler 2: ")
                     self.whos_first()
                 elif choice == "2":
-                    choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot spielen? (1/2/3/4):")
+                    choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen RandomBot, TreeBot, MinimaxBot, MonteCarloBot oder Blocker spielen? (1/2/3/4/5): ")
                     if choice == "1":
                         self.player2 = GomokuBot("GomokuBot", 2)
                         self.whos_first()
@@ -44,10 +45,13 @@ class Game:
                     elif choice == "4":
                         self.player2 = MonteCarloBot("MonteCarloBot", 2)
                         self.whos_first()
+                    elif choice == "5":
+                        self.player2 = Blocker("Blocker", 2)
+                        self.whos_first()
                     else:
-                        print("Bitte geben Sie eine gültige Zahl ein.")
+                        print("Bitte geben Sie eine gültige Zahl ein. ")
             elif start_choice == "2":
-                choice_bot_1 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player One ist? (1/2/3/4):")
+                choice_bot_1 = input(f"Möchtest du, dass RandomBot, TreeBot, MinimaxBot, MonteCarloBot oder Blocker Player One ist? (1/2/3/4/5): ")
                 if choice_bot_1 == "1":
                     self.player1 = GomokuBot("GomokuBot", 1)
                 elif choice_bot_1 == "2":
@@ -56,10 +60,12 @@ class Game:
                     self.player1 = MinimaxBot("MinimaxBot", 1)
                 elif choice_bot_1 == "4":
                     self.player1 = MonteCarloBot("MonteCarloBot", 1)
+                elif choice_bot_1 == "5":
+                    self.player1 = Blocker("Blocker", 1)
                 else:
-                    print("Bitte geben Sie eine gültige Zahl ein.")
+                    print("Bitte geben Sie eine gültige Zahl ein. ")
                 self.current_player = self.player1
-                choice_bot_2 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player Two ist? (1/2/3/4):")
+                choice_bot_2 = input(f"Möchtest du, dass RandomBot, TreeBot, MinimaxBot, MonteCarloBot oder Blocker Player Two ist? (1/2/3/4/5): ")
                 if choice_bot_2 == "1":
                     self.player2 = GomokuBot("GomokuBot_2", 2)
                 elif choice_bot_2 == "2":
@@ -68,7 +74,9 @@ class Game:
                     self.player2 = MinimaxBot("MinimaxBot_2", 2)
                 elif choice_bot_2 == "4":
                     self.player2 = MonteCarloBot("MonteCarloBot_2", 2)
-                num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000):")
+                elif choice_bot_2 == "5":
+                    self.player2 = Blocker("Blocker_2", 2)
+                num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000): ")
                 try:
                     for game_number in range(int(num_games)):
                             print(f"Spiel {game_number + 1} von {num_games}")
