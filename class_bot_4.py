@@ -2,7 +2,6 @@ import random
 import ray
 import os
 from copy import deepcopy
-from functools import lru_cache
 import pickle
 from class_player import *
 
@@ -17,7 +16,7 @@ class MonteCarloBot(Player):
         self.memo = {}
         self.load_state() 
         
-    def mc_trial(self, position):
+    def mc_trial(self, position, depth):
         current_player = self.player_number
         winner = position.is_winner(self.player_number)
         board_full = position.is_full()
@@ -27,7 +26,6 @@ class MonteCarloBot(Player):
             return
 
         move = empty_squares[random.randrange(len(empty_squares))]
-        depth = self.DEP
         while not game_over and depth != 0:
             winner = position.is_winner(self.player_number)
             board_full = position.is_full()
@@ -44,9 +42,11 @@ class MonteCarloBot(Player):
             position.board[move[0]][move[1]] = current_player
             current_player = 2 if current_player == 1 else 1
             depth -= 1
+            #print(f"Depth: {depth}")
 
-    def mc_update_scores(self, scores, position):
-        #integrate dept as a factor
+    def mc_update_scores(self, scores, position_tupel):
+        position, depth = position_tupel
+        #print(f"Depth: {depth}")
         winner = position.is_winner
         if winner == 0:
             return
@@ -56,9 +56,9 @@ class MonteCarloBot(Player):
         for row in range(position.m):
             for col in range(position.n):
                 if position.board[row][col] == self.player_number:
-                    scores[row][col] += coef * self.SCORE_CURRENT
+                    scores[row][col] += coef * self.SCORE_CURRENT * depth
                 elif position.board[row][col] != 0:
-                    scores[row][col] -= coef * self.SCORE_OTHER
+                    scores[row][col] -= coef * self.SCORE_OTHER * depth
         
     def get_best_move(self, position, scores):
         best_square = None
@@ -81,10 +81,10 @@ class MonteCarloBot(Player):
     @ray.remote
     def mc_trial_remote(self, position):
         clone = deepcopy(position)
-        self.mc_trial(clone)
-        return clone
+        depth = deepcopy(self.DEP)
+        self.mc_trial(clone, depth)
+        return clone, depth
     
-    @lru_cache(maxsize=None)
     def mc_move(self, position):
         board_state = str(position.board)
 
@@ -95,7 +95,6 @@ class MonteCarloBot(Player):
             print(f"Beste Position: {best_square} mit Score {best_score}")
             return best_square
         scores = [[0] * position.n for _ in range(position.m)]
-        num = 0
 
         ray.init(num_cpus=os.cpu_count())
 
@@ -103,7 +102,7 @@ class MonteCarloBot(Player):
         results = ray.get(futures)
         for clone in results:
             self.mc_update_scores(scores, clone)
-            num += 1
+
         print(f"Computer wählt aus {len(results)} Möglichkeiten.")
         return self.get_best_move(position, scores)
     
@@ -123,5 +122,4 @@ class MonteCarloBot(Player):
         move = self.mc_move(board)
         ray.shutdown()
         self.save_state()
-        self.mc_move.cache_clear()
         return Player.place_piece(self, move[0], move[1], game, board)
