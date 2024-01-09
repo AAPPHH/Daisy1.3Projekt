@@ -138,6 +138,7 @@ class MonteCarloBot(Player):
         results = ray.get(futures)
         # print(results)
         for clone in results:
+            print(self.DEP)
             self.mc_update_scores(scores, clone)
             num += 1
 
