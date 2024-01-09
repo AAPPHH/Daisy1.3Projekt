@@ -100,7 +100,6 @@ class Game:
         start_time = time.time()
         while not game_over:
             valid_move = True
-            self.game_arrays.append(copy.deepcopy(self.board.board))
             self.board.print_board()
             start_turn_time = time.time()
             if isinstance(self.current_player, GomokuBot):
@@ -151,6 +150,7 @@ class Game:
                         print(f'Spielzugdauer: {end_turn_time - start_turn_time} Sekunden')
                     except:
                         pass
+                    self.game_arrays.append(copy.deepcopy(self.board.board))
                     self.switch_player()
                     
 Daisy = Data_Science("game_history.pkl")
