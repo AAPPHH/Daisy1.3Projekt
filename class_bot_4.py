@@ -48,6 +48,7 @@ class MonteCarloBot(Player):
 
     def mc_update_scores(self, scores, position):
         # print(position.board)
+        #integrate dept as a factor
         winner = position.is_winner
         if winner == 0:
             return

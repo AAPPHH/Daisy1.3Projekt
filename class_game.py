@@ -19,6 +19,7 @@ class Game:
         self.current_player = self.player1
         self.game_arrays = []
         self.winner = None
+        self.starter = None
 
     def start(self):
         try:
@@ -95,6 +96,7 @@ class Game:
 
     def game_loop(self):
         game_over = False
+        self.starter = self.current_player.name
         start_time = time.time()
         while not game_over:
             valid_move = True
