@@ -146,11 +146,11 @@ class Game:
             else:
                 if valid_move == True:
                     end_turn_time = time.time()
+                    self.game_arrays.append(copy.deepcopy(self.board.board))
                     try:
                         print(f'Spielzugdauer: {end_turn_time - start_turn_time} Sekunden')
                     except:
                         pass
-                    self.game_arrays.append(copy.deepcopy(self.board.board))
                     self.switch_player()
                     
 Daisy = Data_Science("game_history.pkl")
