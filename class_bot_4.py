@@ -6,7 +6,7 @@ import pickle
 from class_player import *
 
 class MonteCarloBot(Player):
-    NTRIALS = 200000
+    NTRIALS = 2000
     SCORE_CURRENT = 1.0
     SCORE_OTHER = 10.0
     DEP = 50
@@ -46,7 +46,7 @@ class MonteCarloBot(Player):
 
     def mc_update_scores(self, scores, position_tupel):
         position, depth = position_tupel
-        #print(f"Depth: {depth}")
+        print(f"Depth: {depth}")
         winner = position.is_winner
         if winner == 0:
             return
@@ -79,11 +79,11 @@ class MonteCarloBot(Player):
             return random.choice([(i, j) for i in range(position.m) for j in range(position.n) if position.board[i][j] == 0])
 
     @ray.remote
-    def mc_trial_remote(self, position):
+    def mc_trial_remote(self, position, depth):
         clone = deepcopy(position)
-        depth = deepcopy(self.DEP)
-        self.mc_trial(clone, depth)
-        return clone, depth
+        dep = deepcopy(depth)
+        self.mc_trial(clone, dep)
+        return clone, dep
     
     def mc_move(self, position):
         board_state = str(position.board)
@@ -98,7 +98,7 @@ class MonteCarloBot(Player):
 
         ray.init(num_cpus=os.cpu_count())
 
-        futures = [self.mc_trial_remote.remote(self, deepcopy(position)) for _ in range(self.NTRIALS)]
+        futures = [self.mc_trial_remote.remote(self, position, self.DEP) for _ in range(self.NTRIALS)]
         results = ray.get(futures)
         for clone in results:
             self.mc_update_scores(scores, clone)
