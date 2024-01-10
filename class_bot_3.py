@@ -8,7 +8,7 @@ class MinimaxBot(Player):
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
         self.use_minimax = False  # Setzen Sie dies auf False, um Alpha-Beta-Pruning zu verwenden
-        self.depth = 6  # Tiefe der Minimax-Suche
+        self.depth = 4 # Tiefe der Minimax-Suche
 
     # Hauptfunktion, um einen Zug zu machen
     def make_move(self, game, board):
@@ -84,7 +84,7 @@ class MinimaxBot(Player):
 
     def evaluate(self, pos, dep):
         cur_player = self.player_number
-        print(pos.board)
+
         if pos.is_winner(self.player_number) == True:
             return 10 * (dep+1)
         elif pos.is_winner(self.player_number) == False:

@@ -6,7 +6,7 @@ import pickle
 from class_player import *
 
 class MonteCarloBot(Player):
-    NTRIALS = 2000
+    NTRIALS = 100000
     SCORE_CURRENT = 1.0
     SCORE_OTHER = 10.0
     DEP = 50
@@ -46,7 +46,7 @@ class MonteCarloBot(Player):
 
     def mc_update_scores(self, scores, position_tupel):
         position, depth = position_tupel
-        print(f"Depth: {depth}")
+        #print(f"Depth: {depth}")
         winner = position.is_winner
         if winner == 0:
             return
