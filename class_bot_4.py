@@ -62,39 +62,6 @@ class MonteCarloBot(Player):
                 elif position.board[row][col] != 0:
                     scores[row][col] -= coef * self.SCORE_OTHER
 
-    # def chain(self, piece):
-    #     longeste_chain = str(piece) * (2/self.k)
-
-    #     for row in self.board:
-    #         if longeste_chain in ''.join(str(int(e)) for e in row):
-    #             return True
-
-    #     for col in self.board.T:
-    #         if longeste_chain in ''.join(str(int(e)) for e in col):
-    #             return True
-
-    #     for diag in [np.diagonal(self.board, offset) for offset in range(-self.board.shape[0] + self.k, self.board.shape[1] - self.k + 1)]:
-    #         if longeste_chain in ''.join(str(int(e)) for e in diag):
-    #             return True
-
-    #     for diag in [np.diagonal(np.fliplr(self.board), offset) for offset in range(-self.board.shape[0] + self.k, self.board.shape[1] - self.k + 1)]:
-    #         if longeste_chain in ''.join(str(int(e)) for e in diag):
-    #             return True
-
-    #     return False
-
-    # def mc_update_scores(self, scores, position):
-    #     longest_chain = position.chain(self.player_number)
-    #     coef = 1
-    #     if longest_chain:
-    #         coef = -1
-    #     for row in range(position.m):
-    #         for col in range(position.n):
-    #             if position.board[row][col] == self.player_number:
-    #                 scores[row][col] += coef * self.SCORE_CURRENT
-    #             elif position.board[row][col] != 0:
-    #                 scores[row][col] -= coef * self.SCORE_OTHER
-            
     def get_best_move(self, position, scores):
         best_square = None
         best_score = float('-inf')

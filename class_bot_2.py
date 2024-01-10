@@ -26,3 +26,24 @@ class TreeBot(Player):
                 row = random.randint(0, 4)
                 col = random.randint(0, 4)
                 return Player.place_piece(self, row, col, game, board) #Parameter die die Rausgehen
+            
+    # def chain(self, piece):
+    #     longeste_chain = str(piece) * (2/self.k)
+
+    #     for row in self.board:
+    #         if longeste_chain in ''.join(str(int(e)) for e in row):
+    #             return True
+
+    #     for col in self.board.T:
+    #         if longeste_chain in ''.join(str(int(e)) for e in col):
+    #             return True
+
+    #     for diag in [np.diagonal(self.board, offset) for offset in range(-self.board.shape[0] + self.k, self.board.shape[1] - self.k + 1)]:
+    #         if longeste_chain in ''.join(str(int(e)) for e in diag):
+    #             return True
+
+    #     for diag in [np.diagonal(np.fliplr(self.board), offset) for offset in range(-self.board.shape[0] + self.k, self.board.shape[1] - self.k + 1)]:
+    #         if longeste_chain in ''.join(str(int(e)) for e in diag):
+    #             return True
+
+    #     return False
