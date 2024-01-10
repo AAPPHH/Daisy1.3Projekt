@@ -32,12 +32,12 @@ class Game:
                     self.player2.name = input("Spieler 2: ")
                     self.whos_first()
                 elif choice == "2":
-                    choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen RandomBot, TreeBot, MinimaxBot, MonteCarloBot oder Blocker spielen? (1/2/3/4/5): ")
+                    choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen RandomBot, Silly, MinimaxBot, MonteCarloBot oder Blocker spielen? (1/2/3/4/5): ")
                     if choice == "1":
                         self.player2 = GomokuBot("GomokuBot", 2)
                         self.whos_first()
                     elif choice == "2":
-                        self.player2 = TreeBot("TreeBot", 2)
+                        self.player2 = Silly("Silly", 2)
                         self.whos_first()
                     elif choice == "3":
                         self.player2 = MinimaxBot("MinimaxBot", 2)
@@ -51,11 +51,11 @@ class Game:
                     else:
                         print("Bitte geben Sie eine gültige Zahl ein. ")
             elif start_choice == "2":
-                choice_bot_1 = input(f"Möchtest du, dass RandomBot, TreeBot, MinimaxBot, MonteCarloBot oder Blocker Player One ist? (1/2/3/4/5): ")
+                choice_bot_1 = input(f"Möchtest du, dass RandomBot, Silly, MinimaxBot, MonteCarloBot oder Blocker Player One ist? (1/2/3/4/5): ")
                 if choice_bot_1 == "1":
                     self.player1 = GomokuBot("GomokuBot", 1)
                 elif choice_bot_1 == "2":
-                    self.player1 = TreeBot("TreeBot", 1)
+                    self.player1 = Silly("Silly", 1)
                 elif choice_bot_1 == "3":
                     self.player1 = MinimaxBot("MinimaxBot", 1)
                 elif choice_bot_1 == "4":
@@ -65,11 +65,11 @@ class Game:
                 else:
                     print("Bitte geben Sie eine gültige Zahl ein. ")
                 self.current_player = self.player1
-                choice_bot_2 = input(f"Möchtest du, dass RandomBot, TreeBot, MinimaxBot, MonteCarloBot oder Blocker Player Two ist? (1/2/3/4/5): ")
+                choice_bot_2 = input(f"Möchtest du, dass RandomBot, Silly, MinimaxBot, MonteCarloBot oder Blocker Player Two ist? (1/2/3/4/5): ")
                 if choice_bot_2 == "1":
                     self.player2 = GomokuBot("GomokuBot_2", 2)
                 elif choice_bot_2 == "2":
-                    self.player2 = TreeBot("TreeBot_2", 2)
+                    self.player2 = Silly("Silly", 2)
                 elif choice_bot_2 == "3":
                     self.player2 = MinimaxBot("MinimaxBot_2", 2)
                 elif choice_bot_2 == "4":
@@ -113,8 +113,8 @@ class Game:
             if isinstance(self.current_player, GomokuBot):
                 valid_move = GomokuBot.place_piece(self.current_player, self, self.board)
 
-            elif isinstance(self.current_player, TreeBot):
-                valid_move = TreeBot.make_move(self.current_player, self, self.board)  
+            elif isinstance(self.current_player, Silly):
+                valid_move = Silly.make_move(self.current_player, self, self.board)  
 
             elif isinstance(self.current_player, MinimaxBot):
                 MinimaxBot.make_move(self.current_player, self, self.board)
@@ -122,16 +122,19 @@ class Game:
             elif isinstance(self.current_player, MonteCarloBot):
                 valid_move = MonteCarloBot.place_piece(self.current_player, self, self.board)
             
+            elif isinstance(self.current_player, Blocker):
+                valid_move = Blocker.block_enemy(self.current_player, self, self.board)
+            
             elif isinstance(self.current_player, Player):
                 try:
                     row = int(input(f"Spieler {self.current_player.name}, geben Sie die Zeilennummer ein (0-{self.m-1}): "))
                     col = int(input(f"Spieler {self.current_player.name}, geben Sie die Spaltennummer ein (0-{self.n-1}): "))
                 except ValueError:
-                    print("Bitte geben Sie gültige ganze Zahlen ein.")
+                    print("Bitte geben Sie gültige ganze Zahlen ein. ")
                     continue
                 valid_move = Player.place_piece(self.current_player, row, col, self, self.board)  
                 if not valid_move:
-                    print("Bitte geben Sie eine gültige Zahl ein.")
+                    print("Bitte geben Sie eine gültige Zahl ein. ")
                     continue
 
             if self.board.is_winner(self.current_player.player_number):
