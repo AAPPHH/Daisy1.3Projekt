@@ -9,7 +9,6 @@ class MinimaxBot(Player):
         self.use_minimax = False
         self.depth = 4
 
-
     def make_move(self, game, board):
         if self.use_minimax:
             move = self.minimax(game, board, self.depth, self.player_number)
@@ -32,9 +31,11 @@ class MinimaxBot(Player):
             return 1
         
     def perform_move(self, board, move, player):
+        #print(board.board)
         board_copy = deepcopy(board)
         row, col = move
         board_copy.board[row][col] = player
+        #print(board_copy.board)
         return board_copy
     
     def minimax(self, game, board, depth, player):
@@ -44,7 +45,7 @@ class MinimaxBot(Player):
         for move in moves:
             clone = self.perform_move(board, move, player)
             score = self.min_play(game, clone, depth-1, move, player) 
-            print(f"Move: {move}, Score: {score}")
+            print(f"Move: {clone}, Score: {score}")
             if score > best_score:
                 best_score = score
                 best_move = move
@@ -88,13 +89,13 @@ class MinimaxBot(Player):
         return 0
 
     def alphabeta(self, position, lastmove, player, alpha, beta, depth):
-        print(f"{position.board}")
+        #print(f"{position.board}")
         if position.is_winner(player) or position.is_full() or depth == 0:
             return self.evaluate(position, depth)
         for move in self.get_empty_squares(position):
             clone = deepcopy(position)
             self.perform_move(clone, move, player)
-            print(f'Board state after move:{clone.board}')
+            #print(f'Board state after move:{clone.board}')
             val = self.alphabeta(clone, move, self.get_enemy(), alpha, beta, depth-1)
             if player == self.player_number:
                 if val > alpha:
