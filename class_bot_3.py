@@ -6,7 +6,7 @@ import random
 class MinimaxBot(Player):
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
-        self.use_minimax = True
+        self.use_minimax = False
         self.depth = 4
 
 
@@ -88,11 +88,13 @@ class MinimaxBot(Player):
         return 0
 
     def alphabeta(self, position, lastmove, player, alpha, beta, depth):
+        print(f"{position.board}")
         if position.is_winner(player) or position.is_full() or depth == 0:
             return self.evaluate(position, depth)
         for move in self.get_empty_squares(position):
             clone = deepcopy(position)
             self.perform_move(clone, move, player)
+            print(f'Board state after move:{clone.board}')
             val = self.alphabeta(clone, move, self.get_enemy(), alpha, beta, depth-1)
             if player == self.player_number:
                 if val > alpha:
