@@ -92,7 +92,7 @@ class Game:
     def switch_player(self):
         self.current_player = (
             self.player2 if self.current_player == self.player1 else self.player1
-        )
+)
 
     def game_loop(self):
         game_over = False

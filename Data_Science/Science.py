@@ -21,4 +21,4 @@ treebot_wins = df[df['winner'] == 'TreeBot']
 average_moves_treebot_wins = treebot_wins['N_turn'].mean()
 print(average_moves_treebot_wins)
 
-df.to_excel("Data_Science/game_history.xlsx")
+df.to_excel("Data_Science/Alpha_Ran_100.xlsx")

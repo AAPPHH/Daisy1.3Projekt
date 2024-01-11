@@ -1,5 +1,4 @@
 import numpy as np
-import ray
 from copy import deepcopy
 from class_player import *
 import random
@@ -7,22 +6,22 @@ import random
 class MinimaxBot(Player):
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
-        self.use_minimax = False  # Setzen Sie dies auf False, um Alpha-Beta-Pruning zu verwenden
-        self.depth = 4 # Tiefe der Minimax-Suche
+        self.use_minimax = True
+        self.depth = 4
 
-    # Hauptfunktion, um einen Zug zu machen
+
     def make_move(self, game, board):
         if self.use_minimax:
             move = self.minimax(game, board, self.depth, self.player_number)
         else:
-            move = self.alphabeta_bot(game, board, self.player_number)
+            move =self.alphabeta_bot(game, board, self.player_number) 
         Player.place_piece(self, move[0], move[1], game, board)
 
     def get_empty_squares(self, board):
         empty_squares = []
-        for row_index, row in enumerate(board.board):  # Zugriff auf das NumPy-Array innerhalb des Board-Objekts
+        for row_index, row in enumerate(board.board):
             for col_index, value in enumerate(row):
-                if value == 0:  # Annahme: 0 repräsentiert ein leeres Feld
+                if value == 0:  
                     empty_squares.append((row_index, col_index))
         return empty_squares
     
@@ -33,27 +32,26 @@ class MinimaxBot(Player):
             return 1
         
     def perform_move(self, board, move, player):
-        # Erstellt eine Kopie des Bretts und führt darauf einen hypothetischen Zug aus
         board_copy = deepcopy(board)
         row, col = move
-        board_copy.board[row][col] = player  # Setzt den Spielerwert an der gewählten Position auf dem internen Array
+        board_copy.board[row][col] = player
         return board_copy
     
     def minimax(self, game, board, depth, player):
         moves = self.get_empty_squares(board)
         best_move = moves[0]
         best_score = float('-inf')
-
         for move in moves:
             clone = self.perform_move(board, move, player)
-            score = self.min_play(game, clone, depth-1, move, player)  # Pass the game object here
+            score = self.min_play(game, clone, depth-1, move, player) 
+            print(f"Move: {move}, Score: {score}")
             if score > best_score:
                 best_score = score
                 best_move = move
         return best_move
 
     def min_play(self, game, position, depth, move, player):
-        if position.is_winner(player) or position.is_full() or depth == 0:  # Call is_winner on the game object
+        if position.is_winner(player) or position.is_full() or depth == 0:
             return self.evaluate(position, player)
         moves = self.get_empty_squares(position)
         player = self.get_enemy()
@@ -83,15 +81,12 @@ class MinimaxBot(Player):
         return best_score
 
     def evaluate(self, pos, dep):
-        cur_player = self.player_number
-
         if pos.is_winner(self.player_number) == True:
             return 10 * (dep+1)
         elif pos.is_winner(self.player_number) == False:
             return -10 * (dep+1)
         return 0
 
-    # Alpha-Beta-Pruning
     def alphabeta(self, position, lastmove, player, alpha, beta, depth):
         if position.is_winner(player) or position.is_full() or depth == 0:
             return self.evaluate(position, depth)
@@ -117,15 +112,25 @@ class MinimaxBot(Player):
     def alphabeta_bot(self, game, position, player):
         a = -2
         choices = []
-        if len(self.get_empty_squares(position)) == position.board.size ** 2: # bester erster Zug
+        if len(self.get_empty_squares(position)) == position.board.size ** 2:
             return position.board.size ** 2 // 2 + 1
-        for move in self.get_empty_squares(position):
-            clone = deepcopy(position)
-            self.perform_move(clone, move, player)
-            val = self.alphabeta(clone, move, self.get_enemy(), -2, 2, self.depth)
-            if val > a:
-                a = val
-                choices = [move]
-            elif val == a:
-                choices.append(move)
+
+        for depth in range(1, self.depth + 1):
+            a = -2
+            new_choices = []
+            for move in self.get_empty_squares(position):
+                clone = deepcopy(position)
+                self.perform_move(clone, move, player)
+                val = self.alphabeta(clone, move, self.get_enemy(), -2, 2, depth)
+                if val > a:
+                    a = val
+                    new_choices = [move]
+                elif val == a:
+                    new_choices.append(move)
+            choices = new_choices
+
+            if a == 1:
+                break
+
         return random.choice(choices)
+
