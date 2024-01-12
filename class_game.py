@@ -20,7 +20,10 @@ class Game:
         self.game_arrays = []
         self.winner = None
         self.starter = None
-
+    #echteres random
+    #temp for temporary
+    #random choice
+    #pearl noise
     def start(self):
         try:
             start_choice = input("Let's play five in row! wollen sie oder soll der Computer spielen? (1/2):")
