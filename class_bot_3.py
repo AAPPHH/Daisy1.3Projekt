@@ -8,13 +8,33 @@ class MinimaxBot(Player):
         super().__init__(name, player_number)
         self.use_minimax = True
         self.depth = 4
+        self.memo = {
+            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': ((2,2), "KILLER_MOVE"),
+
+            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': (random.choice([(4,0)]), "KILLER_MOVE"),
+
+            '[[2. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 0.]\n [0. 0. 0. 0. 0.]]': ((4, 4), "KILLER_MOVE"),
+            '[[0. 0. 0. 0. 2.]\n [0. 0. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 0.]\n [0. 0. 0. 0. 0.]]': ((0, 0), "KILLER_MOVE"),
+            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 0.]\n [2. 0. 0. 0. 0.]]': ((0, 0), "KILLER_MOVE"),
+            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 0.]\n [0. 0. 0. 0. 2.]]': ((0, 0), "KILLER_MOVE"),
+
+            '[[2. 0. 0. 0. 0.]\n [0. 1. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 0.]\n [2. 0. 0. 0. 0.]]': ((4, 4), "KILLER_MOVE"),
+            '[[2. 0. 0. 0. 2.]\n [0. 1. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 0.]\n [0. 0. 0. 0. 0.]]': ((4, 4), "KILLER_MOVE")
+        }
 
     def make_move(self, game, board):
+        board_state = str(board.board)
+        if board_state in self.memo:
+            print("Memoization!")
+            move = self.memo[board_state][0]
+            best_score = self.memo[board_state][1]
+            print(f"Beste Position: {move} mit Score {best_score}")
+            return Player.place_piece(self, move[0], move[1], game, board)
         if self.use_minimax:
             move = self.minimax(game, board, self.depth, self.player_number)
         else:
-            move =self.alphabeta_bot(game, board, self.player_number) 
-        Player.place_piece(self, move[0], move[1], game, board)
+            move = self.alphabeta_bot(game, board, self.player_number) 
+        return Player.place_piece(self, move[0], move[1], game, board)
 
     def get_empty_squares(self, board):
         empty_squares = []
@@ -43,11 +63,11 @@ class MinimaxBot(Player):
         for move in moves:
             clone = self.perform_move(board, move, player_number)
             score = self.min_play(game, clone, depth-1, move, player_number) 
-            # print(f"Move: {clone.board}, Score: {score}")
+            print(f"Move: {clone.board}, Score: {score}")
             if score > best_score:
                 best_score = score
                 best_move = move
-        return best_move
+        return best_move 
 
     def min_play(self, game, position, depth, move, player_number):
         if position.is_winner(player_number) or position.is_full() or depth == 0:
@@ -79,9 +99,9 @@ class MinimaxBot(Player):
         return best_score
 
     def evaluate(self, pos, dep):
-        if pos.is_winner(self.player_number) == True:
+        if pos.is_winner(self.player_number):
             return 10 * (dep+1)
-        elif pos.is_winner(self.player_number) == False:
+        elif pos.is_winner(self.get_enemy()):
             return -10 * (dep+1)
         return 0
 

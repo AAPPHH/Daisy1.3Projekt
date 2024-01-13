@@ -78,6 +78,7 @@ class Game:
                             self.game_loop()
                             self.game_arrays = []
                             self.board.reset_board()
+                            self.current_player = self.player1
                     print("Alle Spiele wurden gespielt.")
                 except ValueError:
                     print("Bitte geben Sie eine gültige Zahl ein.")
@@ -112,7 +113,7 @@ class Game:
                 valid_move = TreeBot.make_move(self.current_player, self, self.board)  
 
             elif isinstance(self.current_player, MinimaxBot):
-                MinimaxBot.make_move(self.current_player, self, self.board)
+                valid_move = MinimaxBot.make_move(self.current_player, self, self.board)
 
             elif isinstance(self.current_player, MonteCarloBot):
                 valid_move = MonteCarloBot.place_piece(self.current_player, self, self.board)
