@@ -1,5 +1,4 @@
 import random
-import secrets
 import ray
 import os
 from copy import deepcopy
@@ -46,7 +45,7 @@ class MonteCarloBot(Player):
             empty_squares = [(i, j) for i in range(position.m) for j in range(position.n) if position.board[i][j] == 0]
             if not empty_squares:
                 break
-            move = empty_squares[secrets.choice(range(len(empty_squares)))]
+            move = empty_squares[random.randrange(len(empty_squares))]
             position.board[move[0]][move[1]] = current_player
             current_player = 2 if current_player == 1 else 1
             depth -= 1
