@@ -6,7 +6,7 @@ import random
 class MinimaxBot(Player):
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
-        self.use_minimax = False
+        self.use_minimax = True
         self.depth = 4
 
     def make_move(self, game, board):
@@ -45,7 +45,7 @@ class MinimaxBot(Player):
         for move in moves:
             clone = self.perform_move(board, move, player)
             score = self.min_play(game, clone, depth-1, move, player) 
-            print(f"Move: {clone}, Score: {score}")
+            print(f"Move: {clone.board}, Score: {score}")
             if score > best_score:
                 best_score = score
                 best_move = move
@@ -61,6 +61,7 @@ class MinimaxBot(Player):
             clone = deepcopy(position)
             self.perform_move(clone, move, player)
             score = self.max_play(game, clone, depth-1, move, player)
+            print(f"Move: {clone.board}, Score: {score}")
             if score < best_score:
                 best_move = move
                 best_score = score
@@ -76,6 +77,7 @@ class MinimaxBot(Player):
             clone = deepcopy(position)
             self.perform_move(clone, move, player)
             score = self.min_play(game, clone, depth-1, move, player)
+            print(f"Move: {clone.board}, Score: {score}")
             if score > best_score:
                 best_move = move
                 best_score = score
