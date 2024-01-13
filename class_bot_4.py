@@ -29,8 +29,6 @@ class MonteCarloBot(Player):
             '[[2. 0. 0. 0. 0.]\n [0. 1. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 0.]\n [2. 0. 0. 0. 0.]]': ((4, 4), "KILLER_MOVE"),
             '[[2. 0. 0. 0. 2.]\n [0. 1. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 0.]\n [0. 0. 0. 0. 0.]]': ((4, 4), "KILLER_MOVE")
         }
-        
-        
     def mc_trial(self, position, depth):
         current_player = self.player_number
         winner = position.is_winner(self.player_number)
@@ -39,31 +37,24 @@ class MonteCarloBot(Player):
         empty_squares = [(i, j) for i in range(position.m) for j in range(position.n) if position.board[i][j] == 0]
         if not empty_squares:
             return
-
         while not game_over and depth != 0:
             winner = position.is_winner(self.player_number)
             board_full = position.is_full()
             game_over = winner or board_full
-
             if game_over:
                 break
-
             empty_squares = [(i, j) for i in range(position.m) for j in range(position.n) if position.board[i][j] == 0]
             if not empty_squares:
                 break
-
             move = empty_squares[secrets.choice(range(len(empty_squares)))]
             position.board[move[0]][move[1]] = current_player
             current_player = 2 if current_player == 1 else 1
             depth -= 1
-            #print(f"Depth: {depth}")
 
     def mc_update_scores(self, scores, position_tupel):
         position, depth = position_tupel
-        #print(f"Depth: {depth}")
         move =  [(i, j) for i in range(position.m) for j in range(position.n) if position.board[i][j] == 0]
         dep = len(move)
-        #print(f"Depth: {dep}")
         winner = position.is_winner
         if winner == 0:
             return
@@ -81,7 +72,6 @@ class MonteCarloBot(Player):
         best_square = None
         best_score = float('-inf')
         board_state = str(position.board)
-
         for square in [(i, j) for i in range(position.m) for j in range(position.n)]:
             r, s = square
             if scores[r][s] > best_score and position.board[r][s] == 0:
@@ -104,7 +94,6 @@ class MonteCarloBot(Player):
     
     def mc_move(self, position):
         board_state = str(position.board)
-
         if board_state in self.memo:
             print("Memoization!")
             best_square = self.memo[board_state][0]
@@ -112,14 +101,11 @@ class MonteCarloBot(Player):
             print(f"Beste Position: {best_square} mit Score {best_score}")
             return best_square
         scores = [[0] * position.n for _ in range(position.m)]
-
         ray.init(num_cpus=os.cpu_count())
-
         futures = [self.mc_trial_remote.remote(self, position, self.DEP) for _ in range(self.NTRIALS)]
         results = ray.get(futures)
         for clone in results:
             self.mc_update_scores(scores, clone)
-
         print(f"Computer wählt aus {len(results)} Möglichkeiten.")
         return self.get_best_move(position, scores)
     
@@ -128,7 +114,7 @@ class MonteCarloBot(Player):
             with open('bot_state.pkl', 'rb') as f:
                 self.memo = pickle.load(f)
         except FileNotFoundError:
-            self.memo = {}
+            print("Kein gespeicherter Zustand gefunden.")
 
     def save_state(self):
         with open('bot_state.pkl', 'wb') as f:
