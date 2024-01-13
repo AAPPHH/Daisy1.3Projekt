@@ -10,6 +10,7 @@ class TreeBot(Player):
             if board.board[board.m // 2][board.n // 2] == 0:
                 print("Zentrum")
                 return Player.place_piece(self, board.m // 2, board.n // 2, game, board)
+                # weitere Abfrage sinnlos, da nach return nicht mehr weiter gelesen wird
             # elif board.board[board.m // 2+1][board.n // 2+1] == 0:
             #     print("Oben von der Mitte")
             #     return Player.place_piece(self, board.m // 2+1, board.n // 2+1, game, board)
