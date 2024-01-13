@@ -6,12 +6,12 @@ import random
 class MinimaxBot(Player):
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
-        self.use_minimax = True
+        self.use_minimax = False
         self.depth = 4
         self.memo = {
             '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': ((2,2), "KILLER_MOVE"),
 
-            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': (random.choice([(4,0)]), "KILLER_MOVE"),
+            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': (random.choice([(0, 0), (0, 4), (4, 0), (4, 4)]), "KILLER_MOVE"),
 
             '[[2. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 0.]\n [0. 0. 0. 0. 0.]]': ((4, 4), "KILLER_MOVE"),
             '[[0. 0. 0. 0. 2.]\n [0. 0. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 0.]\n [0. 0. 0. 0. 0.]]': ((0, 0), "KILLER_MOVE"),
@@ -129,8 +129,6 @@ class MinimaxBot(Player):
 
     def alphabeta_bot(self, game, position, player_number):
         choices = []
-        if len(self.get_empty_squares(position)) == position.board.size ** 2:
-            return position.board.size ** 2 // 2 + 1
         for depth in range(1, self.depth + 1):
             a = -2
             new_choices = []
