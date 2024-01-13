@@ -1,20 +1,35 @@
 import random
+import secrets
 import ray
 import os
 from copy import deepcopy
 import pickle
 from class_player import *
 
+
 class MonteCarloBot(Player):
-    NTRIALS = 1000000
+    NTRIALS = 250000
     SCORE_CURRENT = 1.0
     SCORE_OTHER = 10.0
-    DEP = 50
+    DEP = 4
 
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
-        self.memo = {}
         self.load_state() 
+        self.memo = {
+            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': ((2,2), "KILLER_MOVE"),
+
+            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': (random.choice([(0, 0), (0, 4), (4,0), (4,4)]), "KILLER_MOVE"),
+
+            '[[2. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 0.]\n [0. 0. 0. 0. 0.]]': ((4, 4), "KILLER_MOVE"),
+            '[[0. 0. 0. 0. 2.]\n [0. 0. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 0.]\n [0. 0. 0. 0. 0.]]': ((0, 0), "KILLER_MOVE"),
+            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 0.]\n [2. 0. 0. 0. 0.]]': ((0, 0), "KILLER_MOVE"),
+            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 0.]\n [0. 0. 0. 0. 2.]]': ((0, 0), "KILLER_MOVE"),
+
+            '[[2. 0. 0. 0. 0.]\n [0. 1. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 0.]\n [2. 0. 0. 0. 0.]]': ((4, 4), "KILLER_MOVE"),
+            '[[2. 0. 0. 0. 0.]\n [0. 1. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 0.]\n [0. 0. 0. 0. 2.]]': ((4, 4), "KILLER_MOVE")
+        }
+        
         
     def mc_trial(self, position, depth):
         current_player = self.player_number
@@ -25,7 +40,6 @@ class MonteCarloBot(Player):
         if not empty_squares:
             return
 
-        move = empty_squares[random.randrange(len(empty_squares))]
         while not game_over and depth != 0:
             winner = position.is_winner(self.player_number)
             board_full = position.is_full()
@@ -38,7 +52,7 @@ class MonteCarloBot(Player):
             if not empty_squares:
                 break
 
-            move = empty_squares[random.randrange(len(empty_squares))]
+            move = empty_squares[secrets.choice(range(len(empty_squares)))]
             position.board[move[0]][move[1]] = current_player
             current_player = 2 if current_player == 1 else 1
             depth -= 1
