@@ -50,8 +50,7 @@ class MonteCarloBot(Player):
             current_player = 2 if current_player == 1 else 1
             depth -= 1
 
-    def mc_update_scores(self, scores, position_tupel):
-        position, depth = position_tupel
+    def mc_update_scores(self, scores, position):
         move =  [(i, j) for i in range(position.m) for j in range(position.n) if position.board[i][j] == 0]
         dep = len(move)
         winner = position.is_winner
@@ -89,7 +88,7 @@ class MonteCarloBot(Player):
         clone = deepcopy(position)
         dep = deepcopy(depth)
         self.mc_trial(clone, dep)
-        return clone, dep
+        return clone
     
     def mc_move(self, position):
         board_state = str(position.board)
