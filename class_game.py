@@ -138,6 +138,8 @@ class Game:
                 print(f'Gesamtspieldauer: {end_time - start_time} Sekunden')
                 Daisy.save_game_state(game)
                 print(f"Spieler {self.current_player.name} hat gewonnen!")
+                if isinstance(self.current_player, MonteCarloBot):
+                    self.current_player.save_state()
 
             elif self.board.is_full():
                 game_over = True

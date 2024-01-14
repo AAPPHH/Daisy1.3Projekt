@@ -7,14 +7,14 @@ from class_player import *
 
 
 class MonteCarloBot(Player):
-    NTRIALS = 250000
+    NTRIALS = 25000
     SCORE_CURRENT = 1.0
     SCORE_OTHER = 2.0
     DEP = 3
 
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
-        self.load_state() 
+        self.new_memo = {}
         self.memo = {
             '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': ((2,2), "KILLER_MOVE"),
 
@@ -59,9 +59,9 @@ class MonteCarloBot(Player):
         for row in range(position.m):
             for col in range(position.n):
                 if position.board[row][col] == self.player_number:
-                    scores[row][col] += coef * self.SCORE_CURRENT * (dep*2)
+                    scores[row][col] += coef * self.SCORE_CURRENT * (self.NTRIALS/100/dep)
                 elif position.board[row][col] != 0:
-                    scores[row][col] -= coef * self.SCORE_OTHER * (dep*2)
+                    scores[row][col] -= coef * self.SCORE_OTHER * (self.NTRIALS/100/dep)
         
     def get_best_move(self, position, scores):
         best_square = None
@@ -74,7 +74,7 @@ class MonteCarloBot(Player):
                 best_score = scores[r][s]
                 print(f"Beste Position: {best_square} mit Score {best_score}")
         if best_square is not None:
-            self.memo[board_state] = (best_square, best_score)
+            self.new_memo[board_state] = (best_square, best_score)
             return best_square
         else:
             print("Keine beste Position gefunden.")
@@ -95,6 +95,12 @@ class MonteCarloBot(Player):
             best_score = self.memo[board_state][1]
             print(f"Beste Position: {best_square} mit Score {best_score}")
             return best_square
+        if board_state in self.new_memo:
+            print("Memoization!")
+            best_square = self.new_memo[board_state][0]
+            best_score = self.new_memo[board_state][1]
+            print(f"Beste Position: {best_square} mit Score {best_score}")
+            return best_square
         scores = [[0] * position.n for _ in range(position.m)]
         ray.init(num_cpus=os.cpu_count())
         futures = [self.mc_trial_remote.remote(self, position, self.DEP) for _ in range(self.NTRIALS)]
@@ -112,12 +118,14 @@ class MonteCarloBot(Player):
             print("Kein gespeicherter Zustand gefunden.")
 
     def save_state(self):
+        self.memo.update(self.new_memo)  # Add new_memo to memo
         with open('bot_state.pkl', 'wb') as f:
             pickle.dump(self.memo, f)
+        print("Zustand gespeichert.")
     
     def place_piece(self, game, board):
         print("Computer denkt nach...")
+        self.load_state()
         move = self.mc_move(board)
         ray.shutdown()
-        self.save_state()
         return Player.place_piece(self, move[0], move[1], game, board)
