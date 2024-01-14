@@ -7,7 +7,7 @@ from class_player import *
 
 
 class MonteCarloBot(Player):
-    NTRIALS = 25000
+    NTRIALS = 250000
     SCORE_CURRENT = 1.0
     SCORE_OTHER = 2.0
     DEP = 3
