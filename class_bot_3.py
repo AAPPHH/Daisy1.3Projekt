@@ -106,8 +106,7 @@ class MinimaxBot(Player):
         if position.is_winner(player_number) or position.is_full() or depth == 0:
             return self.evaluate(position, depth)
         for move in self.get_empty_squares(position):
-            clone = deepcopy(position)
-            self.perform_move(clone, move, player_number)
+            clone = self.perform_move(position, move, player_number)
             val = self.alphabeta(clone, move, self.get_enemy(), alpha, beta, depth-1)
             if player_number == self.player_number:
                 if val > alpha:
@@ -130,8 +129,7 @@ class MinimaxBot(Player):
             a = -2
             new_choices = []
             for move in self.get_empty_squares(position):
-                clone = deepcopy(position)
-                self.perform_move(clone, move, player_number)
+                clone = self.perform_move(position, move, player_number)
                 val = self.alphabeta(clone, move, self.get_enemy(), -2, 2, depth)
                 if val > a:
                     a = val
