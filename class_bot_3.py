@@ -7,7 +7,7 @@ class MinimaxBot(Player):
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
         self.use_minimax = False
-        self.depth = 4
+        self.depth = 8
         self.memo = {
             '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': ((2,2), "KILLER_MOVE"),
 
