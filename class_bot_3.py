@@ -131,7 +131,7 @@ class MinimaxBot(Player):
             return beta
 
 
-    def alphabeta_bot(self, game, position, player_number, time_limit=5.0):
+    def alphabeta_bot(self, game, position, player_number, time_limit=120.0):
         start_time = time.time()
         choices = []
         for depth in range(1, self.depth + 1):
