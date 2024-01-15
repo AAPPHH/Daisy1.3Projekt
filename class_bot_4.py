@@ -10,7 +10,7 @@ class MonteCarloBot(Player):
     NTRIALS = 250000
     SCORE_CURRENT = 1.0
     SCORE_OTHER = 2.0
-    DEP = 3
+    DEP = 5
 
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
@@ -59,9 +59,9 @@ class MonteCarloBot(Player):
         for row in range(position.m):
             for col in range(position.n):
                 if position.board[row][col] == self.player_number:
-                    scores[row][col] += coef * self.SCORE_CURRENT * (self.NTRIALS/100/dep)
+                    scores[row][col] += coef * self.SCORE_CURRENT * (self.NTRIALS/10/dep+1)
                 elif position.board[row][col] != 0:
-                    scores[row][col] -= coef * self.SCORE_OTHER * (self.NTRIALS/100/dep)
+                    scores[row][col] -= coef * self.SCORE_OTHER * (self.NTRIALS/10/dep+1)
         
     def get_best_move(self, position, scores):
         best_square = None
