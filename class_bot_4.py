@@ -64,9 +64,9 @@ class MonteCarloBot(Player):
         for row in range(position.m):
             for col in range(position.n):
                 if position.board[row][col] == self.player_number:
-                    scores[row][col] += coef * self.SCORE_CURRENT * (self.NTRIALS/10/dep+1)
+                    scores[row][col] += coef * self.SCORE_CURRENT * (self.NTRIALS/dep+1)
                 elif position.board[row][col] != 0:
-                    scores[row][col] -= coef * self.SCORE_OTHER * (self.NTRIALS/10/dep+1)
+                    scores[row][col] -= coef * self.SCORE_OTHER * (self.NTRIALS/dep+1)
         
     def get_best_move(self, position, scores):
         best_square = None
