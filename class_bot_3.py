@@ -126,8 +126,10 @@ class MinimaxBot(Player):
                 if beta <= alpha:
                     return alpha
         if player_number == self.player_number:
+            print(f"Move: {clone.board}, Score: {alpha}")
             return alpha
         else:
+            print(f"Move: {clone.board}, Score: {beta}")
             return beta
 
 
