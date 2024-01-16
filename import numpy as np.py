@@ -42,7 +42,7 @@ def direction(board, player_number):
                 else:
                     return "none"
     for i, j in moves_list:
-        if 0 <= i < 5 and 0 <= j < 5: 
+        if not 0 <= i < 5 and 0 <= j < 5: 
             moves_list.remove((i, j))
             return moves_list
 board = np.array([[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0]])
