@@ -8,7 +8,7 @@ class MinimaxBot(Player):
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
         self.use_minimax = False
-        self.depth = 8
+        self.depth = 5
         self.memo = {
             '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': ((2,2), "KILLER_MOVE"),
             #best starting move
@@ -60,6 +60,13 @@ class MinimaxBot(Player):
         board_copy.board[row][col] = player_number
         return board_copy
     
+    def evaluate(self, pos, dep):
+        if pos.is_winner(self.player_number):
+            return 10 * (dep+1)
+        elif pos.is_winner(self.get_enemy()):
+            return -10 * (dep+1)
+        return 0
+    
     def minimax(self, game, board, depth, player_number):
         moves = self.get_empty_squares(board)
         best_move = None
@@ -102,19 +109,14 @@ class MinimaxBot(Player):
                 best_score = score
         return best_score
 
-    def evaluate(self, pos, dep):
-        if pos.is_winner(self.player_number):
-            return 10 * (dep+1)
-        elif pos.is_winner(self.get_enemy()):
-            return -10 * (dep+1)
-        return 0
-
-    def alphabeta(self, position, lastmove, player_number, alpha, beta, depth):
+    def alphabeta(self, position, player_number, alpha, beta, depth):
         if position.is_winner(player_number) or position.is_full() or depth == 0:
             return self.evaluate(position, depth)
         for move in self.get_empty_squares(position):
+            #print(position.board)
             clone = self.perform_move(position, move, player_number)
-            val = self.alphabeta(clone, move, self.get_enemy(), alpha, beta, depth-1)
+            #print(clone.board)
+            val = self.alphabeta(clone, self.get_enemy(), alpha, beta, depth-1)
             if player_number == self.player_number:
                 if val > alpha:
                     alpha = val
@@ -126,33 +128,27 @@ class MinimaxBot(Player):
                 if beta <= alpha:
                     return alpha
         if player_number == self.player_number:
-            #print(f"Move: {clone.board}, Score: {alpha}")
             return alpha
         else:
-            #print(f"Move: {clone.board}, Score: {beta}")
             return beta
-
 
     def alphabeta_bot(self, game, position, player_number, time_limit=120.0):
         start_time = time.time()
         choices = []
-        for depth in range(1, self.depth + 1):
-            a = -2
-            new_choices = []
-            for move in self.get_empty_squares(position):
-                if time.time() - start_time > time_limit:
-                    print("Time limit exceeded")
-                    break
-                clone = self.perform_move(position, move, player_number)
-                val = self.alphabeta(clone, move, self.get_enemy(), -2, 2, depth)
-                if val > a:
-                    a = val
-                    new_choices = [move]
-                elif val == a:
-                    new_choices.append(move)
-            choices = new_choices
+        a = -2
+        for move in self.get_empty_squares(position):
+            if time.time() - start_time > time_limit:
+                print("Time limit exceeded")
+                break
+            clone = self.perform_move(position, move, player_number)
+            val = self.alphabeta(clone, self.get_enemy(), -2, 2, self.depth)
+            if val > a:
+                a = val
+                choices = [move]
+            elif val == a:
+                choices.append(move)
             if a == 1 or time.time() - start_time > time_limit:
                 print("Time limit exceeded")
                 break
-        return random.choice(choices) if choices else self.minimax(game, position, self.depth, self.player_number)
+        return random.choice(choices) #if choices else self.minimax(game, position, self.depth, self.player_number)
 

@@ -133,9 +133,11 @@ class Game:
             if self.board.is_winner(self.current_player.player_number):
                 game_over = True
                 self.board.print_board()
+                end_turn_time = time.time()
+                print(f'Spielzugdauer: {end_turn_time - start_turn_time} Sekunden')
                 end_time = time.time()
-                self.winner = self.current_player.name
                 print(f'Gesamtspieldauer: {end_time - start_time} Sekunden')
+                self.winner = self.current_player.name
                 Daisy.save_game_state(game)
                 print(f"Spieler {self.current_player.name} hat gewonnen!")
                 if isinstance(self.current_player, MonteCarloBot):
@@ -144,6 +146,8 @@ class Game:
             elif self.board.is_full():
                 game_over = True
                 self.board.print_board()
+                end_turn_time = time.time()
+                print(f'Spielzugdauer: {end_turn_time - start_turn_time} Sekunden')
                 end_time = time.time()
                 print(f'Gesamtspieldauer: {end_time - start_time} Sekunden')
                 Daisy.save_game_state(game)

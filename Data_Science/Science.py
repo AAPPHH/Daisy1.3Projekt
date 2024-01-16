@@ -17,8 +17,8 @@ pd.set_option('display.max_colwidth', None)  # Zeigt den vollen Inhalt der Zelle
 winner = df['winner'].value_counts()
 print(winner)
 
-treebot_wins = df[df['winner'] == 'TreeBot']
+treebot_wins = df[df['winner'] == 'MonteCarloBot']
 average_moves_treebot_wins = treebot_wins['N_turn'].mean()
 print(average_moves_treebot_wins)
 
-df.to_excel("Data_Science/Alpha_Ran_100.xlsx")
+df.to_excel("Data_Science/Monte_Alpha_15.xlsx")
