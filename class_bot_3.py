@@ -8,7 +8,7 @@ class MinimaxBot(Player):
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
         self.use_minimax = False
-        self.depth = 5
+        self.depth = 10
         self.memo = {
             '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': ((2,2), "KILLER_MOVE"),
             #best starting move
@@ -113,10 +113,11 @@ class MinimaxBot(Player):
         if position.is_winner(player_number) or position.is_full() or depth == 0:
             return self.evaluate(position, depth)
         for move in self.get_empty_squares(position):
-            #print(position.board)
+            print(position.board, "1")
             clone = self.perform_move(position, move, player_number)
-            #print(clone.board)
+            print(clone.board,"2")
             val = self.alphabeta(clone, self.get_enemy(), alpha, beta, depth-1)
+            print(val)
             if player_number == self.player_number:
                 if val > alpha:
                     alpha = val

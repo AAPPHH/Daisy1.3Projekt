@@ -25,8 +25,8 @@ class Game:
     #random choice
     #pearl noise
     def start(self):
+        start_choice = input("Let's play five in row! wollen sie oder soll der Computer spielen? (1/2):")
         try:
-            start_choice = input("Let's play five in row! wollen sie oder soll der Computer spielen? (1/2):")
             if start_choice == "1":
                 self.player1.name = input("Bitte geben sie ihre Namen ein:")
                 choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2):")
@@ -94,9 +94,7 @@ class Game:
             self.game_loop()
 
     def switch_player(self):
-        self.current_player = (
-            self.player2 if self.current_player == self.player1 else self.player1
-)
+        self.current_player = (self.player2 if self.current_player == self.player1 else self.player1)
 
     def game_loop(self):
         game_over = False
@@ -167,5 +165,3 @@ Daisy = Data_Science("game_history.pkl")
 Spielbrett = Board()
 game = Game(Spielbrett)
 game.start()
-
-
