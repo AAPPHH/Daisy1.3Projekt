@@ -3,12 +3,14 @@ import numpy as np
 from copy import deepcopy
 from class_player import *
 import random
+import pickle
 
 class MinimaxBot(Player):
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
         self.use_minimax = False
-        self.depth = 10
+        self.depth = 5
+        self.new_memo = {}
         self.memo = {
             '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': ((2,2), "KILLER_MOVE"),
             #best starting move
@@ -37,7 +39,9 @@ class MinimaxBot(Player):
         if self.use_minimax:
             move = self.minimax(game, board, self.depth, self.player_number)
         else:
-            move = self.alphabeta_bot(game, board, self.player_number) 
+            move = self.alphabeta_bot(game, board, self.player_number)
+        if move is not None:
+            self.new_memo[board_state] = (move, best_score)
         return Player.place_piece(self, move[0], move[1], game, board)
 
     def get_empty_squares(self, board):
@@ -50,6 +54,12 @@ class MinimaxBot(Player):
     
     def get_enemy(self):
         if self.player_number == 1:
+            return 2
+        else:
+            return 1
+        
+    def switch_player(self, player_number):
+        if player_number == 1:
             return 2
         else:
             return 1
@@ -113,11 +123,8 @@ class MinimaxBot(Player):
         if position.is_winner(player_number) or position.is_full() or depth == 0:
             return self.evaluate(position, depth)
         for move in self.get_empty_squares(position):
-            print(position.board, "1")
             clone = self.perform_move(position, move, player_number)
-            print(clone.board,"2")
-            val = self.alphabeta(clone, self.get_enemy(), alpha, beta, depth-1)
-            print(val)
+            val = self.alphabeta(clone, self.switch_player(player_number), alpha, beta, depth-1)
             if player_number == self.player_number:
                 if val > alpha:
                     alpha = val
@@ -147,9 +154,23 @@ class MinimaxBot(Player):
                 a = val
                 choices = [move]
             elif val == a:
+                print(a)
                 choices.append(move)
             if a == 1 or time.time() - start_time > time_limit:
                 print("Time limit exceeded")
                 break
         return random.choice(choices) #if choices else self.minimax(game, position, self.depth, self.player_number)
+    
+    def load_state(self):
+        try:
+            with open('bot_3_memo', 'rb') as f:
+                self.memo = pickle.load(f)
+        except FileNotFoundError:
+            pass
+
+    def save_state(self):
+        self.memo.update(self.new_memo)
+        with open('bot_3_memo.pkl', 'wb') as f:
+            pickle.dump(self.memo, f)
+        print("Zustand gespeichert.")
 

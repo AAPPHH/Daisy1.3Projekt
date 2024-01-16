@@ -23,23 +23,18 @@ class Board:
     
     def is_winner(self, piece):
         win_sequence = str(piece) * self.k
-
         for row in self.board:
             if win_sequence in ''.join(str(int(e)) for e in row):
                 return True
-
         for col in self.board.T:
             if win_sequence in ''.join(str(int(e)) for e in col):
                 return True
-
         for diag in [np.diagonal(self.board, offset) for offset in range(-self.board.shape[0] + self.k, self.board.shape[1] - self.k + 1)]:
             if win_sequence in ''.join(str(int(e)) for e in diag):
                 return True
-
         for diag in [np.diagonal(np.fliplr(self.board), offset) for offset in range(-self.board.shape[0] + self.k, self.board.shape[1] - self.k + 1)]:
             if win_sequence in ''.join(str(int(e)) for e in diag):
                 return True
-
         return False
 
     def is_full(self):

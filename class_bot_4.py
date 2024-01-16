@@ -117,14 +117,14 @@ class MonteCarloBot(Player):
     
     def load_state(self):
         try:
-            with open('bot_state.pkl', 'rb') as f:
+            with open('bot_4_memo', 'rb') as f:
                 self.memo = pickle.load(f)
         except FileNotFoundError:
             print("Kein gespeicherter Zustand gefunden.")
 
     def save_state(self):
         self.memo.update(self.new_memo)  # Add new_memo to memo
-        with open('bot_state.pkl', 'wb') as f:
+        with open('Bot_4_memo.pkl', 'wb') as f:
             pickle.dump(self.memo, f)
         print("Zustand gespeichert.")
     
