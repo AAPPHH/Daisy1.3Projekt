@@ -59,7 +59,7 @@ class TreeBot(Player):
                     else:
                         return
         for i, j in moves_list:
-            if not 0 <= i < 5 and not 0 <= j < 5: 
+            if not (0 <= i < 5 and 0 <= j < 5):
                 moves_list.remove((i, j))
         return random.choice(moves_list)
 
