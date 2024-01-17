@@ -141,7 +141,8 @@ class Game:
                 self.winner = self.current_player.name
                 Daisy.save_game_state(game)
                 print(f"Spieler {self.current_player.name} hat gewonnen!")
-
+                if isinstance(self.current_player, MinimaxBot):
+                    self.current_player.save_state()
                 if isinstance(self.current_player, MonteCarloBot):
                     self.current_player.save_state()
 

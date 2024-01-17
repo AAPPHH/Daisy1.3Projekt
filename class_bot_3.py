@@ -41,7 +41,7 @@ class MinimaxBot(Player):
         else:
             move = self.alphabeta_bot(game, board, self.player_number)
         if move is not None:
-            self.new_memo[board_state] = (move, best_score)
+            self.new_memo[board_state] = (move)
         return Player.place_piece(self, move[0], move[1], game, board)
 
     def get_empty_squares(self, board):
