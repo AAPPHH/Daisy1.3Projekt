@@ -15,7 +15,7 @@ Ein pip install ray über einen Prompt ist erforderlich.
 
 Minimax- und MonteCarlobot benutzen pickel um Spielstände für die schon einmal ein zug berechnet wurde zu Speichern.
 Das passiert jedoch nur wenn der jewilige bot das spiel gewonnen hatt. 
-So werden keine züge gespeichert werden die in diesem Spiel zu einer niederlage geführt haben.
+So werden keine züge gespeichert die in diesem Spiel zu einer niederlage geführt haben.
 
 Good Luck Have Fun! :D
 
