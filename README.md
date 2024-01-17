@@ -1,7 +1,6 @@
 # Daisy 1.3 Projekt
 
-
-Wir Spielen Five in a Row!
+Wir Spielen k in a row!
 
 Das Spiel wird durch das auführen der class_game.py gestartet.
 
@@ -20,5 +19,4 @@ So werden keine züge gespeichert werden die in diesem Spiel zu einer niederlage
 
 Good Luck Have Fun! :D
 
-
-    
+"...(5,5,4) is a draw..."  Lustenberger, 1967
