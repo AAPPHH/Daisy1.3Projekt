@@ -35,7 +35,7 @@ class TreeBot(Player):
             return Player.place_piece(self, row, col, game, board)
               
     def direction(self, board, player_number):
-        chain = self.get_chain(board, player_number)
+        chain = self.get_pos(board, player_number)
         moves_list = []
         for row_index, row in enumerate(board):
             for col_index, value in enumerate(row):
@@ -63,7 +63,7 @@ class TreeBot(Player):
                 moves_list.remove((i, j))
         return random.choice(moves_list)
 
-    def get_chain(self, board, player_number):
+    def get_pos(self, board, player_number):
         chain = []
         for row_index, row in enumerate(board):
             for col_index, value in enumerate(row):
