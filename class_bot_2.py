@@ -21,7 +21,7 @@ class TreeBot(Player):
             else:
                 move = self.direction(board.board, self.player_number)
                 return Player.place_piece(self, move[0], move[1], game, board)
-        except Exception as e:
+        except:
             move = self.random_valid_move(board)
             return Player.place_piece(self, move[0], move[1], game, board)
 
