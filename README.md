@@ -21,6 +21,8 @@ Good Luck Have Fun! :D
 
 "...(5,5,4) is a draw..."  Lustenberger, 1967
 
+darstellung matrix
+
 Spielstatistiken:
 
 Gewinnrate: Die Häufigkeit, mit der ein Spieler oder eine Strategie gewinnt.
