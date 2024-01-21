@@ -55,7 +55,7 @@ class Game:
             if choice_bot_1 == "1":
                 self.player1 = GomokuBot("GomokuBot", 1)
             elif choice_bot_1 == "2":
-                self.player1 = TreeBot("TreeBot", 1)
+                self.player1 = TreeBot("ChainTreeBot", 1)
             elif choice_bot_1 == "3":
                 self.player1 = MinimaxBot("MinimaxBot", 1)
             elif choice_bot_1 == "4":
@@ -67,7 +67,7 @@ class Game:
             if choice_bot_2 == "1":
                 self.player2 = GomokuBot("GomokuBot_2", 2)
             elif choice_bot_2 == "2":
-                self.player2 = TreeBot("TreeBot_2", 2)
+                self.player2 = TreeBot("ChainTreeBot_2", 2)
             elif choice_bot_2 == "3":
                 self.player2 = MinimaxBot("MinimaxBot_2", 2)
             elif choice_bot_2 == "4":
