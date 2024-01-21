@@ -140,7 +140,7 @@ class MinimaxBot(Player):
         else:
             return beta
 
-    def alphabeta_bot(self, game, position, player_number, time_limit=120.0):
+    def alphabeta_bot(self, game, position, player_number, time_limit=180.0):
         start_time = time.time()
         choices = []
         a = -2
@@ -149,7 +149,7 @@ class MinimaxBot(Player):
                 print("Time limit exceeded")
                 break
             clone = self.perform_move(position, move, player_number)
-            val = self.alphabeta(clone, self.get_enemy(), -2, 2, self.depth)
+            val = self.alphabeta(clone, self.get_enemy(),-100 , 100, self.depth)
             if val > a:
                 a = val
                 choices = [move]
@@ -159,7 +159,7 @@ class MinimaxBot(Player):
             if a == 1 or time.time() - start_time > time_limit:
                 print("Time limit exceeded")
                 break
-        return random.choice(choices) #if choices else self.minimax(game, position, self.depth, self.player_number)
+        return random.choice(choices) if choices else self.minimax(game, position, self.depth, self.player_number)
     
     def load_state(self):
         try:
