@@ -20,10 +20,7 @@ class Game:
         self.game_arrays = []
         self.winner = None
         self.starter = None
-    #echteres random
     #temp for temporary
-    #random choice
-    #pearl noise
     def start(self):
         start_choice = input("Let's play five in row! wollen sie oder soll der Computer spielen? (1/2):")
         if start_choice == "1":
@@ -89,7 +86,9 @@ class Game:
     def whos_first(self):
         order_choice = input(f"Möchtest du anfangen, {self.player1.name}? (j/n): ")
         if order_choice.lower() == 'n':
+            self.current_player.set_player_number(2)
             self.current_player = self.player2 
+            self.player2.set_player_number(1)
             self.game_loop()
         elif order_choice.lower() == 'j':
             self.game_loop()

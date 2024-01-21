@@ -10,4 +10,7 @@ class Player:
         if board.is_valid_move(row, col): 
             board.board[row][col] =  self.player_number 
             return True  
-        return False  
+        return False 
+    
+    def set_player_number(self, new_player_number):
+        self.player_number = new_player_number
