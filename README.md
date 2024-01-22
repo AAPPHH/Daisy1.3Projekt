@@ -21,18 +21,6 @@ Good Luck Have Fun! :D
 
 "...(5,5,4) is a draw..."  Lustenberger, 1967
 
-darstellung matrix
-
-Spielstatistiken:
-
-Gewinnrate: Die Häufigkeit, mit der ein Spieler oder eine Strategie gewinnt.
-Durchschnittliche Spielzüge: Die durchschnittliche Anzahl von Zügen, die für den Abschluss eines Spiels benötigt werden.
-Spielzeit: Die durchschnittliche oder Gesamtdauer der Spiele.
-Spieler- und Strategieanalyse:
-
-Effektivität verschiedener Strategien: Wie gut bestimmte Strategien gegenüber anderen abschneiden.
-Fehleranalyse: In welchen Situationen machen Spieler oder Algorithmen Fehler oder suboptimale Züge.
-Anpassungsfähigkeit: Wie gut sich ein Spieler oder eine Strategie an unterschiedliche Spielstile oder unerwartete Züge des Gegners anpasst.
 Spielverlaufsanalyse:
 
 Häufige Muster und Formationen: Welche Markierungsmuster oder Formationen am häufigsten zum Gewinn führen.
