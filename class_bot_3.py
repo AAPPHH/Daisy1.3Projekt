@@ -165,7 +165,7 @@ class MinimaxBot(Player):
     def alphabeta_bot(self, game, position, player_number, time_limit=180.0):
         start_time = time.time()
         choices = []
-        a = -2
+        a = 0
         for move in self.get_empty_squares(position):
             if time.time() - start_time > time_limit:
                 print("Time limit exceeded")
@@ -195,4 +195,3 @@ class MinimaxBot(Player):
         with open('bot_3_memo.pkl', 'wb') as f:
             pickle.dump(self.memo, f)
         print("Zustand gespeichert.")
-
