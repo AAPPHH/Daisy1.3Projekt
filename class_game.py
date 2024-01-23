@@ -107,7 +107,7 @@ class Game:
             self.board.print_board()
             start_turn_time = time.time()
             if isinstance(self.current_player, GomokuBot):
-                valid_move = GomokuBot.place_piece(self.current_player, self, self.board)
+                valid_move = GomokuBot.make_move(self.current_player, self, self.board)
 
             elif isinstance(self.current_player, TreeBot):
                 valid_move = TreeBot.make_move(self.current_player, self, self.board)  
@@ -116,7 +116,7 @@ class Game:
                 valid_move = MinimaxBot.make_move(self.current_player, self, self.board)
 
             elif isinstance(self.current_player, MonteCarloBot):
-                valid_move = MonteCarloBot.place_piece(self.current_player, self, self.board)
+                valid_move = MonteCarloBot.make_move(self.current_player, self, self.board)
             
             elif isinstance(self.current_player, Player):
                 try:
@@ -125,7 +125,7 @@ class Game:
                 except ValueError:
                     print("Bitte geben Sie gültige ganze Zahlen ein.")
                     continue
-                valid_move = Player.place_piece(self.current_player, row, col, self, self.board)  
+                valid_move = Player.make_move(self.current_player, row, col, self, self.board)  
                 if not valid_move:
                     print("Bitte geben Sie eine gültige Zahl ein.")
                     continue
@@ -158,7 +158,7 @@ class Game:
             else:
                 if valid_move == True:
                     end_turn_time = time.time()
-                    self.game_arrays.append(copy.deepcopy(self.board.board))
+                    self.game_arrays.append(copy.deepcopy(self.board.array))
                     try:
                         print(f'Spielzugdauer: {end_turn_time - start_turn_time} Sekunden')
                     except:

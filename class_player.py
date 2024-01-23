@@ -7,8 +7,15 @@ class Player:
 
 
     def place_piece(self, row, col, game, board):
+        print("old place_piece")
         if board.is_valid_move(row, col): 
-            board.board[row][col] =  self.player_number 
+            board.array[row][col] =  self.player_number 
+            return True  
+        return False 
+    
+    def make_move(self, row, col, game, board):
+        if board.is_valid_move(row, col): 
+            board.array[row][col] =  self.player_number 
             return True  
         return False 
     

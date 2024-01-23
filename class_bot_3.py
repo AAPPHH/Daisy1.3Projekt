@@ -51,24 +51,24 @@ class MinimaxBot(Player):
         }
 
     def make_move(self, game, board):
-        board_state = str(board.board)
+        board_state = str(board.array)
         if board_state in self.memo:
             print("Memoization!")
             move = self.memo[board_state][0]
             best_score = self.memo[board_state][1]
             print(f"Beste Position: {move} mit Score {best_score}")
-            return Player.place_piece(self, move[0], move[1], game, board)
+            return Player.make_move(self, move[0], move[1], game, board)
         if self.use_minimax:
             move = self.minimax(game, board, self.depth, self.player_number)
         else:
             move = self.alphabeta_bot(game, board, self.player_number)
         if move is not None:
             self.new_memo[board_state] = (move)
-        return Player.place_piece(self, move[0], move[1], game, board)
+        return Player.make_move(self, move[0], move[1], game, board)
 
     def get_empty_squares(self, board):
         empty_squares = []
-        for row_index, row in enumerate(board.board):
+        for row_index, row in enumerate(board.array):
             for col_index, value in enumerate(row):
                 if value == 0:  
                     empty_squares.append((row_index, col_index))
@@ -89,7 +89,7 @@ class MinimaxBot(Player):
     def perform_move(self, board, move, player_number):
         board_copy = deepcopy(board)
         row, col = move
-        board_copy.board[row][col] = player_number
+        board_copy.array[row][col] = player_number
         return board_copy
     
     def evaluate(self, pos, dep):
@@ -106,7 +106,7 @@ class MinimaxBot(Player):
         for move in moves:
             clone = self.perform_move(board, move, player_number)
             score = self.min_play(game, clone, depth-1, move, player_number) 
-            print(f"Move: {clone.board}, Score: {score}")
+            print(f"Move: {clone.array}, Score: {score}")
             if score > best_score:
                 best_score = score
                 best_move = move
