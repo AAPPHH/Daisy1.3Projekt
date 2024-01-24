@@ -13,7 +13,7 @@ class Game:
         self.m = board.m  # Zeilen
         self.n = board.n  # Spalten
         self.k = board.k  # Gewinnbedingung
-        self.board = board #array objekt der klasse board
+        self.board = board # objekt der klasse board
         self.player1 = Player("", 1)
         self.player2 = Player("", 2)
         self.current_player = self.player1
@@ -21,6 +21,7 @@ class Game:
         self.winner = None
         self.starter = None
     #temp for temporary
+    #start modularization
     def start(self):
         start_choice = input("Let's play five in row! wollen sie oder soll der Computer spielen? (1/2):")
         if start_choice == "1":
