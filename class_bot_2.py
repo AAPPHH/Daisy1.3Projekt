@@ -93,9 +93,9 @@ class ChainTreeBot(Player):
         if moves_list:
             return random.choice(moves_list)
         else:
-            return self.random_valid_move()
+            return self.random_move()
 
-    def random_valid_move(self):
+    def random_move(self):
         row = random.randint(0, 4)
         col = random.randint(0, 4)
         return (row, col)
