@@ -4,7 +4,7 @@ import secrets
 
 class SecretsBot(Player):
     '''
-    Bot, der zufällig einen Stein setzt
+    Places pieces at randome positions. Based on the secrets module.
     '''
     def __init__(self, name, player_number):
         super().__init__(name, player_number)

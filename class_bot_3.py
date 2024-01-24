@@ -6,6 +6,9 @@ import random
 import pickle
 
 class MinimaxBot(Player):
+    """
+    Alpha-Beta Pruning Bot with decision table and Minimax backup
+    """
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
         self.use_minimax = False
@@ -67,6 +70,9 @@ class MinimaxBot(Player):
         return Player.make_move(self, move[0], move[1], game, board)
 
     def get_empty_squares(self, board):
+        """
+        Returns a list of empty squares on the board
+        """
         empty_squares = []
         for row_index, row in enumerate(board.array):
             for col_index, value in enumerate(row):
@@ -75,24 +81,36 @@ class MinimaxBot(Player):
         return empty_squares
     
     def get_enemy(self):
+        """
+        Returns the player number of the enemy based on the player number of the bot
+        """
         if self.player_number == 1:
             return 2
         else:
             return 1
         
     def switch_player(self, player_number):
+        """
+        Returns the player number of the enemy
+        """
         if player_number == 1:
             return 2
         else:
             return 1
         
     def perform_move(self, board, move, player_number):
+        """
+        Returns a new board with the move performed
+        """
         board_copy = deepcopy(board)
         row, col = move
         board_copy.array[row][col] = player_number
         return board_copy
     
     def evaluate(self, pos, dep):
+        """
+        Returns a score for the position
+        """
         if pos.is_winner(self.player_number):
             return 10 * (dep+1)
         elif pos.is_winner(self.get_enemy()):
@@ -100,6 +118,9 @@ class MinimaxBot(Player):
         return 0
     
     def minimax(self, game, board, depth, player_number):
+        """
+        Returns the best move for the current player
+        """
         moves = self.get_empty_squares(board)
         best_move = None
         best_score = float('-inf')
@@ -113,6 +134,9 @@ class MinimaxBot(Player):
         return best_move 
 
     def min_play(self, game, position, depth, move, player_number):
+        """
+        Returns the best score for the enemy
+        """
         if position.is_winner(player_number) or position.is_full() or depth == 0:
             return self.evaluate(position, depth)
         moves = self.get_empty_squares(position)
@@ -128,6 +152,9 @@ class MinimaxBot(Player):
         return best_score
 
     def max_play(self, game, position, depth, lastmove, player_number):
+        """
+        Returns the best score for the current player
+        """
         if position.is_winner(player_number) or position.is_full() or depth == 0:
             return self.evaluate(position, depth)
         moves = self.get_empty_squares(position)
@@ -142,6 +169,10 @@ class MinimaxBot(Player):
         return best_score
 
     def alphabeta(self, position, player_number, alpha, beta, depth):
+        """
+        Returns the best score for the current player and prunes the tree
+        works completely recursive
+        """
         if position.is_winner(player_number) or position.is_full() or depth == 0:
             return self.evaluate(position, depth)
         for move in self.get_empty_squares(position):
@@ -163,6 +194,9 @@ class MinimaxBot(Player):
             return beta
 
     def alphabeta_bot(self, game, position, player_number, time_limit=180.0):
+        """
+        Returns the best move for the current player
+        """
         start_time = time.time()
         choices = []
         a = 0
@@ -184,6 +218,9 @@ class MinimaxBot(Player):
         return random.choice(choices) if choices else self.minimax(game, position, self.depth, self.player_number)
     
     def load_state(self):
+        """
+        Loads the memoization table from a file
+        """
         try:
             with open('bot_3_memo', 'rb') as f:
                 self.memo = pickle.load(f)
@@ -191,6 +228,9 @@ class MinimaxBot(Player):
             pass
 
     def save_state(self):
+        """
+        Saves the memoization table to a file
+        """
         self.memo.update(self.new_memo)
         with open('bot_3_memo.pkl', 'wb') as f:
             pickle.dump(self.memo, f)

@@ -23,6 +23,9 @@ class Game:
     #temp for temporary
     #start modularization
     def start(self):
+        """
+        Initializes the gameloop.
+        """
         start_choice = input("Let's play five in row! wollen sie oder soll der Computer spielen? (1/2):")
         if start_choice == "1":
             self.player1.name = input("Bitte geben sie ihre Namen ein:")
@@ -85,6 +88,9 @@ class Game:
             print("Bitte geben Sie eine gültige Zahl ein.")
     
     def whos_first(self):
+        """
+        Asks the player if he wants to start first.
+        """
         order_choice = input(f"Möchtest du anfangen, {self.player1.name}? (j/n): ")
         if order_choice.lower() == 'n':
             self.current_player.set_player_number(2)
@@ -97,9 +103,15 @@ class Game:
             print("Bitte geben Sie eine gültige Antwort ein.")
 
     def switch_player(self):
+        """
+        Switches the current player.
+        """
         self.current_player = (self.player2 if self.current_player == self.player1 else self.player1)
 
     def game_loop(self):
+        """
+        The main game loop.
+        """
         game_over = False
         self.starter = self.current_player.name
         start_time = time.time()

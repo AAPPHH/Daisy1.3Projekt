@@ -14,10 +14,16 @@ class Player:
         return False 
     
     def make_move(self, row, col, game, board):
+        """
+        Places a piece on the board.
+        """
         if board.is_valid_move(row, col): 
             board.array[row][col] =  self.player_number 
             return True  
         return False 
     
     def set_player_number(self, new_player_number):
+        """
+        Sets the player number.
+        """
         self.player_number = new_player_number

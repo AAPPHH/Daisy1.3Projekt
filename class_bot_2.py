@@ -3,6 +3,9 @@ import random
 from class_player import *
 
 class ChainTreeBot(Player):
+    """
+    Bot that uses a decision tabel and otherwise places pieces next to his own pieces otherwise random.
+    """
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
         self.memo = {
@@ -57,6 +60,9 @@ class ChainTreeBot(Player):
                 return Player.make_move(self, move[0], move[1], game, board)
 
     def get_pos(self, board, player_number):
+        """
+        Returns a list of tuples with the coordinates of the player's pieces.
+        """
         chain = []
         for row_index, row in enumerate(board):
             for col_index, value in enumerate(row):
@@ -65,6 +71,9 @@ class ChainTreeBot(Player):
         return chain
 
     def direction(self, board, player_number):
+        """
+        Returns a random move next to the player's pieces.
+        """
         chain = self.get_pos(board, player_number)
         moves_list = []
         for row_index, col_index in chain:
@@ -96,6 +105,9 @@ class ChainTreeBot(Player):
             return self.random_move()
 
     def random_move(self):
+        """
+        Returns a random move.
+        """
         row = random.randint(0, 4)
         col = random.randint(0, 4)
         return (row, col)

@@ -6,6 +6,9 @@ import pickle
 from class_player import *
 
 class MonteCarloBot(Player):
+    """
+    Monte Carlo Bot with decision table and memoization.
+    """
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
         self.NTRIALS = 250000
@@ -53,6 +56,10 @@ class MonteCarloBot(Player):
         }
 
     def mc_trial(self, position, depth):
+        """
+        Plays a game starting with the given position, alternating between players,
+        by making random moves. Makes inplace changes to position.
+        """
         current_player = self.player_number
         winner = position.is_winner(self.player_number)
         board_full = position.is_full()
@@ -75,6 +82,9 @@ class MonteCarloBot(Player):
             depth -= 1
 
     def mc_update_scores(self, scores, position):
+        """
+        This function takes a grid of scores (a list of lists)
+        """
         move =  [(i, j) for i in range(position.m) for j in range(position.n) if position.array[i][j] == 0]
         dep = len(move)
         winner = position.is_winner
@@ -91,6 +101,10 @@ class MonteCarloBot(Player):
                     scores[row][col] -= coef * self.SCORE_OTHER * dep**2
         
     def get_best_move(self, position, scores):
+        """
+        Find all of the empty squares with the maximum score
+        or randomly return one of them as a (row, column) tuple.
+        """
         best_square = None
         best_score = float('-inf')
         board_state = str(position.array)
@@ -109,12 +123,19 @@ class MonteCarloBot(Player):
 
     @ray.remote
     def mc_trial_remote(self, position, depth):
+        """
+        Ray remote for mc_trial inplace changes.
+        """
         clone = deepcopy(position)
         dep = deepcopy(depth)
         self.mc_trial(clone, dep)
         return clone
     
     def mc_move(self, position):
+        """
+        This method checks all if there is allready a best move for the current board state
+        otherwise it will run the monte carlo simulation.
+        """
         board_state = str(position.array)
         if board_state in self.memo:
             print("Memoization!")
@@ -145,6 +166,9 @@ class MonteCarloBot(Player):
         return Player.make_move(self, move[0], move[1], game, board)
     
     def load_state(self):
+        """
+        Loads the memoization dictionary from a file.
+        """
         try:
             with open('bot_4_memo', 'rb') as f:
                 self.memo = pickle.load(f)
@@ -152,7 +176,10 @@ class MonteCarloBot(Player):
             print("Kein gespeicherter Zustand gefunden.")
 
     def save_state(self):
-        self.memo.update(self.new_memo)  # Add new_memo to memo
+        """
+        Saves the memoization dictionary to a file.
+        """
+        self.memo.update(self.new_memo)
         with open('Bot_4_memo.pkl', 'wb') as f:
             pickle.dump(self.memo, f)
         print("Zustand gespeichert.")
