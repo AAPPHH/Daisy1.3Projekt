@@ -31,12 +31,12 @@ class Game:
                 self.player2.name = input("Spieler 2: ")
                 self.whos_first()
             elif choice == "2":
-                choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot spielen? (1/2/3/4):")
+                choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen SecretsBot, ChainTreeBot, MinimaxBot oder einen MonteCarloBot spielen? (1/2/3/4):")
                 if choice == "1":
-                    self.player2 = GomokuBot("GomokuBot", 2)
+                    self.player2 = SecretsBot("SecretsBot", 2)
                     self.whos_first()
                 elif choice == "2":
-                    self.player2 = TreeBot("TreeBot", 2)
+                    self.player2 = ChainTreeBot("ChainTreeBot", 2)
                     self.whos_first()
                 elif choice == "3":
                     self.player2 = MinimaxBot("MinimaxBot", 2)
@@ -51,9 +51,9 @@ class Game:
         elif start_choice == "2":
             choice_bot_1 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player One ist? (1/2/3/4):")
             if choice_bot_1 == "1":
-                self.player1 = GomokuBot("GomokuBot", 1)
+                self.player1 = SecretsBot("SecretsBot", 1)
             elif choice_bot_1 == "2":
-                self.player1 = TreeBot("ChainTreeBot", 1)
+                self.player1 = ChainTreeBot("ChainTreeBot", 1)
             elif choice_bot_1 == "3":
                 self.player1 = MinimaxBot("MinimaxBot", 1)
             elif choice_bot_1 == "4":
@@ -63,9 +63,9 @@ class Game:
             self.current_player = self.player1
             choice_bot_2 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player Two ist? (1/2/3/4):")
             if choice_bot_2 == "1":
-                self.player2 = GomokuBot("GomokuBot_2", 2)
+                self.player2 = SecretsBot("SecretsBot_2", 2)
             elif choice_bot_2 == "2":
-                self.player2 = TreeBot("ChainTreeBot_2", 2)
+                self.player2 = ChainTreeBot("ChainTreeBot_2", 2)
             elif choice_bot_2 == "3":
                 self.player2 = MinimaxBot("MinimaxBot_2", 2)
             elif choice_bot_2 == "4":
@@ -107,11 +107,11 @@ class Game:
             valid_move = True
             self.board.print_board()
             start_turn_time = time.time()
-            if isinstance(self.current_player, GomokuBot):
-                valid_move = GomokuBot.make_move(self.current_player, self, self.board)
+            if isinstance(self.current_player, SecretsBot):
+                valid_move = SecretsBot.make_move(self.current_player, self, self.board)
 
-            elif isinstance(self.current_player, TreeBot):
-                valid_move = TreeBot.make_move(self.current_player, self, self.board)  
+            elif isinstance(self.current_player, ChainTreeBot):
+                valid_move = ChainTreeBot.make_move(self.current_player, self, self.board)  
 
             elif isinstance(self.current_player, MinimaxBot):
                 valid_move = MinimaxBot.make_move(self.current_player, self, self.board)

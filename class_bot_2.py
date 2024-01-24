@@ -2,7 +2,7 @@ import numpy as np
 import random
 from class_player import *
 
-class TreeBot(Player):
+class ChainTreeBot(Player):
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
         self.memo = {
