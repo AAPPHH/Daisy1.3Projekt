@@ -14,7 +14,7 @@ class MonteCarloBot(Player):
         self.NTRIALS = 250000
         self.SCORE_CURRENT = 1.0
         self.SCORE_OTHER = 2.0
-        self.DEP = 5
+        self.DEP = 25
         self.new_memo = {}
         self.memo = {
             #best move 1 Player_Number=1
