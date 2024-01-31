@@ -11,10 +11,10 @@ class MonteCarloBot(Player):
     """
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
-        self.NTRIALS = 250000
-        self.SCORE_CURRENT = 1.0
+        self.NTRIALS = 100000
+        self.SCORE_CURRENT = 10.0
         self.SCORE_OTHER = 1.0
-        self.DEP = 25
+        self.DEP = 10
         self.new_memo = {}
         self.memo = {
             #best move 1 Player_Number=1
@@ -81,24 +81,43 @@ class MonteCarloBot(Player):
             current_player = 2 if current_player == 1 else 1
             depth -= 1
 
+    # def mc_update_scores(self, scores, position):
+    #     """
+    #     This function takes a grid of scores (a list of lists)
+    #     """
+    #     move =  [(i, j) for i in range(position.m) for j in range(position.n) if position.array[i][j] == 0]
+    #     dep = len(move)
+    #     winner = position.is_winner
+    #     print(winner)
+    #     if winner == 0:
+    #         return
+    #     coef = 1
+    #     if self.player_number != winner:
+    #         coef = -1
+    #     for row in range(position.m):
+    #         for col in range(position.n):
+    #             if position.array[row][col] == self.player_number:
+    #                 scores[row][col] += coef * self.SCORE_CURRENT * dep**2
+    #             elif position.array[row][col] != 0:
+    #                 scores[row][col] -= coef * self.SCORE_OTHER * dep**2
+
     def mc_update_scores(self, scores, position):
         """
         This function takes a grid of scores (a list of lists)
         """
-        move =  [(i, j) for i in range(position.m) for j in range(position.n) if position.array[i][j] == 0]
+        move = [(i, j) for i in range(position.m) for j in range(position.n) if position.array[i][j] == 0]
         dep = len(move)
-        winner = position.is_winner
+        winner = position.is_winner(self.player_number)  # Korrekter Aufruf mit Parameter
+        #print(winner)
         if winner == 0:
             return
-        coef = 1
-        if self.player_number != winner:
-            coef = -1
+        coef = 1 if self.player_number == winner else -1
         for row in range(position.m):
             for col in range(position.n):
                 if position.array[row][col] == self.player_number:
-                    scores[row][col] += coef * self.SCORE_CURRENT * dep#**2
+                    scores[row][col] += coef * self.SCORE_CURRENT * dep**2
                 elif position.array[row][col] != 0:
-                    scores[row][col] -= coef * self.SCORE_OTHER * dep#**2
+                    scores[row][col] -= coef * self.SCORE_OTHER * dep**2
         
     def get_best_move(self, position, scores):
         """
@@ -157,6 +176,32 @@ class MonteCarloBot(Player):
             self.mc_update_scores(scores, clone)
         print(f"Computer wählt aus {len(results)} Möglichkeiten.")
         return self.get_best_move(position, scores)
+    
+    # def mc_move(self, board):
+    #     """
+    #     This method checks all if there is already a best move for the current board state
+    #     otherwise it will run the monte carlo simulation.
+    #     """
+    #     board_state = str(board.array)
+    #     # Überprüfen auf Memoisierung
+    #     if board_state in self.memo:
+    #         print("Memoization!")
+    #         return self.memo[board_state][0]
+    #     if board_state in self.new_memo:
+    #         print("Memoization!")
+    #         return self.new_memo[board_state][0]
+
+    #     scores = [[0] * board.n for _ in range(board.m)]
+    #     for _ in range(self.NTRIALS):
+    #         #print(scores)
+    #         board_temp = deepcopy(board)
+    #         self.mc_trial(board_temp, self.DEP)
+    #         #print(board_temp.array)
+    #         self.mc_update_scores(scores, board_temp)
+    #         #print(scores)
+    #     print(scores)
+    #     print(f"Computer wählt aus {self.NTRIALS} Möglichkeiten.")
+    #     return self.get_best_move(board_temp, scores)
     
     def make_move(self, game, board):
         print("Computer denkt nach...")

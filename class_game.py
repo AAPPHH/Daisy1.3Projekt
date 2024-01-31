@@ -57,38 +57,85 @@ class Game:
                         print("Bitte geben Sie eine gültige Zahl ein.")
                 break
             elif start_choice == "2":
-                choice_bot_1 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player One ist? (1/2/3/4):")
-                if choice_bot_1 == "1":
-                    self.player1 = SecretsBot("SecretsBot", 1)
-                elif choice_bot_1 == "2":
-                    self.player1 = ChainTreeBot("ChainTreeBot", 1)
-                elif choice_bot_1 == "3":
-                    self.player1 = MinimaxBot("MinimaxBot", 1)
-                elif choice_bot_1 == "4":
-                    self.player1 = MonteCarloBot("MonteCarloBot", 1)
-                else:
-                    print("Bitte geben Sie eine gültige Zahl ein.")
-                self.current_player = self.player1
-                choice_bot_2 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player Two ist? (1/2/3/4):")
-                if choice_bot_2 == "1":
-                    self.player2 = SecretsBot("SecretsBot_2", 2)
-                elif choice_bot_2 == "2":
-                    self.player2 = ChainTreeBot("ChainTreeBot_2", 2)
-                elif choice_bot_2 == "3":
-                    self.player2 = MinimaxBot("MinimaxBot_2", 2)
-                elif choice_bot_2 == "4":
-                    self.player2 = MonteCarloBot("MonteCarloBot_2", 2)
-                num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000):")
-                for game_number in range(int(num_games)):
-                    print(f"Spiel {game_number + 1} von {num_games}")
-                    self.game_loop()
-                    self.game_arrays = []
-                    self.board.reset_board()
+                while True:
+                    choice_bot_1 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player One ist? (1/2/3/4):")
+                    if choice_bot_1 == "1":
+                        self.player1 = SecretsBot("SecretsBot", 1)
+                        break
+                    elif choice_bot_1 == "2":
+                        self.player1 = ChainTreeBot("ChainTreeBot", 1)
+                        break
+                    elif choice_bot_1 == "3":
+                        self.player1 = MinimaxBot("MinimaxBot", 1)
+                        break
+                    elif choice_bot_1 == "4":
+                        self.player1 = MonteCarloBot("MonteCarloBot", 1)
+                        break
+                    else:
+                        print("Bitte geben Sie eine gültige Zahl ein.")
                     self.current_player = self.player1
-                print("Alle Spiele wurden gespielt.")
+                while True:
+                    choice_bot_2 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player Two ist? (1/2/3/4):")
+                    if choice_bot_2 == "1":
+                        self.player2 = SecretsBot("SecretsBot_2", 2)
+                        break
+                    elif choice_bot_2 == "2":
+                        self.player2 = ChainTreeBot("ChainTreeBot_2", 2)
+                        break
+                    elif choice_bot_2 == "3":
+                        self.player2 = MinimaxBot("MinimaxBot_2", 2)
+                        break
+                    elif choice_bot_2 == "4":
+                        self.player2 = MonteCarloBot("MonteCarloBot_2", 2)
+                        break
+                    else:
+                        print("Bitte geben Sie eine gültige Zahl ein.")
+                while True:
+                    num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000):")
+                    if not isinstance(num_games, int) or num_games < 1 or num_games > 10000:
+                        print("Bitte geben Sie eine gültige Zahl zwischen 1 und 10000 ein.")
+                    else:
+                        for game_number in range(int(num_games)):
+                            print(f"Spiel {game_number + 1} von {num_games}")
+                            self.game_loop()
+                            self.game_arrays = []
+                            self.board.reset_board()
+                            self.current_player = self.player1
+                        print("Alle Spiele wurden gespielt.")
+                        break
+            elif start_choice == "3":
+                while True:
+                    num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000):")
+                    if not isinstance(num_games, int) or num_games < 1 or num_games > 10000:
+                        print("Bitte geben Sie eine gültige Zahl zwischen 1 und 10000 ein.")
+                    self.all_bot_vs_bot(int(num_games))
+                    print("Alle Spiele wurden gespielt.")
+                    break
             else:
                 print("Bitte geben Sie eine gültige Zahl ein.")
     
+    def all_bot_vs_bot(self, num_games):
+        bots = [SecretsBot, ChainTreeBot, MinimaxBot, MonteCarloBot]
+        for i, Bot1 in enumerate(bots):
+            for Bot2 in bots[i:]:
+                for game_number in range(num_games):
+                    self.player1 = Bot1(f"{Bot1.__name__}", 1)
+                    self.player2 = Bot2(f"{Bot2.__name__}_2", 2)
+                    self.reset_game()
+                    print(f"Spiel {game_number + 1} von {num_games}")
+                    self.game_loop()
+                    self.player1 = Bot2(f"{Bot2.__name__}", 1)
+                    self.player2 = Bot1(f"{Bot1.__name__}_2", 2)
+                    self.reset_game()
+                    print(f"Spiel {game_number + 1} von {num_games}")
+                    self.game_loop()
+                        
+    def reset_game(self):
+        self.game_arrays = []
+        self.board.reset_board()
+        self.winner = None
+        self.current_player = self.player1
+        
     def whos_first(self):
         """
         Asks the player if he wants to start first.
