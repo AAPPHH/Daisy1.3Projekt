@@ -55,29 +55,29 @@ class MonteCarloBot(Player):
             '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 2. 0.]\n [0. 0. 1. 1. 0.]\n [0. 1. 0. 2. 0.]\n [0. 0. 0. 0. 0.]]': ((2, 1), "KILLER_MOVE")  #4.2
         }
 
-    def mc_trial(self, position, depth):
+    def mc_trial(self, board_temp, depth):
         """
         Plays a game starting with the given position, alternating between players,
         by making random moves. Makes inplace changes to position.
         """
         current_player = self.player_number
-        winner = position.is_winner(self.player_number)
-        board_full = position.is_full()
+        winner = board_temp.is_winner(self.player_number)
+        board_full = board_temp.is_full()
         game_over = winner or board_full
-        empty_squares = [(i, j) for i in range(position.m) for j in range(position.n) if position.array[i][j] == 0]
+        empty_squares = [(i, j) for i in range(board_temp.m) for j in range(board_temp.n) if board_temp.array[i][j] == 0]
         if not empty_squares:
             return
         while not game_over and depth != 0:
-            winner = position.is_winner(self.player_number)
-            board_full = position.is_full()
+            winner = board_temp.is_winner(self.player_number)
+            board_full = board_temp.is_full()
             game_over = winner or board_full
             if game_over:
                 break
-            empty_squares = [(i, j) for i in range(position.m) for j in range(position.n) if position.array[i][j] == 0]
+            empty_squares = [(i, j) for i in range(board_temp.m) for j in range(board_temp.n) if board_temp.array[i][j] == 0]
             if not empty_squares:
                 break
             move = empty_squares[random.randrange(len(empty_squares))]
-            position.array[move[0]][move[1]] = current_player
+            board_temp.array[move[0]][move[1]] = current_player
             current_player = 2 if current_player == 1 else 1
             depth -= 1
 
@@ -101,35 +101,35 @@ class MonteCarloBot(Player):
     #             elif position.array[row][col] != 0:
     #                 scores[row][col] -= coef * self.SCORE_OTHER * dep**2
 
-    def mc_update_scores(self, scores, position):
+    def mc_update_scores(self, scores, board_temp):
         """
         This function takes a grid of scores (a list of lists)
         """
-        move = [(i, j) for i in range(position.m) for j in range(position.n) if position.array[i][j] == 0]
+        move = [(i, j) for i in range(board_temp.m) for j in range(board_temp.n) if board_temp.array[i][j] == 0]
         dep = len(move)
-        winner = position.is_winner(self.player_number)  # Korrekter Aufruf mit Parameter
+        winner = board_temp.is_winner(self.player_number)  # Korrekter Aufruf mit Parameter
         #print(winner)
         if winner == 0:
             return
         coef = 1 if self.player_number == winner else -1
-        for row in range(position.m):
-            for col in range(position.n):
-                if position.array[row][col] == self.player_number:
+        for row in range(board_temp.m):
+            for col in range(board_temp.n):
+                if board_temp.array[row][col] == self.player_number:
                     scores[row][col] += coef * self.SCORE_CURRENT * dep**2
-                elif position.array[row][col] != 0:
+                elif board_temp.array[row][col] != 0:
                     scores[row][col] -= coef * self.SCORE_OTHER * dep**2
         
-    def get_best_move(self, position, scores):
+    def get_best_move(self, board_temp, scores):
         """
         Find all of the empty squares with the maximum score
         or randomly return one of them as a (row, column) tuple.
         """
         best_square = None
         best_score = float('-inf')
-        board_state = str(position.array)
-        for square in [(i, j) for i in range(position.m) for j in range(position.n)]:
+        board_state = str(board_temp.array)
+        for square in [(i, j) for i in range(board_temp.m) for j in range(board_temp.n)]:
             r, s = square
-            if scores[r][s] > best_score and position.array[r][s] == 0:
+            if scores[r][s] > best_score and board_temp.array[r][s] == 0:
                 best_square = square
                 best_score = scores[r][s]
                 print(f"Beste Position: {best_square} mit Score {best_score}")
@@ -138,17 +138,17 @@ class MonteCarloBot(Player):
             return best_square
         else:
             print("Keine beste Position gefunden.")
-            return random.choice([(i, j) for i in range(position.m) for j in range(position.n) if position.array[i][j] == 0])
+            return random.choice([(i, j) for i in range(board_temp.m) for j in range(board_temp.n) if board_temp.array[i][j] == 0])
 
     @ray.remote
-    def mc_trial_remote(self, position, depth):
+    def mc_trial_remote(self, board, depth):
         """
         Ray remote for mc_trial inplace changes.
         """
-        clone = deepcopy(position)
+        board_temp = deepcopy(board)
         dep = deepcopy(depth)
-        self.mc_trial(clone, dep)
-        return clone
+        self.mc_trial(board_temp, dep)
+        return board_temp
     
     def mc_move(self, position):
         """
