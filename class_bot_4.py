@@ -13,7 +13,7 @@ class MonteCarloBot(Player):
         super().__init__(name, player_number)
         self.NTRIALS = 250000
         self.SCORE_CURRENT = 1.0
-        self.SCORE_OTHER = 2.0
+        self.SCORE_OTHER = 1.0
         self.DEP = 25
         self.new_memo = {}
         self.memo = {
@@ -96,9 +96,9 @@ class MonteCarloBot(Player):
         for row in range(position.m):
             for col in range(position.n):
                 if position.array[row][col] == self.player_number:
-                    scores[row][col] += coef * self.SCORE_CURRENT * dep**2
+                    scores[row][col] += coef * self.SCORE_CURRENT * dep#**2
                 elif position.array[row][col] != 0:
-                    scores[row][col] -= coef * self.SCORE_OTHER * dep**2
+                    scores[row][col] -= coef * self.SCORE_OTHER * dep#**2
         
     def get_best_move(self, position, scores):
         """
