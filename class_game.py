@@ -52,7 +52,6 @@ class Game:
                                 continue
                             self.whos_first()
                             break
-                        break
                     else:
                         print("Bitte geben Sie eine gültige Zahl ein.")
                 break
@@ -90,16 +89,19 @@ class Game:
                         break
                     else:
                         print("Bitte geben Sie eine gültige Zahl ein.")
+                while True:
                     num_games = input("Wie viele Runden möchtest du spielen? (1-10000): ")
-                    for game_number in range(num_games):
-                        print(f"Spiel {game_number + 1} von {num_games}")
-                        self.game_loop()
-                        self.game_arrays = []
-                        self.board.reset_board()
-                        self.current_player = self.player1
-                    print("Alle Spiele wurden gespielt.")
-                            
-
+                    num_games = int(num_games)
+                    if not isinstance(num_games, int) or num_games < 1 or num_games > 10000:
+                        print("Bitte geben Sie eine gültige Zahl zwischen 1 und 10000 ein.")
+                    else:
+                        for game_number in range(int(num_games)):
+                            print(f"Spiel {game_number + 1} von {num_games}")
+                            self.current_player = self.player1
+                            self.game_loop()
+                            self.reset_game()
+                        print("Alle Spiele wurden gespielt.")
+                
             elif start_choice == "3":
                 while True:
                     num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000):")

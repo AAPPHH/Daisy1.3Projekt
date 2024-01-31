@@ -4,6 +4,7 @@ class Player:
     def __init__(self, name, player_number):
         self.name = name
         self.player_number = player_number
+        #memo einfügen
 
 
     def place_piece(self, row, col, game, board):
