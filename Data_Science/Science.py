@@ -1,4 +1,5 @@
 import pandas as pd
+import sketch
 
 path = r"Data_Science/game_history.pkl"
 
@@ -22,3 +23,6 @@ average_moves_treebot_wins = treebot_wins['N_turn'].mean()
 print(average_moves_treebot_wins)
 
 df.to_excel("Data_Science/Mini.xlsx")
+
+df.sketch.ask("Which columns are integer type?")
+
