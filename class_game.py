@@ -90,19 +90,16 @@ class Game:
                         break
                     else:
                         print("Bitte geben Sie eine gültige Zahl ein.")
-                while True:
                     num_games = input("Wie viele Runden möchtest du spielen? (1-10000): ")
-                    if isinstance(num_games, int):
-                        for game_number in range(num_games):
-                            print(f"Spiel {game_number + 1} von {num_games}")
-                            self.game_loop()
-                            self.game_arrays = []
-                            self.board.reset_board()
-                            self.current_player = self.player1
-                            print("Alle Spiele wurden gespielt.")
-                            break
-                    else:
-                        print("Bitte geben Sie eine gültige ganze Zahl ein.")
+                    for game_number in range(num_games):
+                        print(f"Spiel {game_number + 1} von {num_games}")
+                        self.game_loop()
+                        self.game_arrays = []
+                        self.board.reset_board()
+                        self.current_player = self.player1
+                    print("Alle Spiele wurden gespielt.")
+                            
+
             elif start_choice == "3":
                 while True:
                     num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000):")
