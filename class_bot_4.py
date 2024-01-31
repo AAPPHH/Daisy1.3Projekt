@@ -11,7 +11,7 @@ class MonteCarloBot(Player):
     """
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
-        self.NTRIALS = 100000
+        self.NTRIALS = 250000
         self.SCORE_CURRENT = 10.0
         self.SCORE_OTHER = 1.0
         self.DEP = 10
