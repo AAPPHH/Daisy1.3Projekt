@@ -24,68 +24,70 @@ class Game:
     #start modularization
     def start(self):
         """
-        Initializes the gameloop.
+        Initializes the game loop.
         """
-        start_choice = input("Let's play five in row! wollen sie oder soll der Computer spielen? (1/2):")
-        if start_choice == "1":
-            self.player1.name = input("Bitte geben sie ihre Namen ein:")
-            choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen anderen Spieler oder gegen den Computer spielen? (1/2):")
-            if choice == "1":
-                self.player2.name = input("Spieler 2: ")
-                self.whos_first()
-            elif choice == "2":
-                choice = input(f"Hallo {self.player1.name}, möchtest du gegen einen SecretsBot, ChainTreeBot, MinimaxBot oder einen MonteCarloBot spielen? (1/2/3/4):")
-                if choice == "1":
-                    self.player2 = SecretsBot("SecretsBot", 2)
-                    self.whos_first()
-                elif choice == "2":
-                    self.player2 = ChainTreeBot("ChainTreeBot", 2)
-                    self.whos_first()
-                elif choice == "3":
-                    self.player2 = MinimaxBot("MinimaxBot", 2)
-                    self.whos_first()
-                elif choice == "4":
-                    self.player2 = MonteCarloBot("MonteCarloBot", 2)
-                    self.whos_first()
+        while True:
+            start_choice = input("Let's play five in a row! Wollen Sie oder soll der Computer spielen? (1/2): ")
+            if start_choice == "1":
+                self.player1.name = input("Bitte geben Sie Ihren Namen ein: ")
+                while True:
+                    choice = input(f"Hallo {self.player1.name}, möchten Sie gegen einen anderen Spieler oder gegen den Computer spielen? (1/2): ")
+                    if choice == "1":
+                        self.player2.name = input("Spieler 2: Bitte geben Sie Ihren Namen ein: ")
+                        self.whos_first()
+                        break
+                    elif choice == "2":
+                        while True:
+                            choice = input(f"Hallo {self.player1.name}, möchten Sie gegen einen SecretsBot, ChainTreeBot, MinimaxBot oder einen MonteCarloBot spielen? (1/2/3/4): ")
+                            if choice == "1":
+                                self.player2 = SecretsBot("SecretsBot", 2)
+                            elif choice == "2":
+                                self.player2 = ChainTreeBot("ChainTreeBot", 2)
+                            elif choice == "3":
+                                self.player2 = MinimaxBot("MinimaxBot", 2)
+                            elif choice == "4":
+                                self.player2 = MonteCarloBot("MonteCarloBot", 2)
+                            else:
+                                print("Bitte geben Sie eine gültige Zahl ein.")
+                                continue
+                            self.whos_first()
+                            break
+                        break
+                    else:
+                        print("Bitte geben Sie eine gültige Zahl ein.")
+                break
+            elif start_choice == "2":
+                choice_bot_1 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player One ist? (1/2/3/4):")
+                if choice_bot_1 == "1":
+                    self.player1 = SecretsBot("SecretsBot", 1)
+                elif choice_bot_1 == "2":
+                    self.player1 = ChainTreeBot("ChainTreeBot", 1)
+                elif choice_bot_1 == "3":
+                    self.player1 = MinimaxBot("MinimaxBot", 1)
+                elif choice_bot_1 == "4":
+                    self.player1 = MonteCarloBot("MonteCarloBot", 1)
                 else:
                     print("Bitte geben Sie eine gültige Zahl ein.")
-            else:
-                print("Bitte geben Sie eine gültige Zahl ein.")
-        elif start_choice == "2":
-            choice_bot_1 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player One ist? (1/2/3/4):")
-            if choice_bot_1 == "1":
-                self.player1 = SecretsBot("SecretsBot", 1)
-            elif choice_bot_1 == "2":
-                self.player1 = ChainTreeBot("ChainTreeBot", 1)
-            elif choice_bot_1 == "3":
-                self.player1 = MinimaxBot("MinimaxBot", 1)
-            elif choice_bot_1 == "4":
-                self.player1 = MonteCarloBot("MonteCarloBot", 1)
-            else:
-                print("Bitte geben Sie eine gültige Zahl ein.")
-            self.current_player = self.player1
-            choice_bot_2 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player Two ist? (1/2/3/4):")
-            if choice_bot_2 == "1":
-                self.player2 = SecretsBot("SecretsBot_2", 2)
-            elif choice_bot_2 == "2":
-                self.player2 = ChainTreeBot("ChainTreeBot_2", 2)
-            elif choice_bot_2 == "3":
-                self.player2 = MinimaxBot("MinimaxBot_2", 2)
-            elif choice_bot_2 == "4":
-                self.player2 = MonteCarloBot("MonteCarloBot_2", 2)
-            num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000):")
-            try:
+                self.current_player = self.player1
+                choice_bot_2 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player Two ist? (1/2/3/4):")
+                if choice_bot_2 == "1":
+                    self.player2 = SecretsBot("SecretsBot_2", 2)
+                elif choice_bot_2 == "2":
+                    self.player2 = ChainTreeBot("ChainTreeBot_2", 2)
+                elif choice_bot_2 == "3":
+                    self.player2 = MinimaxBot("MinimaxBot_2", 2)
+                elif choice_bot_2 == "4":
+                    self.player2 = MonteCarloBot("MonteCarloBot_2", 2)
+                num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000):")
                 for game_number in range(int(num_games)):
-                        print(f"Spiel {game_number + 1} von {num_games}")
-                        self.game_loop()
-                        self.game_arrays = []
-                        self.board.reset_board()
-                        self.current_player = self.player1
+                    print(f"Spiel {game_number + 1} von {num_games}")
+                    self.game_loop()
+                    self.game_arrays = []
+                    self.board.reset_board()
+                    self.current_player = self.player1
                 print("Alle Spiele wurden gespielt.")
-            except ValueError:
+            else:
                 print("Bitte geben Sie eine gültige Zahl ein.")
-        else:
-            print("Bitte geben Sie eine gültige Zahl ein.")
     
     def whos_first(self):
         """

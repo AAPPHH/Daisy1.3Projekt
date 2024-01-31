@@ -12,7 +12,7 @@ class MinimaxBot(Player):
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
         self.use_minimax = False
-        self.depth = 5
+        self.depth = 6
         self.new_memo = {}
         self.memo = {
             #best move 1 Player_Number=1
@@ -68,6 +68,10 @@ class MinimaxBot(Player):
         if move is not None:
             self.new_memo[board_state] = (move)
         return Player.make_move(self, move[0], move[1], game, board)
+    
+    def manhattan_distance_to_center(self, row, col, board):
+        center_row, center_col = len(board.array) // 2, len(board.array[0]) // 2
+        return abs(row - center_row) + abs(col - center_col)
 
     def get_empty_squares(self, board):
         """
@@ -78,6 +82,8 @@ class MinimaxBot(Player):
             for col_index, value in enumerate(row):
                 if value == 0:  
                     empty_squares.append((row_index, col_index))
+
+        empty_squares.sort(key=lambda pos: self.manhattan_distance_to_center(pos[0], pos[1], board))
         return empty_squares
     
     def get_enemy(self):
@@ -212,8 +218,7 @@ class MinimaxBot(Player):
             elif val == a:
                 print(a)
                 choices.append(move)
-            if a == 1 or time.time() - start_time > time_limit:
-                print("Time limit exceeded")
+            if a == self.depth*10 or time.time() - start_time > time_limit:
                 break
         return random.choice(choices) if choices else self.minimax(game, position, self.depth, self.player_number)
     
