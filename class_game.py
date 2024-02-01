@@ -27,6 +27,7 @@ class Game:
         Initializes the game loop.
         """
         while True:
+            self.reset_game()
             start_choice = input("Let's play five in a row! Wollen Sie oder soll der Computer spielen? (1/2): ")
             if start_choice == "1":
                 self.player1.name = input("Bitte geben Sie Ihren Namen ein: ")
@@ -101,6 +102,7 @@ class Game:
                             self.game_loop()
                             self.reset_game()
                         print("Alle Spiele wurden gespielt.")
+                        break
                 
             elif start_choice == "3":
                 while True:
