@@ -1,4 +1,3 @@
-import random
 import ray
 import os
 from copy import deepcopy
@@ -16,44 +15,6 @@ class MonteCarloBot(Player):
         self.SCORE_OTHER = 2.0
         self.DEP = 10
         self.new_memo = {}
-        self.memo = {
-            #best move 1 Player_Number=1
-            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': ((2,  2), "KILLER_MOVE"),
-            #best move 2 Player_Number=2
-            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': (random.choice([(1, 1), (1, 3), (3, 1), (3, 3)]), "KILLER_MOVE"),
-            #best move 3 Player_Number=1
-            '[[0. 0. 0. 0. 0.]\n [0. 2. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': (random.choice([(1, 3), (3, 1)]), "KILLER_MOVE"), #1
-            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 2. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': (random.choice([(1, 1), (3, 3)]), "KILLER_MOVE"), #2
-            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 2. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': (random.choice([(1, 1), (3, 3)]), "KILLER_MOVE"), #3
-            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 2. 0.]\n [0. 0. 0. 0. 0.]]': (random.choice([(1, 3), (3, 1)]), "KILLER_MOVE"), #4
-            #best move 4 Player_Number=2
-            '[[0. 0. 0. 0. 0.]\n [0. 2. 0. 1. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': ((3, 1), "KILLER_MOVE"), #1.1
-            '[[0. 0. 0. 0. 0.]\n [0. 2. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 1. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': ((1, 3), "KILLER_MOVE"), #1.2
-            '[[0. 0. 0. 0. 0.]\n [0. 1. 0. 2. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': ((3, 3), "KILLER_MOVE"), #2.1
-            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 2. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 0.]\n [0. 0. 0. 0. 0.]]': ((1, 1), "KILLER_MOVE"), #2.2
-            '[[0. 0. 0. 0. 0.]\n [0. 1. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 2. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': ((3, 3), "KILLER_MOVE"), #3.1
-            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 2. 0. 1. 0.]\n [0. 0. 0. 0. 0.]]': ((1, 1), "KILLER_MOVE"), #3.2  
-            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 1. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 2. 0.]\n [0. 0. 0. 0. 0.]]': ((3, 1), "KILLER_MOVE"), #4.1
-            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 1. 0. 2. 0.]\n [0. 0. 0. 0. 0.]]': ((1, 3), "KILLER_MOVE"), #4.2
-            #best move 5 Player_Number=1
-            '[[0. 0. 0. 0. 0.]\n [0. 2. 0. 1. 0.]\n [0. 0. 1. 0. 0.]\n [0. 2. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': ((2, 1), "KILLER_MOVE"), #1.1
-            '[[0. 0. 0. 0. 0.]\n [0. 2. 0. 2. 0.]\n [0. 0. 1. 0. 0.]\n [0. 1. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': ((1, 2), "KILLER_MOVE"), #1.2
-            '[[0. 0. 0. 0. 0.]\n [0. 1. 0. 2. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 2. 0.]\n [0. 0. 0. 0. 0.]]': ((2, 3), "KILLER_MOVE"), #2.1
-            '[[0. 0. 0. 0. 0.]\n [0. 2. 0. 2. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 0.]\n [0. 0. 0. 0. 0.]]': ((1, 2), "KILLER_MOVE"), #2.2
-            '[[0. 0. 0. 0. 0.]\n [0. 1. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 2. 0. 2. 0.]\n [0. 0. 0. 0. 0.]]': ((3, 2), "KILLER_MOVE"), #3.1
-            '[[0. 0. 0. 0. 0.]\n [0. 1. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 2. 0. 1. 0.]\n [0. 0. 0. 0. 0.]]': ((2, 1), "KILLER_MOVE"), #3.2
-            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 1. 0.]\n [0. 0. 1. 0. 0.]\n [0. 2. 0. 2. 0.]\n [0. 0. 0. 0. 0.]]': ((3, 2), "KILLER_MOVE"), #4.1
-            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 2. 0.]\n [0. 0. 1. 0. 0.]\n [0. 1. 0. 2. 0.]\n [0. 0. 0. 0. 0.]]': ((2, 3), "KILLER_MOVE"), #4.2
-            #best move 6 Player_Number=2
-            '[[0. 0. 0. 0. 0.]\n [0. 2. 0. 1. 0.]\n [0. 1. 1. 0. 0.]\n [0. 2. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': ((2, 3), "KILLER_MOVE"), #1.1
-            '[[0. 0. 0. 0. 0.]\n [0. 2. 1. 2. 0.]\n [0. 0. 1. 0. 0.]\n [0. 1. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': ((3, 2), "KILLER_MOVE"), #1.2
-            '[[0. 0. 0. 0. 0.]\n [0. 1. 0. 2. 0.]\n [0. 0. 1. 1. 0.]\n [0. 0. 0. 2. 0.]\n [0. 0. 0. 0. 0.]]': ((2, 1), "KILLER_MOVE"), #2.1
-            '[[0. 0. 0. 0. 0.]\n [0. 2. 1. 2. 0.]\n [0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 0.]\n [0. 0. 0. 0. 0.]]': ((3, 2), "KILLER_MOVE"), #2.2
-            '[[0. 0. 0. 0. 0.]\n [0. 1. 0. 0. 0.]\n [0. 0. 1. 0. 0.]\n [0. 2. 1. 2. 0.]\n [0. 0. 0. 0. 0.]]': ((1, 2), "KILLER_MOVE"), #3.1
-            '[[0. 0. 0. 0. 0.]\n [0. 2. 0. 0. 0.]\n [0. 1. 1. 0. 0.]\n [0. 2. 0. 1. 0.]\n [0. 0. 0. 0. 0.]]': ((2, 3), "KILLER_MOVE"), #3.2
-            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 1. 0.]\n [0. 0. 1. 0. 0.]\n [0. 2. 1. 2. 0.]\n [0. 0. 0. 0. 0.]]': ((1, 2), "KILLER_MOVE"), #4.1
-            '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 2. 0.]\n [0. 0. 1. 1. 0.]\n [0. 1. 0. 2. 0.]\n [0. 0. 0. 0. 0.]]': ((2, 1), "KILLER_MOVE")  #4.2
-        }
 
     def mc_trial(self, board_temp, depth):
         """
@@ -81,34 +42,13 @@ class MonteCarloBot(Player):
             current_player = 2 if current_player == 1 else 1
             depth -= 1
 
-    # def mc_update_scores(self, scores, position):
-    #     """
-    #     This function takes a grid of scores (a list of lists)
-    #     """
-    #     move =  [(i, j) for i in range(position.m) for j in range(position.n) if position.array[i][j] == 0]
-    #     dep = len(move)
-    #     winner = position.is_winner
-    #     print(winner)
-    #     if winner == 0:
-    #         return
-    #     coef = 1
-    #     if self.player_number != winner:
-    #         coef = -1
-    #     for row in range(position.m):
-    #         for col in range(position.n):
-    #             if position.array[row][col] == self.player_number:
-    #                 scores[row][col] += coef * self.SCORE_CURRENT * dep**2
-    #             elif position.array[row][col] != 0:
-    #                 scores[row][col] -= coef * self.SCORE_OTHER * dep**2
-
     def mc_update_scores(self, scores, board_temp):
         """
         This function takes a grid of scores (a list of lists)
         """
         move = [(i, j) for i in range(board_temp.m) for j in range(board_temp.n) if board_temp.array[i][j] == 0]
         dep = len(move)
-        winner = board_temp.is_winner(self.player_number)  # Korrekter Aufruf mit Parameter
-        #print(winner)
+        winner = board_temp.is_winner(self.player_number)
         if winner == 0:
             return
         coef = 1 if self.player_number == winner else -1
@@ -153,7 +93,7 @@ class MonteCarloBot(Player):
     def mc_move(self, position):
         """
         This method checks all if there is allready a best move for the current board state
-        otherwise it will run the monte carlo simulation.
+        otherwise it will run the MontecCarlo simulation.
         """
         board_state = str(position.array)
         if board_state in self.memo:
@@ -176,32 +116,6 @@ class MonteCarloBot(Player):
             self.mc_update_scores(scores, clone)
         print(f"Computer wählt aus {len(results)} Möglichkeiten.")
         return self.get_best_move(position, scores)
-    
-    # def mc_move(self, board):
-    #     """
-    #     This method checks all if there is already a best move for the current board state
-    #     otherwise it will run the monte carlo simulation. !!!Without Ray!!!
-    #     """
-    #     board_state = str(board.array)
-    #     # Überprüfen auf Memoisierung
-    #     if board_state in self.memo:
-    #         print("Memoization!")
-    #         return self.memo[board_state][0]
-    #     if board_state in self.new_memo:
-    #         print("Memoization!")
-    #         return self.new_memo[board_state][0]
-
-    #     scores = [[0] * board.n for _ in range(board.m)]
-    #     for _ in range(self.NTRIALS):
-    #         #print(scores)
-    #         board_temp = deepcopy(board)
-    #         self.mc_trial(board_temp, self.DEP)
-    #         #print(board_temp.array)
-    #         self.mc_update_scores(scores, board_temp)
-    #         #print(scores)
-    #     print(scores)
-    #     print(f"Computer wählt aus {self.NTRIALS} Möglichkeiten.")
-    #     return self.get_best_move(board_temp, scores)
     
     def make_move(self, game, board):
         print("Computer denkt nach...")
@@ -228,3 +142,29 @@ class MonteCarloBot(Player):
         with open('Bot_4_memo.pkl', 'wb') as f:
             pickle.dump(self.memo, f)
         print("Zustand gespeichert.")
+
+    # def mc_move(self, board):
+    #     """
+    #     This method checks all if there is already a best move for the current board state
+    #     otherwise it will run the monte carlo simulation. !!!Without Ray!!!
+    #     """
+    #     board_state = str(board.array)
+    #     # Überprüfen auf Memoisierung
+    #     if board_state in self.memo:
+    #         print("Memoization!")
+    #         return self.memo[board_state][0]
+    #     if board_state in self.new_memo:
+    #         print("Memoization!")
+    #         return self.new_memo[board_state][0]
+
+    #     scores = [[0] * board.n for _ in range(board.m)]
+    #     for _ in range(self.NTRIALS):
+    #         #print(scores)
+    #         board_temp = deepcopy(board)
+    #         self.mc_trial(board_temp, self.DEP)
+    #         #print(board_temp.array)
+    #         self.mc_update_scores(scores, board_temp)
+    #         #print(scores)
+    #     print(scores)
+    #     print(f"Computer wählt aus {self.NTRIALS} Möglichkeiten.")
+    #     return self.get_best_move(board_temp, scores)
