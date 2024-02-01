@@ -180,7 +180,7 @@ class MonteCarloBot(Player):
     # def mc_move(self, board):
     #     """
     #     This method checks all if there is already a best move for the current board state
-    #     otherwise it will run the monte carlo simulation.
+    #     otherwise it will run the monte carlo simulation. !!!Without Ray!!!
     #     """
     #     board_state = str(board.array)
     #     # Überprüfen auf Memoisierung
