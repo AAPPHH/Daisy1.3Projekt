@@ -143,6 +143,8 @@ class MonteCarloBot(Player):
             pickle.dump(self.memo, f)
         print("Zustand gespeichert.")
 
+    
+
     # def mc_move(self, board):
     #     """
     #     This method checks all if there is already a best move for the current board state
