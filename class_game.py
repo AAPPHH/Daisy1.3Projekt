@@ -116,7 +116,7 @@ class Game:
                 print("Bitte geben Sie eine gültige Zahl ein.")
     
     def all_bot_vs_bot(self, num_games):
-        bots = [SecretsBot, ChainTreeBot, MinimaxBot, MonteCarloBot]
+        bots = [SecretsBot, ChainTreeBot, MinimaxBot]
         for i, Bot1 in enumerate(bots):
             for Bot2 in bots[i:]:
                 for game_number in range(num_games):
