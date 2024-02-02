@@ -22,7 +22,7 @@ treebot_wins = df[df['winner'] == 'MonteCarloBot']
 average_moves_treebot_wins = treebot_wins['N_turn'].mean()
 print(average_moves_treebot_wins)
 
-df.to_excel("Data_Science/Mini.xlsx")
+df.to_excel("Data_Science/TryallV2.xlsx")
 
 df.sketch.ask("Which columns are integer type?")
 
