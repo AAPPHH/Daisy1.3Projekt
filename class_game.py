@@ -135,7 +135,7 @@ class Game:
         self.game_arrays = []
         self.board.reset_board()
         self.winner = None
-        self.player1 = self.current_player
+        self.current_player = self.player1
         
     def whos_first(self):
         """
