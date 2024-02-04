@@ -12,7 +12,6 @@ class MinimaxBot(Player):
         super().__init__(name, player_number)
         self.use_minimax = False
         self.depth = 6
-        self.new_memo = {}
 
     def make_move(self, game, board):
         board_state = str(board.array)
@@ -26,8 +25,6 @@ class MinimaxBot(Player):
             move = self.minimax(game, board, self.depth, self.player_number)
         else:
             move = self.alphabeta_bot(game, board, self.player_number)
-        if move is not None:
-            self.new_memo[board_state] = (move)
         return Player.make_move(self, move[0], move[1], game, board)
 
     def get_empty_squares(self, board):
@@ -180,22 +177,3 @@ class MinimaxBot(Player):
             if a == self.depth*10 or time.time() - start_time > time_limit:
                 break
         return random.choice(choices) if choices else self.minimax(game, position, self.depth, self.player_number)
-    
-    def load_state(self):
-        """
-        Loads the memoization table from a file
-        """
-        try:
-            with open('bot_3_memo', 'rb') as f:
-                self.memo = pickle.load(f)
-        except FileNotFoundError:
-            pass
-
-    def save_state(self):
-        """
-        Saves the memoization table to a file
-        """
-        self.memo.update(self.new_memo)
-        with open('bot_3_memo.pkl', 'wb') as f:
-            pickle.dump(self.memo, f)
-        print("Zustand gespeichert.")

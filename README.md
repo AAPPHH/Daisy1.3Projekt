@@ -23,19 +23,11 @@ Good Luck Have Fun! :D
 
 Spielverlaufsanalyse:
 
-Häufige Muster und Formationen: Welche Markierungsmuster oder Formationen am häufigsten zum Gewinn führen.
 Schlüsselzüge: Züge, die signifikant die Wahrscheinlichkeit des Gewinnens oder Verlierens ändern.
-Spielphasen: Analyse der unterschiedlichen Phasen des Spiels (Anfang, Mitte, Ende) und wie Strategien sich in diesen Phasen ändern.
-Computergestützte Analyse:
 
-Suchtiefe und -effizienz: Bei Verwendung von Algorithmen wie Minimax oder Alpha-Beta-Pruning, wie tief und effizient sucht der Algorithmus.
-Heuristische Bewertung: Effektivität der verwendeten heuristischen Methoden zur Bewertung von Spielbrettern.
-Statistische Daten:
+Suchtiefe und -effizienz: Bei Verwendung von Algorithmen, wie tief und effizient sucht der Algorithmus.
 
 Verteilung der Gewinne nach Spieler: Gibt es einen signifikanten Unterschied in der Gewinnverteilung zwischen den Spielern?
-Verteilung der Spielzüge: Welche Züge sind am häufigsten und welche führen am häufigsten zum Sieg?
-Maschinelles Lernen:
 
 Lernfortschritte: Wenn maschinelles Lernen eingesetzt wird, wie schnell und effizient verbessert sich der Algorithmus?
-Strategieinnovation: Entwickelt der lernende Algorithmus neue, kreative oder unerwartete Strategien?
-Die Auswertung dieser Faktoren kann Ihnen helfen, ein tieferes Verständnis für das Spiel und die beteiligten Strategien zu gewinnen. Sie können auch dazu beitragen, die Fähigkeiten eines KI-Spielers zu verbessern oder interessante Einblicke in das Spielverhalten von Menschen zu gewinnen.
+Tf agent based Bot
