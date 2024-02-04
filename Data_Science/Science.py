@@ -1,7 +1,7 @@
 import pandas as pd
 import sketch
 
-path = r"Data_Science/game_history.pkl"
+path = r"Data_Science/Monte_Mini.pkl"
 
 df = pd.read_pickle(path)
 
@@ -26,3 +26,11 @@ df.to_excel("Data_Science/check.xlsx")
 
 df.sketch.ask("Which columns are integer type?")
 
+df1 = pd.read_pickle(r"Data_Science/all_vs_all.pkl")
+df2 = pd.read_pickle(r"Data_Science/Monte_Chain.pkl")
+df3 = pd.read_pickle(r"Data_Science/Monte_Mini.pkl")
+
+
+df4 = pd.concat([df1, df2, df3], axis=0).reset_index(drop=True)
+df4.to_pickle("Data_Science/Bots_Games.pkl")
+df4.to_excel("Data_Science/Bots_Games.xlsx")
