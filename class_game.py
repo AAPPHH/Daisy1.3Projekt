@@ -20,8 +20,7 @@ class Game:
         self.game_arrays = []
         self.winner = None
         self.starter = None
-    #temp for temporary
-    #start modularization
+
     def start(self):
         """
         Initializes the game loop.
