@@ -9,22 +9,13 @@ class Board:
         self.array = np.zeros((m, n)) #board for pieces 
 
     def reset_board(self):
-        """
-        Resets the board.
-        """
         self.array = np.zeros((self.m, self.n))
 
     def print_board(self):
-        """
-        Prints the board.
-        """
         for row in self.array:
             print(' '.join(str(int(val)) for val in row))
 
     def is_valid_move(self, row, col):
-        """
-        Checks if a move is valid.
-        """
         m, n = self.array.shape
         if 0 <= row < m and 0 <= col < n and self.array[row][col] == 0:
             return True
@@ -50,8 +41,5 @@ class Board:
         return False
 
     def is_full(self):
-        """
-        Checks if the board is full.
-        """
         return np.all(self.array != 0)
     

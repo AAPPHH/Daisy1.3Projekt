@@ -65,19 +65,13 @@ class Player:
             '[[0. 0. 0. 0. 0.]\n [0. 2. 0. 0. 0.]\n [0. 1. 1. 0. 0.]\n [0. 2. 0. 1. 0.]\n [0. 0. 0. 0. 0.]]': ((2, 3), "KILLER_MOVE"), #3.2
             '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 1. 0.]\n [0. 0. 1. 0. 0.]\n [0. 2. 1. 2. 0.]\n [0. 0. 0. 0. 0.]]': ((1, 2), "KILLER_MOVE"), #4.1
             '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 2. 0.]\n [0. 0. 1. 1. 0.]\n [0. 1. 0. 2. 0.]\n [0. 0. 0. 0. 0.]]': ((2, 1), "KILLER_MOVE")  #4.2
-        }
+        } #decisions tabel
 
     def make_move(self, row, col, game, board):
-        """
-        Places a piece on the board.
-        """
         if board.is_valid_move(row, col): 
             board.array[row][col] =  self.player_number 
             return True  
         return False 
     
     def set_player_number(self, new_player_number):
-        """
-        Sets the player number.
-        """
         self.player_number = new_player_number

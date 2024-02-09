@@ -33,7 +33,7 @@ class ChainTreeBot(Player):
 
     def direction(self, board, player_number):
         """
-        Returns a random move next to the player's pieces.
+        Returns a random choice of a move that is next to the player's pieces.
         """
         chain = self.get_pos(board, player_number)
         moves_list = []

@@ -19,7 +19,7 @@ class MonteCarloBot(Player):
     def mc_trial(self, board_temp, depth):
         """
         Plays a game starting with the given position, alternating between players,
-        by making random moves. Makes inplace changes to position.
+        by making random moves. Makes inplace changes to board_temp.
         """
         current_player = self.player_number
         winner = board_temp.is_winner(self.player_number)
@@ -61,8 +61,7 @@ class MonteCarloBot(Player):
         
     def get_best_move(self, board_temp, scores):
         """
-        Find all of the empty squares with the maximum score
-        or randomly return one of them as a (row, column) tuple.
+        picks the square with the highest score.
         """
         best_square = None
         best_score = float('-inf')
@@ -90,12 +89,12 @@ class MonteCarloBot(Player):
         self.mc_trial(board_temp, dep)
         return board_temp
     
-    def mc_move(self, position):
+    def mc_move(self, board):
         """
         This method checks all if there is allready a best move for the current board state
         otherwise it will run the MontecCarlo simulation.
         """
-        board_state = str(position.array)
+        board_state = str(board.array)
         if board_state in self.memo:
             print("Memoization!")
             best_square = self.memo[board_state][0]
@@ -108,14 +107,14 @@ class MonteCarloBot(Player):
             best_score = self.new_memo[board_state][1]
             print(f"Beste Position: {best_square} mit Score {best_score}")
             return best_square
-        scores = [[0] * position.n for _ in range(position.m)]
+        scores = [[0] * board.n for _ in range(board.m)]
         ray.init(num_cpus=os.cpu_count())
-        futures = [self.mc_trial_remote.remote(self, position, self.DEP) for _ in range(self.NTRIALS)]
+        futures = [self.mc_trial_remote.remote(self, board, self.DEP) for _ in range(self.NTRIALS)]
         results = ray.get(futures)
         for clone in results:
             self.mc_update_scores(scores, clone)
         print(f"Computer wählt aus {len(results)} Möglichkeiten.")
-        return self.get_best_move(position, scores)
+        return self.get_best_move(board, scores)
     
     def make_move(self, game, board):
         print("Computer denkt nach...")

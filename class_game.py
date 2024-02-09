@@ -22,9 +22,6 @@ class Game:
         self.starter = None
 
     def start(self):
-        """
-        Initializes the game loop.
-        """
         while True:
             self.reset_game()
             start_choice = input("Let's play five in a row! Wollen Sie oder soll der Computer spielen? (1/2): ")
@@ -152,15 +149,9 @@ class Game:
             print("Bitte geben Sie eine gültige Antwort ein.")
 
     def switch_player(self):
-        """
-        Switches the current player.
-        """
         self.current_player = (self.player2 if self.current_player == self.player1 else self.player1)
 
     def game_loop(self):
-        """
-        The main game loop.
-        """
         game_over = False
         self.starter = self.current_player.name
         start_time = time.time()
