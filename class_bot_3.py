@@ -81,55 +81,6 @@ class MinimaxBot(Player):
             return -10 * (dep+1)
         return 0
     
-    def minimax(self, game, board, depth, player_number):
-        """
-        Returns the best move for the current player
-        """
-        moves = self.get_empty_squares(board)
-        best_move = None
-        best_score = float('-inf')
-        for move in moves:
-            clone = self.perform_move(board, move, player_number)
-            score = self.min_play(game, clone, depth-1, move, player_number) 
-            print(f"Move: {clone.array}, Score: {score}")
-            if score > best_score:
-                best_score = score
-                best_move = move
-        return best_move 
-
-    def min_play(self, game, position, depth, move, player_number):
-        """
-        Returns the best score for the enemy
-        """
-        if position.is_winner(player_number) or position.is_full() or depth == 0:
-            return self.evaluate(position, depth)
-        moves = self.get_empty_squares(position)
-        player_number_enemy = self.get_enemy()
-        best_score = float('inf')
-        for move in moves:
-            clone = self.perform_move(position, move, player_number_enemy)
-            score = self.max_play(game, clone, depth-1, move, player_number)
-            if score < best_score:
-                best_move = move
-                best_score = score
-        return best_score
-
-    def max_play(self, game, position, depth, lastmove, player_number):
-        """
-        Returns the best score for the current player
-        """
-        if position.is_winner(player_number) or position.is_full() or depth == 0:
-            return self.evaluate(position, depth)
-        moves = self.get_empty_squares(position)
-        best_score = float('-inf')
-        for move in moves:
-            clone = self.perform_move(position, move, player_number)
-            score = self.min_play(game, clone, depth-1, move, player_number)
-            if score > best_score:
-                best_move = move
-                best_score = score
-        return best_score
-
     def alphabeta(self, position, player_number, alpha, beta, depth):
         """
         Returns the best score for the current player and prunes the tree
