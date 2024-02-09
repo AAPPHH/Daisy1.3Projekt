@@ -28,9 +28,6 @@ class MinimaxBot(Player):
         return Player.make_move(self, move[0], move[1], game, board)
 
     def get_empty_squares(self, board):
-        """
-        Returns a list of empty squares on the board
-        """
         empty_squares = []
         for row_index, row in enumerate(board.array):
             for col_index, value in enumerate(row):
