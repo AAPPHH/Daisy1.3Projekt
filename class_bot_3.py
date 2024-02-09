@@ -1,105 +1,146 @@
+import time
 import numpy as np
-import ray
 from copy import deepcopy
 from class_player import *
-import random
+import pickle
 
 class MinimaxBot(Player):
+    """
+    Alpha-Beta Pruning Bot with decision table and Minimax backup
+    """
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
-        self.use_minimax = False  # Setzen Sie dies auf False, um Alpha-Beta-Pruning zu verwenden
-        self.depth = 6  # Tiefe der Minimax-Suche
+        self.use_minimax = False
+        self.depth = 6
 
-    # Hauptfunktion, um einen Zug zu machen
     def make_move(self, game, board):
+        board_state = str(board.array)
+        if board_state in self.memo:
+            print("Memoization!")
+            move = self.memo[board_state][0]
+            best_score = self.memo[board_state][1]
+            print(f"Beste Position: {move} mit Score {best_score}")
+            return Player.make_move(self, move[0], move[1], game, board)
         if self.use_minimax:
             move = self.minimax(game, board, self.depth, self.player_number)
         else:
             move = self.alphabeta_bot(game, board, self.player_number)
-        Player.place_piece(self, move[0], move[1], game, board)
+        return Player.make_move(self, move[0], move[1], game, board)
 
     def get_empty_squares(self, board):
+        """
+        Returns a list of empty squares on the board
+        """
         empty_squares = []
-        for row_index, row in enumerate(board.board):  # Zugriff auf das NumPy-Array innerhalb des Board-Objekts
+        for row_index, row in enumerate(board.array):
             for col_index, value in enumerate(row):
-                if value == 0:  # Annahme: 0 repräsentiert ein leeres Feld
+                if value == 0:  
                     empty_squares.append((row_index, col_index))
+
+        empty_squares.sort(key=lambda pos: self.manhattan_distance_to_center(pos[0], pos[1], board))
         return empty_squares
+        
+    def manhattan_distance_to_center(self, row, col, board):
+        center_row, center_col = len(board.array) // 2, len(board.array[0]) // 2
+        return abs(row - center_row) + abs(col - center_col)
     
     def get_enemy(self):
+        """
+        Returns the player number of the enemy based on the player number of the bot
+        """
         if self.player_number == 1:
             return 2
         else:
             return 1
         
-    def perform_move(self, board, move, player):
-        # Erstellt eine Kopie des Bretts und führt darauf einen hypothetischen Zug aus
+    def switch_player(self, player_number):
+        """
+        Returns the player number of the enemy
+        """
+        if player_number == 1:
+            return 2
+        else:
+            return 1
+        
+    def perform_move(self, board, move, player_number):
+        """
+        Returns a new board with the move performed
+        """
         board_copy = deepcopy(board)
         row, col = move
-        board_copy.board[row][col] = player  # Setzt den Spielerwert an der gewählten Position auf dem internen Array
+        board_copy.array[row][col] = player_number
         return board_copy
     
-    def minimax(self, game, board, depth, player):
+    def evaluate(self, pos, dep):
+        """
+        Returns a score for the position
+        """
+        if pos.is_winner(self.player_number):
+            return 10 * (dep+1)
+        elif pos.is_winner(self.get_enemy()):
+            return -10 * (dep+1)
+        return 0
+    
+    def minimax(self, game, board, depth, player_number):
+        """
+        Returns the best move for the current player
+        """
         moves = self.get_empty_squares(board)
-        best_move = moves[0]
+        best_move = None
         best_score = float('-inf')
-
         for move in moves:
-            clone = self.perform_move(board, move, player)
-            score = self.min_play(game, clone, depth-1, move, player)  # Pass the game object here
+            clone = self.perform_move(board, move, player_number)
+            score = self.min_play(game, clone, depth-1, move, player_number) 
+            print(f"Move: {clone.array}, Score: {score}")
             if score > best_score:
                 best_score = score
                 best_move = move
-        return best_move
+        return best_move 
 
-    def min_play(self, game, position, depth, move, player):
-        if position.is_winner(player) or position.is_full() or depth == 0:  # Call is_winner on the game object
-            return self.evaluate(position, player)
+    def min_play(self, game, position, depth, move, player_number):
+        """
+        Returns the best score for the enemy
+        """
+        if position.is_winner(player_number) or position.is_full() or depth == 0:
+            return self.evaluate(position, depth)
         moves = self.get_empty_squares(position)
-        player = self.get_enemy()
+        player_number_enemy = self.get_enemy()
         best_score = float('inf')
         for move in moves:
-            clone = deepcopy(position)
-            self.perform_move(clone, move, player)
-            score = self.max_play(game, clone, depth-1, move, player)
+            clone = self.perform_move(position, move, player_number_enemy)
+            score = self.max_play(game, clone, depth-1, move, player_number)
             if score < best_score:
                 best_move = move
                 best_score = score
         return best_score
 
-    def max_play(self, game, position, depth, lastmove, player):
-        if position.is_winner(player) or position.is_full() or depth == 0:
+    def max_play(self, game, position, depth, lastmove, player_number):
+        """
+        Returns the best score for the current player
+        """
+        if position.is_winner(player_number) or position.is_full() or depth == 0:
             return self.evaluate(position, depth)
         moves = self.get_empty_squares(position)
-        player = self.get_enemy()
         best_score = float('-inf')
         for move in moves:
-            clone = deepcopy(position)
-            self.perform_move(clone, move, player)
-            score = self.min_play(game, clone, depth-1, move, player)
+            clone = self.perform_move(position, move, player_number)
+            score = self.min_play(game, clone, depth-1, move, player_number)
             if score > best_score:
                 best_move = move
                 best_score = score
         return best_score
 
-    def evaluate(self, pos, dep):
-        cur_player = self.player_number
-        print(pos.board)
-        if pos.is_winner(self.player_number) == True:
-            return 10 * (dep+1)
-        elif pos.is_winner(self.player_number) == False:
-            return -10 * (dep+1)
-        return 0
-
-    # Alpha-Beta-Pruning
-    def alphabeta(self, position, lastmove, player, alpha, beta, depth):
-        if position.is_winner(player) or position.is_full() or depth == 0:
+    def alphabeta(self, position, player_number, alpha, beta, depth):
+        """
+        Returns the best score for the current player and prunes the tree
+        works completely recursive
+        """
+        if position.is_winner(player_number) or position.is_full() or depth == 0:
             return self.evaluate(position, depth)
         for move in self.get_empty_squares(position):
-            clone = deepcopy(position)
-            self.perform_move(clone, move, player)
-            val = self.alphabeta(clone, move, self.get_enemy(), alpha, beta, depth-1)
-            if player == self.player_number:
+            clone = self.perform_move(position, move, player_number)
+            val = self.alphabeta(clone, self.switch_player(player_number), alpha, beta, depth-1)
+            if player_number == self.player_number:
                 if val > alpha:
                     alpha = val
                 if alpha >= beta:
@@ -109,23 +150,30 @@ class MinimaxBot(Player):
                     beta = val
                 if beta <= alpha:
                     return alpha
-        if player == self.player_number:
+        if player_number == self.player_number:
             return alpha
         else:
             return beta
 
-    def alphabeta_bot(self, game, position, player):
-        a = -2
+    def alphabeta_bot(self, game, position, player_number, time_limit=180.0):
+        """
+        Returns the best move for the current player
+        """
+        start_time = time.time()
         choices = []
-        if len(self.get_empty_squares(position)) == position.board.size ** 2: # bester erster Zug
-            return position.board.size ** 2 // 2 + 1
+        a = 0
         for move in self.get_empty_squares(position):
-            clone = deepcopy(position)
-            self.perform_move(clone, move, player)
-            val = self.alphabeta(clone, move, self.get_enemy(), -2, 2, self.depth)
+            if time.time() - start_time > time_limit:
+                print("Time limit exceeded")
+                break
+            clone = self.perform_move(position, move, player_number)
+            val = self.alphabeta(clone, self.get_enemy(),-100 , 100, self.depth)
             if val > a:
                 a = val
                 choices = [move]
             elif val == a:
+                print(a)
                 choices.append(move)
-        return random.choice(choices)
+            if a == self.depth*10 or time.time() - start_time > time_limit:
+                break
+        return random.choice(choices) if choices else self.minimax(game, position, self.depth, self.player_number)

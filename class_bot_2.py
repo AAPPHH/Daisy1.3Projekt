@@ -1,28 +1,74 @@
 import numpy as np
-import random
 from class_player import *
 
-class TreeBot(Player):
+class ChainTreeBot(Player):
+    """
+    Bot that uses a decision tabel and otherwise places pieces next to his own pieces otherwise random.
+    """
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
 
     def make_move(self, game, board):
-            if board.board[board.m // 2][board.n // 2] == 0:
-                print("Zentrum")
-                return Player.place_piece(self, board.m // 2, board.n // 2, game, board)
-            # elif board.board[board.m // 2+1][board.n // 2+1] == 0:
-            #     print("Oben von der Mitte")
-            #     return Player.place_piece(self, board.m // 2+1, board.n // 2+1, game, board)
-            # elif board.board[board.m // 2-1][board.n // 2-1] == 0:
-            #     print("Unten von der Mitte")
-            #     return Player.place_piece(self, board.m // 2-1, board.n // 2-1, game, board)         
-            # elif board.board[board.m // 2+2][board.n // 2+2] == 0:
-            #     print("Rechts von der Mitte")
-            #     return Player.place_piece(self, board.m // 2+2, board.n // 2+2, game, board)
-            # elif board.board[board.m // 2-2][board.n // 2-2] == 0:
-            #     print("Links von der Mitte")
-            #     return Player.place_piece(self, board.m // 2-2, board.n // 2-2, game, board)   
+            board_state = str(board.array)
+            if board_state in self.memo:
+                print("Memoization!")
+                move = self.memo[board_state][0]
+                best_score = self.memo[board_state][1]
+                print(f"Beste Position: {move} mit Score {best_score}")
+                return Player.make_move(self, move[0], move[1], game, board)
             else:
-                row = random.randint(0, 4)
-                col = random.randint(0, 4)
-                return Player.place_piece(self, row, col, game, board) #Parameter die die Rausgehen
+                move = self.direction(board.array, self.player_number)
+                return Player.make_move(self, move[0], move[1], game, board)
+
+    def get_pos(self, board, player_number):
+        """
+        Returns a list of tuples with the coordinates of the player's pieces.
+        """
+        chain = []
+        for row_index, row in enumerate(board):
+            for col_index, value in enumerate(row):
+                if value == player_number:
+                    chain.append((row_index, col_index))
+        return chain
+
+    def direction(self, board, player_number):
+        """
+        Returns a random move next to the player's pieces.
+        """
+        chain = self.get_pos(board, player_number)
+        moves_list = []
+        for row_index, col_index in chain:
+            potential_moves = [
+                (row_index, col_index + 2),
+                (row_index, col_index - 2),
+                (row_index + 2, col_index),
+                (row_index - 2, col_index),
+                (row_index + 2, col_index + 2),
+                (row_index - 2, col_index - 2),
+                (row_index + 2, col_index - 2),
+                (row_index - 2, col_index + 2)
+            ]
+            for move in potential_moves:
+                if (0 <= move[0] < len(board) and 0 <= move[1] < len(board[0]) and
+                        board[move[0]][move[1]] == 0 and
+                        ((move[0], move[1] - 1) in chain or
+                         (move[0], move[1] + 1) in chain or
+                         (move[0] - 1, move[1]) in chain or
+                         (move[0] + 1, move[1]) in chain or
+                         (move[0] - 1, move[1] - 1) in chain or
+                         (move[0] + 1, move[1] + 1) in chain or
+                         (move[0] - 1, move[1] + 1) in chain or
+                         (move[0] + 1, move[1] - 1) in chain)):
+                    moves_list.append(move)
+        if moves_list:
+            return random.choice(moves_list)
+        else:
+            return self.random_move()
+
+    def random_move(self):
+        """
+        Returns a random move.
+        """
+        row = random.randint(0, 4)
+        col = random.randint(0, 4)
+        return (row, col)
