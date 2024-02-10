@@ -3,7 +3,7 @@ from class_player import *
 
 class ChainTreeBot(Player):
     """
-    Bot that uses a decision tabel and otherwise places pieces next to his own pieces otherwise random.
+    Bot that uses a decision tabel and otherwise places pieces next to his own piece.
     """
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
