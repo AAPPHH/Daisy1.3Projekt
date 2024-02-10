@@ -25,23 +25,16 @@ class Board:
         """
         Checks if a player has won. i.e. if there is a chain of k pieces of the same player.
         """
-        """
-        Checks if a player has won. i.e. if there is a chain of k pieces of the same player.
-        """
         win_sequence = str(piece) * self.k
-        for row in self.array:
         for row in self.array:
             if win_sequence in ''.join(str(int(e)) for e in row):
                 return True
         for col in self.array.T:
-        for col in self.array.T:
             if win_sequence in ''.join(str(int(e)) for e in col):
                 return True
         for diag in [np.diagonal(self.array, offset) for offset in range(-self.array.shape[0] + self.k, self.array.shape[1] - self.k + 1)]:
-        for diag in [np.diagonal(self.array, offset) for offset in range(-self.array.shape[0] + self.k, self.array.shape[1] - self.k + 1)]:
             if win_sequence in ''.join(str(int(e)) for e in diag):
                 return True
-        for diag in [np.diagonal(np.fliplr(self.array), offset) for offset in range(-self.array.shape[0] + self.k, self.array.shape[1] - self.k + 1)]:
         for diag in [np.diagonal(np.fliplr(self.array), offset) for offset in range(-self.array.shape[0] + self.k, self.array.shape[1] - self.k + 1)]:
             if win_sequence in ''.join(str(int(e)) for e in diag):
                 return True

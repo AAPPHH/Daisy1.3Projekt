@@ -1,5 +1,4 @@
 import random
-import random
 from class_board import *
 class Player:
     def __init__(self, name, player_number):
