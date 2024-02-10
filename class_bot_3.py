@@ -6,7 +6,8 @@ import pickle
 
 class MinimaxBot(Player):
     """
-    Alpha-Beta Pruning Bot with decision table
+    Alpha-Beta Pruning Bot with decision tabl
+    
     """
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
