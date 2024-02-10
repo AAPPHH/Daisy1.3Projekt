@@ -16,6 +16,13 @@ class ChainTreeBot(Player):
                 best_score = self.memo[board_state][1]
                 print(f"Beste Position: {move} mit Score {best_score}")
                 return Player.make_move(self, move[0], move[1], game, board)
+            board_state = str(board.array)
+            if board_state in self.memo:
+                print("Memoization!")
+                move = self.memo[board_state][0]
+                best_score = self.memo[board_state][1]
+                print(f"Beste Position: {move} mit Score {best_score}")
+                return Player.make_move(self, move[0], move[1], game, board)
             else:
                 move = self.direction(board.array, self.player_number)
                 return Player.make_move(self, move[0], move[1], game, board)

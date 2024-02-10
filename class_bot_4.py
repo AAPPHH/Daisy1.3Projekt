@@ -114,14 +114,7 @@ class MonteCarloBot(Player):
         for clone in results:
             self.mc_update_scores(scores, clone)
         print(f"Computer wählt aus {len(results)} Möglichkeiten.")
-        return self.get_best_move(board, scores)
-    
-    def make_move(self, game, board):
-        print("Computer denkt nach...")
-        self.load_state()
-        move = self.mc_move(board)
-        ray.shutdown()
-        return Player.make_move(self, move[0], move[1], game, board)
+        return self.get_best_move(position, scores)
     
     def load_state(self):
         """

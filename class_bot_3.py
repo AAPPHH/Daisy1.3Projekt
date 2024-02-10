@@ -1,4 +1,5 @@
 import time
+import time
 import numpy as np
 from copy import deepcopy
 from class_player import *
@@ -27,13 +28,21 @@ class MinimaxBot(Player):
         else:
             move = self.alphabeta_bot(game, board, self.player_number)
         return Player.make_move(self, move[0], move[1], game, board)
+        return Player.make_move(self, move[0], move[1], game, board)
 
     def get_empty_squares(self, board):
+        """
+        Returns a list of empty squares on the board
+        """
         empty_squares = []
+        for row_index, row in enumerate(board.array):
         for row_index, row in enumerate(board.array):
             for col_index, value in enumerate(row):
                 if value == 0:  
+                if value == 0:  
                     empty_squares.append((row_index, col_index))
+
+        empty_squares.sort(key=lambda pos: self.manhattan_distance_to_center(pos[0], pos[1], board))
 
         empty_squares.sort(key=lambda pos: self.manhattan_distance_to_center(pos[0], pos[1], board))
         return empty_squares
@@ -46,6 +55,9 @@ class MinimaxBot(Player):
         return abs(row - center_row) + abs(col - center_col)
     
     def get_enemy(self):
+        """
+        Returns the player number of the enemy based on the player number of the bot
+        """
         if self.player_number == 1:
             return 2
         else:
@@ -63,6 +75,7 @@ class MinimaxBot(Player):
         """
         board_copy = deepcopy(board)
         row, col = move
+        board_copy.array[row][col] = player_number
         board_copy.array[row][col] = player_number
         return board_copy
     
@@ -97,6 +110,7 @@ class MinimaxBot(Player):
                 if beta <= alpha:
                     return alpha
         if player_number == self.player_number:
+        if player_number == self.player_number:
             return alpha
         else:
             return beta
@@ -118,6 +132,7 @@ class MinimaxBot(Player):
                 a = val
                 choices = [move]
             elif val == a:
+                print(a)
                 print(a)
                 choices.append(move)
             if a == self.depth*10 or time.time() - start_time > time_limit:
