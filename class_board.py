@@ -3,10 +3,10 @@ from class_player import *
 
 class Board:
     def __init__(self, m=5, n=5, k=4):
-        self.m = m  #columns
-        self.n = n  #rows
-        self.k = k  #chain length
-        self.array = np.zeros((m, n)) #board for pieces 
+        self.m = m # rows
+        self.n = n # columns
+        self.k = k # number of pieces in a row to win
+        self.array = np.zeros((m, n))
 
     def reset_board(self):
         self.array = np.zeros((self.m, self.n))
