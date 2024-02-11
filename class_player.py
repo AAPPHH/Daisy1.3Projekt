@@ -5,6 +5,9 @@ class Player:
         self.player_number = player_number
 
     def make_move(self, row, col, game, board):
+        """
+        Places a Player's piece on the board at the given row and column
+        """
         if board.is_valid_move(row, col): 
             board.array[row][col] =  self.player_number 
             return True  

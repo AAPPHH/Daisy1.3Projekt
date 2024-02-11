@@ -16,6 +16,7 @@ class MinimaxBot(Player):
     def make_move(self, game, board):
         """
         Choose between decision tabel and alphabeta
+        check if the board state is in the decision table
         """
         board_state = str(board.array)
         if board_state in self.memo:

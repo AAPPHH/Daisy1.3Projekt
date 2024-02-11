@@ -22,6 +22,9 @@ class Game:
         self.starter = None
 
     def start(self):
+        """
+        Starts the game and asks the player for the game mode.
+        """
         while True:
             self.reset_game()
             start_choice = input("Let's play five in a row! Wollen Sie oder soll der Computer spielen? (1/2): ")
@@ -103,6 +106,9 @@ class Game:
                 print("Bitte geben Sie eine gültige Zahl ein.")
     
     def all_bot_vs_bot(self, num_games):
+        """
+        Plays all bots against each other for a certain number of games.
+        """
         bots = [SecretsBot, ChainTreeBot, MinimaxBot]
         for i, Bot1 in enumerate(bots):
             for Bot2 in bots[i:]:
@@ -119,6 +125,9 @@ class Game:
                     self.game_loop()
                         
     def reset_game(self):
+        """
+        Resets the game stats and the board.
+        """
         self.game_arrays = []
         self.board.reset_board()
         self.winner = None
@@ -126,7 +135,7 @@ class Game:
         
     def whos_first(self):
         """
-        Asks the player if he wants to start first.
+        Asks the player if he wants to start first and starts the game loop.
         """
         while True:
             order_choice = input(f"Möchtest du anfangen, {self.player1.name}? (j/n): ")
@@ -143,9 +152,15 @@ class Game:
                 print("Bitte geben Sie eine gültige Antwort ein.")
 
     def switch_player(self):
+        """
+        Switches the current player.
+        """
         self.current_player = (self.player2 if self.current_player == self.player1 else self.player1)
 
     def game_loop(self):
+        """
+        Main game loop till game is over.
+        """
         game_over = False
         self.starter = self.current_player.name
         start_time = time.time()
