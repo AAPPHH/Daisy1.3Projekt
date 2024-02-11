@@ -1,8 +1,7 @@
 import time
-import numpy as np
 from copy import deepcopy
 from class_player import *
-import pickle
+from Decision_table import *
 
 class MinimaxBot(Player):
     """
@@ -12,6 +11,7 @@ class MinimaxBot(Player):
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
         self.depth = 6
+        self.memo = decision_table
 
     def make_move(self, game, board):
         """

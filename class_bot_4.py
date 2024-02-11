@@ -3,6 +3,7 @@ import os
 from copy import deepcopy
 import pickle
 from class_player import *
+from Decision_table import *
 
 class MonteCarloBot(Player):
     """
@@ -10,10 +11,11 @@ class MonteCarloBot(Player):
     """
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
-        self.NTRIALS = 250000
+        self.NTRIALS = 2500
         self.SCORE_CURRENT = 1.0
         self.SCORE_OTHER = 2.0
         self.DEP = 10
+        self.memo = decision_table
         self.new_memo = {}
 
     def mc_trial(self, board_temp, depth):
@@ -89,7 +91,7 @@ class MonteCarloBot(Player):
         self.mc_trial(board_temp, dep)
         return board_temp
     
-    def mc_move(self, board):
+    def make_move(self, game, board):
         """
         This method checks all if there is allready a best move for the current board state
         otherwise it will run the MontecCarlo simulation.
@@ -100,21 +102,23 @@ class MonteCarloBot(Player):
             best_square = self.memo[board_state][0]
             best_score = self.memo[board_state][1]
             print(f"Beste Position: {best_square} mit Score {best_score}")
-            return best_square
+            return  Player.make_move(self, best_square[0], best_square[1], game, board)
         if board_state in self.new_memo:
             print("Memoization!")
             best_square = self.new_memo[board_state][0]
             best_score = self.new_memo[board_state][1]
             print(f"Beste Position: {best_square} mit Score {best_score}")
-            return best_square
+            return Player.make_move(self, best_square[0], best_square[1], game, board)
         scores = [[0] * board.n for _ in range(board.m)]
         ray.init(num_cpus=os.cpu_count())
         futures = [self.mc_trial_remote.remote(self, board, self.DEP) for _ in range(self.NTRIALS)]
         results = ray.get(futures)
+        ray.shutdown()
         for clone in results:
             self.mc_update_scores(scores, clone)
+        best_square = self.get_best_move(board, scores)
         print(f"Computer wählt aus {len(results)} Möglichkeiten.")
-        return self.get_best_move(board, scores)
+        return Player.make_move(self, best_square[0], best_square[1], game, board)
     
     def load_state(self):
         """

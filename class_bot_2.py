@@ -1,5 +1,5 @@
-import numpy as np
 from class_player import *
+from Decision_table import *
 
 class ChainTreeBot(Player):
     """
@@ -7,6 +7,7 @@ class ChainTreeBot(Player):
     """
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
+        self.memo = decision_table
 
     def make_move(self, game, board):
             board_state = str(board.array)
