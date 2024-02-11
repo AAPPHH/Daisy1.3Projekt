@@ -57,49 +57,40 @@ class Game:
                     choice_bot_1 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player One ist? (1/2/3/4):")
                     if choice_bot_1 == "1":
                         self.player1 = SecretsBot("SecretsBot", 1)
-                        break
                     elif choice_bot_1 == "2":
-                        self.player1 = ChainTreeBot("ChainTreeBot", 1)
-                        break
+                        self.player1 = ChainTreeBot("ChainTreeBot", 1)    
                     elif choice_bot_1 == "3":
                         self.player1 = MinimaxBot("MinimaxBot", 1)
-                        break
                     elif choice_bot_1 == "4":
-                        self.player1 = MonteCarloBot("MonteCarloBot", 1)
-                        break
+                        self.player1 = MonteCarloBot("MonteCarloBot", 1) 
                     else:
                         print("Bitte geben Sie eine gültige Zahl ein.")
                     self.current_player = self.player1
+                    break
                 while True:
                     choice_bot_2 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player Two ist? (1/2/3/4):")
                     if choice_bot_2 == "1":
                         self.player2 = SecretsBot("SecretsBot_2", 2)
-                        break
                     elif choice_bot_2 == "2":
                         self.player2 = ChainTreeBot("ChainTreeBot_2", 2)
-                        break
                     elif choice_bot_2 == "3":
                         self.player2 = MinimaxBot("MinimaxBot_2", 2)
-                        break
                     elif choice_bot_2 == "4":
                         self.player2 = MonteCarloBot("MonteCarloBot_2", 2)
-                        break
                     else:
                         print("Bitte geben Sie eine gültige Zahl ein.")
+                    break
                 while True:
                     num_games = input("Wie viele Runden möchtest du spielen? (1-10000): ")
-                    num_games = int(num_games)
                     if not isinstance(num_games, int) or num_games < 1 or num_games > 10000:
                         print("Bitte geben Sie eine gültige Zahl zwischen 1 und 10000 ein.")
-                    else:
-                        for game_number in range(int(num_games)):
-                            print(f"Spiel {game_number + 1} von {num_games}")
-                            self.current_player = self.player1
-                            self.game_loop()
-                            self.reset_game()
-                        print("Alle Spiele wurden gespielt.")
-                        break
-                
+                    for game_number in range(int(num_games)):
+                        print(f"Spiel {game_number + 1} von {num_games}")
+                        self.current_player = self.player1
+                        self.game_loop()
+                        self.reset_game()
+                    print("Alle Spiele wurden gespielt.")
+                    break
             elif start_choice == "3":
                 while True:
                     num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000):")
@@ -137,16 +128,19 @@ class Game:
         """
         Asks the player if he wants to start first.
         """
-        order_choice = input(f"Möchtest du anfangen, {self.player1.name}? (j/n): ")
-        if order_choice.lower() == 'n':
-            self.current_player.set_player_number(2)
-            self.current_player = self.player2 
-            self.player2.set_player_number(1)
-            self.game_loop()
-        elif order_choice.lower() == 'j':
-            self.game_loop()
-        else:
-            print("Bitte geben Sie eine gültige Antwort ein.")
+        while True:
+            order_choice = input(f"Möchtest du anfangen, {self.player1.name}? (j/n): ")
+            if order_choice.lower() == 'n':
+                self.current_player.set_player_number(2)
+                self.current_player = self.player2 
+                self.player2.set_player_number(1)
+                self.game_loop()
+                break
+            elif order_choice.lower() == 'j':
+                self.game_loop()
+                break
+            else:
+                print("Bitte geben Sie eine gültige Antwort ein.")
 
     def switch_player(self):
         self.current_player = (self.player2 if self.current_player == self.player1 else self.player1)
