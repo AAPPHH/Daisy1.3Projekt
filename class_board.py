@@ -23,7 +23,7 @@ class Board:
     
     def is_winner(self, piece):
         """
-        Checks if a player has won. i.e. if there is a chain of k pieces of the same player.
+        Checks if a player has won. i.e. if there is a string of k pieces of the same player.
         """
         win_sequence = str(piece) * self.k
         for row in self.array:
