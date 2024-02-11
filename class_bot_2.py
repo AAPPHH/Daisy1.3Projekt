@@ -10,6 +10,11 @@ class ChainTreeBot(Player):
         self.memo = decision_table
 
     def make_move(self, game, board):
+            """
+            Choose between decision tabel and nearest piece
+            if the board state is in the decision table use killer move
+            else use nearest piece
+            """
             board_state = str(board.array)
             if board_state in self.memo:
                 print("Memoization!")
@@ -18,7 +23,7 @@ class ChainTreeBot(Player):
                 print(f"Beste Position: {move} mit Score {best_score}")
                 return Player.make_move(self, move[0], move[1], game, board)
             else:
-                move = self.direction(board.array, self.player_number)
+                move = self.nearest(board.array, self.player_number)
                 return Player.make_move(self, move[0], move[1], game, board)
 
     def get_pos(self, board, player_number):
@@ -32,7 +37,7 @@ class ChainTreeBot(Player):
                     chain.append((row_index, col_index))
         return chain
 
-    def direction(self, board, player_number):
+    def nearest(self, board, player_number):
         """
         Returns a random choice of a move that is next to the player's pieces.
         """

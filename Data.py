@@ -3,9 +3,12 @@ import pickle
 
 class Data_Science: 
     def __init__(self, filename="game_history.pkl"):
-        self.filename = filename
+        self.filename = filename #path to the file
 
     def save_game_state(self, game):
+        """
+        converts the game state to a pandas dataframe
+        """
         game_history = self.load_game_history()
         new_row = pd.DataFrame([{
                 'winner': game.winner,
@@ -19,9 +22,15 @@ class Data_Science:
         self.save_game_history(game_history)
     
     def save_game_history(self, game_history):
+        """
+        Saves the game history to a pickle file
+        """
         game_history.to_pickle(self.filename)
 
     def load_game_history(self):
+        """
+        Loads the game history from a pickle file
+        """
         try:
             return pd.read_pickle(self.filename)
         except FileNotFoundError:

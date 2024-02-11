@@ -8,69 +8,71 @@ from Decision_table import *
 class MonteCarloBot(Player):
     """
     Monte Carlo Bot with decision table and memoization.
+    if the board state is in the decision table use killer move
+    else use Monte Carlo simulation
     """
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
-        self.NTRIALS = 2500
+        self.NTRIALS = 250000
         self.SCORE_CURRENT = 1.0
         self.SCORE_OTHER = 2.0
         self.DEP = 10
         self.memo = decision_table
         self.new_memo = {}
 
-    def mc_trial(self, board_temp, depth):
+    def mc_trial(self, temp_board, depth):
         """
         Plays a game starting with the given position, alternating between players,
         by making random moves. Makes inplace changes to board_temp.
         """
         current_player = self.player_number
-        winner = board_temp.is_winner(self.player_number)
-        board_full = board_temp.is_full()
+        winner = temp_board.is_winner(self.player_number)
+        board_full = temp_board.is_full()
         game_over = winner or board_full
-        empty_squares = [(i, j) for i in range(board_temp.m) for j in range(board_temp.n) if board_temp.array[i][j] == 0]
+        empty_squares = [(i, j) for i in range(temp_board.m) for j in range(temp_board.n) if temp_board.array[i][j] == 0]
         if not empty_squares:
             return
         while not game_over and depth != 0:
-            winner = board_temp.is_winner(self.player_number)
-            board_full = board_temp.is_full()
+            winner = temp_board.is_winner(self.player_number)
+            board_full = temp_board.is_full()
             game_over = winner or board_full
             if game_over:
                 break
-            empty_squares = [(i, j) for i in range(board_temp.m) for j in range(board_temp.n) if board_temp.array[i][j] == 0]
+            empty_squares = [(i, j) for i in range(temp_board.m) for j in range(temp_board.n) if temp_board.array[i][j] == 0]
             if not empty_squares:
                 break
             move = empty_squares[random.randrange(len(empty_squares))]
-            board_temp.array[move[0]][move[1]] = current_player
+            temp_board.array[move[0]][move[1]] = current_player
             current_player = 2 if current_player == 1 else 1
             depth -= 1
 
-    def mc_update_scores(self, scores, board_temp):
+    def mc_update_scores(self, scores, temp_board):
         """
         This function takes a grid of scores (a list of lists)
         """
-        move = [(i, j) for i in range(board_temp.m) for j in range(board_temp.n) if board_temp.array[i][j] == 0]
+        move = [(i, j) for i in range(temp_board.m) for j in range(temp_board.n) if temp_board.array[i][j] == 0]
         dep = len(move)
-        winner = board_temp.is_winner(self.player_number)
+        winner = temp_board.is_winner(self.player_number)
         if winner == 0:
             return
         coef = 1 if self.player_number == winner else -1
-        for row in range(board_temp.m):
-            for col in range(board_temp.n):
-                if board_temp.array[row][col] == self.player_number:
+        for row in range(temp_board.m):
+            for col in range(temp_board.n):
+                if temp_board.array[row][col] == self.player_number:
                     scores[row][col] += coef * self.SCORE_CURRENT * dep**2
-                elif board_temp.array[row][col] != 0:
+                elif temp_board.array[row][col] != 0:
                     scores[row][col] -= coef * self.SCORE_OTHER * dep**2
         
-    def get_best_move(self, board_temp, scores):
+    def get_best_move(self, temp_board, scores):
         """
         picks the square with the highest score.
         """
         best_square = None
         best_score = float('-inf')
-        board_state = str(board_temp.array)
-        for square in [(i, j) for i in range(board_temp.m) for j in range(board_temp.n)]:
+        board_state = str(temp_board.array)
+        for square in [(i, j) for i in range(temp_board.m) for j in range(temp_board.n)]:
             r, s = square
-            if scores[r][s] > best_score and board_temp.array[r][s] == 0:
+            if scores[r][s] > best_score and temp_board.array[r][s] == 0:
                 best_square = square
                 best_score = scores[r][s]
                 print(f"Beste Position: {best_square} mit Score {best_score}")
@@ -79,7 +81,7 @@ class MonteCarloBot(Player):
             return best_square
         else:
             print("Keine beste Position gefunden.")
-            return random.choice([(i, j) for i in range(board_temp.m) for j in range(board_temp.n) if board_temp.array[i][j] == 0])
+            return random.choice([(i, j) for i in range(temp_board.m) for j in range(temp_board.n) if temp_board.array[i][j] == 0])
 
     @ray.remote
     def mc_trial_remote(self, board, depth):

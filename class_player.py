@@ -14,4 +14,7 @@ class Player:
         return False 
     
     def set_player_number(self, new_player_number):
+        """
+        Sets the player number to a new value
+        """
         self.player_number = new_player_number

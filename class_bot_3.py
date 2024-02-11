@@ -5,8 +5,7 @@ from Decision_table import *
 
 class MinimaxBot(Player):
     """
-    Alpha-Beta Pruning Bot with decision tabl
-    
+    Alpha-Beta Pruning Bot with decision table
     """
     def __init__(self, name, player_number):
         super().__init__(name, player_number)
@@ -16,7 +15,8 @@ class MinimaxBot(Player):
     def make_move(self, game, board):
         """
         Choose between decision tabel and alphabeta
-        check if the board state is in the decision table
+        if the board state is in the decision table use killer move
+        else use alphabeta
         """
         board_state = str(board.array)
         if board_state in self.memo:
@@ -30,6 +30,9 @@ class MinimaxBot(Player):
         return Player.make_move(self, move[0], move[1], game, board)
 
     def get_empty_squares(self, board):
+        """
+        Returns a list of empty squares sorted by the Manhattan distance to the center of the board
+        """
         empty_squares = []
         for row_index, row in enumerate(board.array):
             for col_index, value in enumerate(row):
@@ -47,12 +50,18 @@ class MinimaxBot(Player):
         return abs(row - center_row) + abs(col - center_col)
     
     def get_enemy(self):
+        """
+        Returns the player number of the enemy
+        """
         if self.player_number == 1:
             return 2
         else:
             return 1
         
     def switch_player(self, player_number):
+        """
+        Returns the player number of the temp_enemy
+        """
         if player_number == 1:
             return 2
         else:
@@ -104,7 +113,7 @@ class MinimaxBot(Player):
 
     def alphabeta_bot(self, game, board, player_number, time_limit=180.0):
         """
-        Returns the best move for the current player
+        Returns the best move with the highest score
         """
         start_time = time.time()
         choices = []

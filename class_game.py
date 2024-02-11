@@ -226,7 +226,7 @@ class Game:
                         pass
                     self.switch_player()
                     
-Daisy = Data_Science("game_history.pkl")
-Spielbrett = Board()
-game = Game(Spielbrett)
-game.start()
+Daisy = Data_Science("game_history.pkl") # Erstellt ein neues Objekt der Klasse Data_Science
+Spielbrett = Board() # Erstellt ein neues Spielbrett
+game = Game(Spielbrett) # Erstellt ein neues Spiel
+game.start() # Startet das Spiel
