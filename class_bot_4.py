@@ -1,7 +1,7 @@
 import ray
 import os
-from copy import deepcopy
 import pickle
+from copy import deepcopy
 from class_player import *
 from Decision_table import *
 
