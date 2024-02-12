@@ -30,20 +30,20 @@ class ChainTreeBot(Player):
         """
         Returns a list of tuples with the coordinates of the player's pieces.
         """
-        chain = []
+        pos_list = []
         for row_index, row in enumerate(board):
             for col_index, value in enumerate(row):
                 if value == player_number:
-                    chain.append((row_index, col_index))
-        return chain
+                    pos_list.append((row_index, col_index))
+        return pos_list
 
     def nearest(self, board, player_number):
         """
         Returns a random choice of a move that is next to the player's pieces.
         """
-        chain = self.get_pos(board, player_number)
+        pos_list = self.get_pos(board, player_number)
         moves_list = []
-        for row_index, col_index in chain:
+        for row_index, col_index in pos_list:
             potential_moves = [
                 (row_index, col_index + 2),
                 (row_index, col_index - 2),
@@ -57,14 +57,14 @@ class ChainTreeBot(Player):
             for move in potential_moves:
                 if (0 <= move[0] < len(board) and 0 <= move[1] < len(board[0]) and
                         board[move[0]][move[1]] == 0 and
-                        ((move[0], move[1] - 1) in chain or
-                         (move[0], move[1] + 1) in chain or
-                         (move[0] - 1, move[1]) in chain or
-                         (move[0] + 1, move[1]) in chain or
-                         (move[0] - 1, move[1] - 1) in chain or
-                         (move[0] + 1, move[1] + 1) in chain or
-                         (move[0] - 1, move[1] + 1) in chain or
-                         (move[0] + 1, move[1] - 1) in chain)):
+                        ((move[0], move[1] - 1) in pos_list or
+                         (move[0], move[1] + 1) in pos_list or
+                         (move[0] - 1, move[1]) in pos_list or
+                         (move[0] + 1, move[1]) in pos_list or
+                         (move[0] - 1, move[1] - 1) in pos_list or
+                         (move[0] + 1, move[1] + 1) in pos_list or
+                         (move[0] - 1, move[1] + 1) in pos_list or
+                         (move[0] + 1, move[1] - 1) in pos_list)):
                     moves_list.append(move)
         if moves_list:
             return random.choice(moves_list)

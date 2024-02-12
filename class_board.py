@@ -10,7 +10,7 @@ class Board:
 
     def reset_board(self):
         """
-        Resets the board to an empty state of zeros
+        Resets the board to an empty array of zeros
         """
         self.array = np.zeros((self.m, self.n))
 
@@ -32,7 +32,7 @@ class Board:
     
     def is_winner(self, piece):
         """
-        Checks if a player has won. i.e. if there is a string of k pieces of the same player.
+        Checks if a player has won. i.e. if there is a string of k pieces of the same playernumber.
         """
         win_sequence = str(piece) * self.k
         for row in self.array:
@@ -51,7 +51,7 @@ class Board:
 
     def is_full(self):
         """
-        Checks if the board is full
+        Checks if the board has zero cells left. i.e. if the game is a draw.
         """
         return np.all(self.array != 0)
     
