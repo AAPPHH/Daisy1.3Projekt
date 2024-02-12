@@ -35,7 +35,6 @@ class Game:
                     if choice == "1":
                         self.player2.name = input("Spieler 2: Bitte geben Sie Ihren Namen ein: ")
                         self.whos_first()
-                        break
                     elif choice == "2":
                         while True:
                             choice = input(f"Hallo {self.player1.name}, möchten Sie gegen einen SecretsBot, ChainTreeBot, MinimaxBot oder einen MonteCarloBot spielen? (1/2/3/4): ")
@@ -49,9 +48,9 @@ class Game:
                                 self.player2 = MonteCarloBot("MonteCarloBot", 2)
                             else:
                                 print("Bitte geben Sie eine gültige Zahl ein.")
-                                continue
                             self.whos_first()
                             break
+                        break
                     else:
                         print("Bitte geben Sie eine gültige Zahl ein.")
                 break
@@ -60,33 +59,46 @@ class Game:
                     choice_bot_1 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player One ist? (1/2/3/4):")
                     if choice_bot_1 == "1":
                         self.player1 = SecretsBot("SecretsBot", 1)
+                        break
                     elif choice_bot_1 == "2":
-                        self.player1 = ChainTreeBot("ChainTreeBot", 1)    
+                        self.player1 = ChainTreeBot("ChainTreeBot", 1) 
+                        break   
                     elif choice_bot_1 == "3":
                         self.player1 = MinimaxBot("MinimaxBot", 1)
+                        break
                     elif choice_bot_1 == "4":
                         self.player1 = MonteCarloBot("MonteCarloBot", 1) 
+                        break
                     else:
                         print("Bitte geben Sie eine gültige Zahl ein.")
                     self.current_player = self.player1
-                    break
                 while True:
                     choice_bot_2 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player Two ist? (1/2/3/4):")
                     if choice_bot_2 == "1":
                         self.player2 = SecretsBot("SecretsBot_2", 2)
+                        break
                     elif choice_bot_2 == "2":
                         self.player2 = ChainTreeBot("ChainTreeBot_2", 2)
+                        break
                     elif choice_bot_2 == "3":
                         self.player2 = MinimaxBot("MinimaxBot_2", 2)
+                        break
                     elif choice_bot_2 == "4":
                         self.player2 = MonteCarloBot("MonteCarloBot_2", 2)
+                        break
                     else:
                         print("Bitte geben Sie eine gültige Zahl ein.")
-                    break
-                while True:
-                    num_games = input("Wie viele Runden möchtest du spielen? (1-10000): ")
-                    if not isinstance(num_games, int) or num_games < 1 or num_games > 10000:
-                        print("Bitte geben Sie eine gültige Zahl zwischen 1 und 10000 ein.")
+                num_games = None
+                while num_games is None:
+                    num_games_input = input("Wie viele Runden möchtest du spielen? (1-10000): ")
+                    try:
+                        num_games_converted = int(num_games_input)
+                        if 1 <= num_games_converted <= 10000:
+                            num_games = num_games_converted
+                        else:
+                            print("Bitte geben Sie eine gültige Zahl zwischen 1 und 10000 ein.")
+                    except ValueError:
+                        print("Bitte geben Sie eine gültige Zahl ein.")
                     for game_number in range(int(num_games)):
                         print(f"Spiel {game_number + 1} von {num_games}")
                         self.current_player = self.player1
@@ -95,10 +107,17 @@ class Game:
                     print("Alle Spiele wurden gespielt.")
                     break
             elif start_choice == "3":
-                while True:
-                    num_games = input(f"Wie viele Runden möchtest du spielen? (1-10000):")
-                    if not isinstance(num_games, int) or num_games < 1 or num_games > 10000:
-                        print("Bitte geben Sie eine gültige Zahl zwischen 1 und 10000 ein.")
+                num_games = None
+                while num_games is None:
+                    num_games_input = input("Wie viele Runden möchtest du spielen? (1-10000): ")
+                    try:
+                        num_games_converted = int(num_games_input)
+                        if 1 <= num_games_converted <= 10000:
+                            num_games = num_games_converted
+                        else:
+                            print("Bitte geben Sie eine gültige Zahl zwischen 1 und 10000 ein.")
+                    except ValueError:
+                        print("Bitte geben Sie eine gültige Zahl ein.")
                     self.all_bot_vs_bot(int(num_games))
                     print("Alle Spiele wurden gespielt.")
                     break
