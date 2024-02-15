@@ -6,6 +6,9 @@ from class_bot_1 import *
 from class_bot_2 import *
 from class_bot_3 import *
 from class_bot_4 import *
+from class_bot_5 import *
+from class_bot_6 import *
+from class_bot_7 import *
 from Data import *
 
 class Game:
@@ -46,6 +49,12 @@ class Game:
                                 self.player2 = MinimaxBot("MinimaxBot", 2)
                             elif choice == "4":
                                 self.player2 = MonteCarloBot("MonteCarloBot", 2)
+                            elif choice == "5":
+                                pass
+                            elif choice == "6":
+                                pass
+                            elif choice == "7":
+                                pass
                             else:
                                 print("Bitte geben Sie eine gültige Zahl ein.")
                             self.whos_first()
@@ -69,6 +78,12 @@ class Game:
                     elif choice_bot_1 == "4":
                         self.player1 = MonteCarloBot("MonteCarloBot", 1) 
                         break
+                    elif choice == "5":
+                        pass
+                    elif choice == "6":
+                        pass
+                    elif choice == "7":
+                        pass
                     else:
                         print("Bitte geben Sie eine gültige Zahl ein.")
                     self.current_player = self.player1
@@ -86,6 +101,12 @@ class Game:
                     elif choice_bot_2 == "4":
                         self.player2 = MonteCarloBot("MonteCarloBot_2", 2)
                         break
+                    elif choice == "5":
+                        pass
+                    elif choice == "6":
+                        pass
+                    elif choice == "7":
+                        pass
                     else:
                         print("Bitte geben Sie eine gültige Zahl ein.")
                 num_games = None
@@ -198,6 +219,15 @@ class Game:
 
             elif isinstance(self.current_player, MonteCarloBot):
                 valid_move = MonteCarloBot.make_move(self.current_player, self, self.board)
+
+            elif isinstance#(self.current_player, ):
+                valid_move =
+
+            elif isinstance#(self.current_player, ):
+                valid_move =
+
+            elif isinstance#(self.current_player, ):
+                valid_move =
             
             elif isinstance(self.current_player, Player):
                 try:
