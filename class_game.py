@@ -50,11 +50,11 @@ class Game:
                             elif choice == "4":
                                 self.player2 = MonteCarloBot("MonteCarloBot", 2)
                             elif choice == "5":
-                                pass
+                                self.player2 = Silly("Silly", 2)
                             elif choice == "6":
-                                pass
+                                self.player2 = Blocker("Blocker", 2)
                             elif choice == "7":
-                                pass
+                                self.player2 = Kölsche_Jung("Kölsche_Jung", 2)
                             else:
                                 print("Bitte geben Sie eine gültige Zahl ein.")
                             self.whos_first()
@@ -78,12 +78,15 @@ class Game:
                     elif choice_bot_1 == "4":
                         self.player1 = MonteCarloBot("MonteCarloBot", 1) 
                         break
-                    elif choice == "5":
-                        pass
-                    elif choice == "6":
-                        pass
-                    elif choice == "7":
-                        pass
+                    elif choice_bot_1 == "5":
+                        self.player1 = Silly("Silly", 1)
+                        break
+                    elif choice_bot_1 == "6":
+                        self.player1 = Blocker("Blocker", 1)
+                        break
+                    elif choice_bot_1 == "7":
+                        self.player1 = Kölsche_Jung("Kölsche_Jung", 1)
+                        break
                     else:
                         print("Bitte geben Sie eine gültige Zahl ein.")
                     self.current_player = self.player1
@@ -101,12 +104,15 @@ class Game:
                     elif choice_bot_2 == "4":
                         self.player2 = MonteCarloBot("MonteCarloBot_2", 2)
                         break
-                    elif choice == "5":
-                        pass
-                    elif choice == "6":
-                        pass
-                    elif choice == "7":
-                        pass
+                    elif choice_bot_2 == "5":
+                        self.player2 = Silly("Silly", 2)
+                        break
+                    elif choice_bot_2 == "6":
+                        self.player2 = Blocker("Blocker", 2)
+                        break
+                    elif choice_bot_2 == "7":
+                        self.player2 = Kölsche_Jung("Kölsche_Jung", 2)
+                        break
                     else:
                         print("Bitte geben Sie eine gültige Zahl ein.")
                 num_games = None
@@ -149,7 +155,7 @@ class Game:
         """
         all bots against each other for a certain number of games.
         """
-        bots = [SecretsBot, ChainTreeBot, MinimaxBot]
+        bots = [SecretsBot, ChainTreeBot, Silly, Kölsche_Jung]
         for i, Bot1 in enumerate(bots):
             for Bot2 in bots[i:]:
                 for game_number in range(num_games):
@@ -220,14 +226,14 @@ class Game:
             elif isinstance(self.current_player, MonteCarloBot):
                 valid_move = MonteCarloBot.make_move(self.current_player, self, self.board)
 
-            elif isinstance#(self.current_player, ):
-                valid_move =
+            elif isinstance(self.current_player, Silly):
+                valid_move = Silly.make_move(self.current_player, self, self.board)
 
-            elif isinstance#(self.current_player, ):
-                valid_move =
+            elif isinstance(self.current_player, Blocker):
+                valid_move = Blocker.blocking(self.current_player, self, self.board)
 
-            elif isinstance#(self.current_player, ):
-                valid_move =
+            elif isinstance(self.current_player, Kölsche_Jung):
+                valid_move = Kölsche_Jung.halt_op(self.current_player, self, self.board)
             
             elif isinstance(self.current_player, Player):
                 try:

@@ -21,10 +21,10 @@ class Silly(Player):
                     (center[0] - 2, center[1] - 2), (center[0] - 2, center[1] + 1),
                     (center[0] - 2, center[1] - 1), (center[0] - 1, center[1])]
           for move in moves:
-               if 0 <= move[0] < board.m and 0 <= move[1] < board.n and board.board[move[0]][move[1]] == 0:
+               if 0 <= move[0] < board.m and 0 <= move[1] < board.n and board.array[move[0]][move[1]] == 0:
                     print(f"{self.name} macht einen Zug an Position {move}!")
-                    return Player.place_piece(self, move[0], move[1], game, board)
+                    return Player.make_move(self, move[0], move[1], game, board)
           row = random.randint(0, board.m - 1)
           col = random.randint(0, board.n - 1)
           print(f"{self.name} ==> ({row}, {col})!")
-          return Player.place_piece(self, row, col, game, board)
+          return Player.make_move(self, row, col, game, board)
