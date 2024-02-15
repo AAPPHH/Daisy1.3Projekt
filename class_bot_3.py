@@ -86,15 +86,15 @@ class MinimaxBot(Player):
             return -10 * (dep+1)
         return 0
     
-    def alphabeta(self, board, player_number, alpha, beta, depth):
+    def alphabeta(self, board_temp, player_number, alpha, beta, depth):
         """
         Returns the best score for the current player and prunes the tree
         works completely recursive
         """
-        if board.is_winner(player_number) or board.is_full() or depth == 0:
-            return self.evaluate(board, depth)
-        for move in self.get_empty_squares(board):
-            clone = self.perform_move(board, move, player_number)
+        if board_temp.is_winner(player_number) or board_temp.is_full() or depth == 0:
+            return self.evaluate(board_temp, depth)
+        for move in self.get_empty_squares(board_temp):
+            clone = self.perform_move(board_temp, move, player_number)
             val = self.alphabeta(clone, self.switch_player(player_number), alpha, beta, depth-1)
             if player_number == self.player_number:
                 if val > alpha:
