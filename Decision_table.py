@@ -1,5 +1,5 @@
 import random
- #decisions tabel with board.array as key and the best move as value
+#decisions tabel with board.array as key and the best move as value
 decision_table = {
             #best move 1 Player_Number=1
             '[[0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]]': ((2,  2), "KILLER_MOVE"),

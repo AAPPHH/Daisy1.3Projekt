@@ -126,7 +126,7 @@ class Game:
     
     def all_bot_vs_bot(self, num_games):
         """
-        Plays all bots against each other for a certain number of games.
+        all bots against each other for a certain number of games.
         """
         bots = [SecretsBot, ChainTreeBot, MinimaxBot]
         for i, Bot1 in enumerate(bots):

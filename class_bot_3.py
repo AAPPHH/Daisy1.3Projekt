@@ -69,7 +69,7 @@ class MinimaxBot(Player):
         
     def perform_move(self, board, move, player_number):
         """
-        Returns a new board with the temp_move performed
+        Returns a board_temp with the temp_move performed
         """
         board_copy = deepcopy(board)
         row, col = move

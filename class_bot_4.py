@@ -22,7 +22,7 @@ class MonteCarloBot(Player):
 
     def mc_trial(self, temp_board, depth):
         """
-        Plays a game starting with the given position, alternating between players,
+        Plays a game with the given start position, alternating between players,
         by making random moves. Makes inplace changes to board_temp.
         """
         current_player = self.player_number
@@ -95,7 +95,7 @@ class MonteCarloBot(Player):
     
     def make_move(self, game, board):
         """
-        This method checks all if there is allready a best move for the current board state
+        This method checks if there is allready a best move for the current board state
         otherwise it will run the MontecCarlo simulation.
         """
         board_state = str(board.array)
@@ -134,18 +134,16 @@ class MonteCarloBot(Player):
 
     def save_state(self):
         """
-        Saves the memoization dictionary to a file.
+        Saves the new memoization dictionary to a file.
         """
         self.memo.update(self.new_memo)
         with open('Bot_4_memo.pkl', 'wb') as f:
             pickle.dump(self.memo, f)
         print("Zustand gespeichert.")
 
-    
-
     # def mc_move(self, board):
     #     """
-    #     This method checks all if there is already a best move for the current board state
+    #     This method checks if there is already a best move for the current board state
     #     otherwise it will run the monte carlo simulation. !!!Without Ray!!!
     #     """
     #     board_state = str(board.array)
