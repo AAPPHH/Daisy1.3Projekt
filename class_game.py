@@ -60,7 +60,6 @@ class Game:
                             self.whos_first()
                             self.give_review()
                             break
-                        break
                     else:
                         print("Bitte geben Sie eine gültige Zahl ein.")
                 break
