@@ -7,8 +7,6 @@ from class_bot_2 import *
 from class_bot_3 import *
 from class_bot_4 import *
 from class_bot_5 import *
-from class_bot_6 import *
-from class_bot_7 import *
 from Data import *
 
 class Game:
