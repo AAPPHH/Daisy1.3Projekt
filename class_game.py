@@ -305,3 +305,6 @@ Daisy = Data_Science("game_history.pkl") # Erstellt ein neues Objekt der Klasse 
 Spielbrett = Board() # Erstellt ein neues Spielbrett
 game = Game(Spielbrett) # Erstellt ein neues Spiel
 game.start() # Startet das Spiel
+
+# Good Luck Have Fun! :D
+# "...(5,5,4) is a draw..."  Lustenberger, 1967

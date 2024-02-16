@@ -18,5 +18,4 @@ Das passiert jedoch nur wenn der jewilige bot das spiel gewonnen hatt.
 So werden keine züge gespeichert die in diesem Spiel zu einer niederlage geführt haben.
 
 Good Luck Have Fun! :D
-
 "...(5,5,4) is a draw..."  Lustenberger, 1967
