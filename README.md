@@ -20,14 +20,3 @@ So werden keine züge gespeichert die in diesem Spiel zu einer niederlage gefüh
 Good Luck Have Fun! :D
 
 "...(5,5,4) is a draw..."  Lustenberger, 1967
-
-Spielverlaufsanalyse:
-
-Schlüsselzüge: Züge, die signifikant die Wahrscheinlichkeit des Gewinnens oder Verlierens ändern.
-
-Suchtiefe und -effizienz: Bei Verwendung von Algorithmen, wie tief und effizient sucht der Algorithmus.
-
-Verteilung der Gewinne nach Spieler: Gibt es einen signifikanten Unterschied in der Gewinnverteilung zwischen den Spielern?
-
-Lernfortschritte: Wenn maschinelles Lernen eingesetzt wird, wie schnell und effizient verbessert sich der Algorithmus?
-Tf agent based Bot
