@@ -68,8 +68,8 @@ class Blocker(Player):
                 random_column = random.choice(valid_columns)
                 return Player.make_move(self, random_row, random_column, game, board)
         else:
-            rdm_row = random.randint(0, board.m - 1)
-            rdm_column = random.randint(0, board.n - 1)
+            rdm_row = random.randint(0, board.m)
+            rdm_column = random.randint(0, board.n)
             return Player.make_move(self, rdm_row, rdm_column, game, board)
      
 

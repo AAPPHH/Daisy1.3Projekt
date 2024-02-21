@@ -57,7 +57,9 @@ class Game:
                                 print("Bitte geben Sie eine gültige Zahl ein.")
                             self.whos_first()
                             self.give_review()
+                            self.reset_game()
                             break
+                        break
                     else:
                         print("Bitte geben Sie eine gültige Zahl ein.")
                 break
