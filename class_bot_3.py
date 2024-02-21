@@ -19,14 +19,14 @@ class MinimaxBot(Player):
         else use alphabeta
         """
         board_state = str(board.array)
-        if board_state in self.memo:
-            print("Memoization!")
-            move = self.memo[board_state][0]
-            best_score = self.memo[board_state][1]
-            print(f"Beste Position: {move} mit Score {best_score}")
-            return Player.make_move(self, move[0], move[1], game, board)
-        else:
-            move = self.alphabeta_bot(game, board, self.player_number)
+        # if board_state in self.memo:
+        #     print("Memoization!")
+        #     move = self.memo[board_state][0]
+        #     best_score = self.memo[board_state][1]
+        #     print(f"Beste Position: {move} mit Score {best_score}")
+        #     return Player.make_move(self, move[0], move[1], game, board)
+        # else:
+        move = self.alphabeta_bot(game, board, self.player_number)
         return Player.make_move(self, move[0], move[1], game, board)
 
     def get_empty_squares(self, board):
