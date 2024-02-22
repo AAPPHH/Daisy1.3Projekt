@@ -58,11 +58,12 @@ class Game:
                             self.whos_first()
                             self.give_review()
                             self.reset_game()
+                            self.player1 = Player("", 1)
+                            self.player2 = Player("", 2)
                             break
                         break
                     else:
                         print("Bitte geben Sie eine gültige Zahl ein.")
-                break
             elif start_choice == "2":
                 while True:
                     choice_bot_1 = input(f"Möchtest du das einen RandomBot, TreeBot, MinimaxBot oder einen MonteCarloBot Player One ist? (1/2/3/4):")
