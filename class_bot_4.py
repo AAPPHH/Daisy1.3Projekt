@@ -115,7 +115,6 @@ class MonteCarloBot(Player):
         ray.init(num_cpus=os.cpu_count())
         futures = [self.mc_trial_remote.remote(self, board, self.DEP) for _ in range(self.NTRIALS)]
         results = ray.get(futures)
-        print(results)
         ray.shutdown()
         for clone in results:
             self.mc_update_scores(scores, clone)
